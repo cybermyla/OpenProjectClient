@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func mockupData() {
-        for index in 1...3 {
+        for index in 1...50 {
             ProjectManager.mockupProject(index)
             WorkPackageManager.mockupWorkPackages(index, count: 15)
         }

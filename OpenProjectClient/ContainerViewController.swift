@@ -30,7 +30,7 @@ class ContainerViewController: UIViewController {
     }
     var leftViewController: SideMenuViewController?
     
-    let centerPanelExpandedOffset: CGFloat = 140
+    let centerPanelExpandedOffset: CGFloat = 100
     
     
     override func viewDidLoad() {

@@ -73,7 +73,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             if projects.count <= maxProjectsTableViewNr {
                 projectsTableViewHeight = CGFloat(projects.count) * projectsRowHeight
             } else {
-                projectsTableViewHeight = CGFloat(10) * projectsRowHeight
+                projectsTableViewHeight = CGFloat(maxProjectsTableViewNr) * projectsRowHeight
             }
         }
 

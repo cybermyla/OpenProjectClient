@@ -14,6 +14,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var projectId: Int?
     var workpackages: [WorkPackage] = []
 
+    @IBOutlet weak var tableViewWorkPackages: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,11 +41,21 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch (segue.identifier!) {
+            case "ShowWPDetail":
+            let vc = segue.destinationViewController as! WPDetailViewController
+            let wpIndex = self.tableViewWorkPackages.indexPathForSelectedRow!.row
+            vc.workpackage = workpackages[wpIndex]
+            break
+        default:
+            break
+        }
     }
-    */
+
     
     @IBAction func menuTapped(sender: AnyObject) {
         delegate?.toggleLeftPanel!()
@@ -63,6 +74,10 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier("WorkpackageCell") as UITableViewCell!
         cell.textLabel?.text = workpackages[indexPath.row].subject
         return cell;
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableViewWorkPackages.deselectRowAtIndexPath(indexPath, animated: false)
     }
 
     //add filters button
@@ -84,12 +99,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     func filterTapped() {
         let vc = UIStoryboard.filtersViewController()
         delegate?.collapseSidePanels!()
-        self.presentViewController(vc!, animated: true, completion: nil)
-    }
-    
-    @IBAction func addWpTapped(sender: AnyObject) {
-        let vc = UIStoryboard.newWorkpackageViewController()
-        
         self.presentViewController(vc!, animated: true, completion: nil)
     }
     

@@ -15,6 +15,7 @@
 		E26017411BDB690900AF8332 /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017401BDB690900AF8332 /* ProjectManager.swift */; };
 		E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */; };
 		E26017451BDB812800AF8332 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017441BDB812800AF8332 /* AppState.swift */; };
+		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
@@ -53,6 +54,7 @@
 		E26017401BDB690900AF8332 /* ProjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
 		E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageManager.swift; sourceTree = "<group>"; };
 		E26017441BDB812800AF8332 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */,
 				E229FA411BD835750095010D /* WPFiltersViewController.swift */,
 				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
+				E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */,
 			);
 			name = WorkPackages;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
+				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E26017451BDB812800AF8332 /* AppState.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,

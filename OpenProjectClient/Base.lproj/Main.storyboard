@@ -109,7 +109,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qyb-VN-eKI">
-                                <rect key="frame" x="0.0" y="271" width="375" height="319"/>
+                                <rect key="frame" x="0.0" y="271" width="375" height="353"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuItemCell" id="ARh-E6-DWa">
@@ -129,7 +129,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3Ps-eN-5bj" firstAttribute="top" secondItem="Qyb-VN-eKI" secondAttribute="bottom" constant="39" id="1jv-UL-pc9"/>
+                            <constraint firstItem="3Ps-eN-5bj" firstAttribute="top" secondItem="Qyb-VN-eKI" secondAttribute="bottom" constant="5" id="1jv-UL-pc9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="o8k-yj-Pld" secondAttribute="trailing" constant="-20" id="3UJ-6j-tlT"/>
                             <constraint firstItem="o8k-yj-Pld" firstAttribute="trailing" secondItem="Qyb-VN-eKI" secondAttribute="trailing" id="8p1-yV-5x3"/>
                             <constraint firstItem="GPh-wn-bCV" firstAttribute="top" secondItem="nls-Yn-q3H" secondAttribute="bottom" constant="8" id="Cif-ci-fgj"/>
@@ -241,7 +241,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4U-fm-kzD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071.5" y="-341.5"/>
+            <point key="canvasLocation" x="1133.5" y="-341.5"/>
         </scene>
         <!--Work Packages View Controller-->
         <scene sceneID="eg7-6x-SIc">
@@ -256,7 +256,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Ka-V0-Klr">
-                                <rect key="frame" x="0.0" y="-44" width="375" height="665"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="621"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkpackageCell" id="7R9-hP-yM6">
@@ -266,6 +266,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LuC-ph-Ms5" kind="show" identifier="ShowWPDetail" id="8PR-1s-piq"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -278,7 +281,7 @@
                         <constraints>
                             <constraint firstItem="1Ka-V0-Klr" firstAttribute="leading" secondItem="RAW-4y-IqH" secondAttribute="leading" id="CdI-Z8-5uz"/>
                             <constraint firstAttribute="bottom" secondItem="1Ka-V0-Klr" secondAttribute="bottom" constant="46" id="SCx-hk-3YH"/>
-                            <constraint firstItem="1Ka-V0-Klr" firstAttribute="top" secondItem="u2A-Pp-SJ7" secondAttribute="bottom" constant="-64" id="diA-py-1fK"/>
+                            <constraint firstItem="1Ka-V0-Klr" firstAttribute="top" secondItem="RAW-4y-IqH" secondAttribute="topMargin" id="u7k-ZT-WXg"/>
                             <constraint firstAttribute="trailing" secondItem="1Ka-V0-Klr" secondAttribute="trailing" id="vWK-g5-Jf5"/>
                         </constraints>
                     </view>
@@ -291,16 +294,57 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="n0a-Xa-zo0">
                             <connections>
-                                <action selector="addWpTapped:" destination="1Cc-Bm-hxH" id="zhy-8K-hvr"/>
+                                <segue destination="IGN-Ij-sFU" kind="presentation" identifier="NewWorkPackage" id="soF-vo-M9W"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="tableViewWorkPackages" destination="1Ka-V0-Klr" id="yc0-Ly-RjV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Flk-RH-QaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="655.5" y="395.5"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="rA6-vu-qtJ">
+            <objects>
+                <viewController storyboardIdentifier="WPDetailViewController" id="LuC-ph-Ms5" customClass="WPDetailViewController" customModule="OpenProjectClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="onN-db-Lna"/>
+                        <viewControllerLayoutGuide type="bottom" id="jWA-up-Gxh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tHa-L8-NBj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgV-Q3-4zu">
+                                <rect key="frame" x="20" y="163" width="306" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="PhB-JU-EeJ">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="RcJ-2E-0VD">
+                            <connections>
+                                <segue destination="IGN-Ij-sFU" kind="presentation" identifier="EditWorkPackage" id="nsb-bi-ym5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="labelSubject" destination="JgV-Q3-4zu" id="qEq-0f-n0T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NNB-TX-1E4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133.5" y="424.5"/>
         </scene>
         <!--Activities View Controller-->
         <scene sceneID="nZG-RR-qhn">
@@ -330,4 +374,7 @@
             <point key="canvasLocation" x="650.5" y="1152.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nsb-bi-ym5"/>
+    </inferredMetricsTieBreakers>
 </document>
