@@ -210,4 +210,8 @@ extension UIStoryboard {
     class func newWorkpackageViewController() -> NewWorkPackageViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("NewWorkPackageViewController") as? NewWorkPackageViewController
     }
+    
+    class func projectsMenuViewController() -> ProjectsMenuViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("ProjectsMenuViewController") as? ProjectsMenuViewController
+    }
 }

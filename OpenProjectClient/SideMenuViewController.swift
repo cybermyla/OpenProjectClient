@@ -34,7 +34,9 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     var delegate: SideMenuViewControllerDelegate?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var projectsView: UIView!
     
+    @IBOutlet weak var projectsViewConHeight: NSLayoutConstraint!
     
     var items: [String] = ["WorkPackages", "Activities"]
     
@@ -46,14 +48,31 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.separatorStyle = .None
     }
     
+    
+    
     override func viewDidAppear(animated: Bool) {
-
+        // projectsView.frame = CGRectMake(0, 0, 0, 0)
+        projectsViewConHeight.constant = 0
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func test(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                if (self.projectsViewConHeight.constant == 0) {
+                    self.projectsViewConHeight.constant = 300
+                } else {
+                    self.projectsViewConHeight.constant = 0
+                }
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -83,5 +102,8 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         delegate?.itemTapped(MenuItem(rawValue: indexPath.row)!)
     }
+    
+    
+    
 
 }

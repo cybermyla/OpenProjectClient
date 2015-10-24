@@ -10,6 +10,7 @@
 		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
+		E24F53EA1BDABE8800C675DC /* ProjectsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
@@ -44,6 +45,7 @@
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
+		E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectsMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E26017361BDB5C9E00AF8332 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */,
+				E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */,
+				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		E26017371BDB5CE300AF8332 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				E23B0CB01BD585050052172F /* ActivitiesViewController.swift */,
+			);
+			name = Activities;
+			sourceTree = "<group>";
+		};
+		E26017381BDB5D0000AF8332 /* WorkPackages */ = {
+			isa = PBXGroup;
+			children = (
+				E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */,
+				E229FA411BD835750095010D /* WPFiltersViewController.swift */,
+				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
+			);
+			name = WorkPackages;
+			sourceTree = "<group>";
+		};
 		E2CD5A5D1BBDC013009A3C33 = {
 			isa = PBXGroup;
 			children = (
@@ -111,19 +141,16 @@
 		E2CD5A681BBDC013009A3C33 /* OpenProjectClient */ = {
 			isa = PBXGroup;
 			children = (
+				E26017371BDB5CE300AF8332 /* Activities */,
+				E26017381BDB5D0000AF8332 /* WorkPackages */,
+				E26017361BDB5C9E00AF8332 /* SideMenu */,
 				E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */,
 				E2CD5A6B1BBDC013009A3C33 /* ViewController.swift */,
 				E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */,
-				E229FA411BD835750095010D /* WPFiltersViewController.swift */,
 				E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */,
-				E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */,
-				E23B0CB01BD585050052172F /* ActivitiesViewController.swift */,
-				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
-				E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */,
 				E2CD5A701BBDC013009A3C33 /* Assets.xcassets */,
 				E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */,
 				E2CD5A751BBDC013009A3C33 /* Info.plist */,
-				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
 			);
 			path = OpenProjectClient;
 			sourceTree = "<group>";
@@ -285,6 +312,7 @@
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
+				E24F53EA1BDABE8800C675DC /* ProjectsMenuViewController.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
