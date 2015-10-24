@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
+        mockupData()
+        
         return true
     }
 
@@ -49,6 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func mockupData() {
+        for index in 1...3 {
+            ProjectManager.mockupProject(index)
+            WorkPackageManager.mockupWorkPackages(index, count: 15)
+        }
+    }
 
 }
 

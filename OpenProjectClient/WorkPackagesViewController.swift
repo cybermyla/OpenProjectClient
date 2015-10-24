@@ -11,8 +11,8 @@ import UIKit
 class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var delegate: ContainerViewControllerDelegate?
-    
-    let workpackages: [String] = ["Mama", "Tata", "Evicka", "Klaudinka", "Mama", "Tata", "Evicka", "Klaudinka", "Mama", "Tata", "Evicka", "Klaudinka", "Mama", "Tata", "Evicka", "Klaudinka"]
+    var projectId: Int?
+    var workpackages: [WorkPackage] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,13 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        projectId = AppState.sharedInstance.projectId
+        if let project = projectId as Int! {
+            workpackages = WorkPackageManager.getWorkPackagesByProjectId(project)
+        }
     }
     
 
@@ -54,7 +61,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("WorkpackageCell") as UITableViewCell!
-        cell.textLabel?.text = workpackages[indexPath.row]
+        cell.textLabel?.text = workpackages[indexPath.row].subject
         return cell;
     }
 

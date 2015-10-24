@@ -9,7 +9,8 @@
 import UIKit
 
 protocol SideMenuViewControllerDelegate {
-    func itemTapped(item: MenuItem)
+    func menuItemTapped(item: MenuItem)
+    func projectSelected(projectId: Int)
 }
 
 enum MenuItem: Int {
@@ -27,32 +28,59 @@ enum MenuItem: Int {
             return vc!
             }()        }
     }
+    
+    func name() -> String {
+        switch (self) {
+        case .WorkPackages: return "WorkPackages"
+        case .Activities: return "Activities"
+        }
+    }
 }
 
 class SideMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var delegate: SideMenuViewControllerDelegate?
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var menuTableView: UITableView!
+    
     @IBOutlet weak var projectsView: UIView!
+    @IBOutlet weak var projectsTableView: UITableView!
     
     @IBOutlet weak var projectsViewConHeight: NSLayoutConstraint!
     
-    var items: [String] = ["WorkPackages", "Activities"]
+    var items: [MenuItem] = [.WorkPackages, .Activities]
+    var projects: [Project] = []
+    
+    var projectsTableViewHeight:CGFloat = 0
+    let maxProjectsTableViewNr = 8
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        tableView.separatorStyle = .None
+        menuTableView.separatorStyle = .None
     }
     
-    
-    
     override func viewDidAppear(animated: Bool) {
-        // projectsView.frame = CGRectMake(0, 0, 0, 0)
         projectsViewConHeight.constant = 0
+        if let indexPath = AppState.sharedInstance.projectIndexPath {
+            projectsTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+        }
+        
+        if (projects.count > 0) {
+            let projectsRowHeight = projectsTableView.rectForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)).height
+            if projects.count <= maxProjectsTableViewNr {
+                projectsTableViewHeight = CGFloat(projects.count) * projectsRowHeight
+            } else {
+                projectsTableViewHeight = CGFloat(10) * projectsRowHeight
+            }
+        }
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        projects = ProjectManager.getProjects()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,10 +89,10 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func test(sender: AnyObject) {
-        
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        let height:CGFloat = projectsTableViewHeight
+        UIView.animateWithDuration(0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 if (self.projectsViewConHeight.constant == 0) {
-                    self.projectsViewConHeight.constant = 300
+                    self.projectsViewConHeight.constant = height
                 } else {
                     self.projectsViewConHeight.constant = 0
                 }
@@ -90,20 +118,46 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if tableView == menuTableView {
+            return items.count
+        } else if tableView == projectsTableView {
+            return projects.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MenuItemCell") as UITableViewCell!
-        cell.textLabel?.text = items[indexPath.row]
-        return cell;
+        switch (tableView) {
+        case menuTableView:
+            let cell = tableView.dequeueReusableCellWithIdentifier("MenuItemCell") as UITableViewCell!
+            let item = items[indexPath.row];
+            cell.textLabel?.text = item.name()
+            if (item.name() == AppState.sharedInstance.menuItem.name()) {
+                menuTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            }
+            return cell
+        case projectsTableView:
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell") as UITableViewCell!
+            let project = projects[indexPath.row]
+            cell.textLabel?.text = project.name
+            return cell
+        default:
+            return UITableViewCell()
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.itemTapped(MenuItem(rawValue: indexPath.row)!)
+        switch (tableView) {
+        case menuTableView:
+            delegate?.menuItemTapped(MenuItem(rawValue: indexPath.row)!)
+            break
+        case projectsTableView:
+            AppState.sharedInstance.projectIndexPath = indexPath
+            delegate?.projectSelected(projects[indexPath.row].id!)
+            break
+        default:
+            break
+        }
     }
-    
-    
-    
-
 }

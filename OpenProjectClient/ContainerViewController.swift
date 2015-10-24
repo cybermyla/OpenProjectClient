@@ -108,11 +108,20 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         }
     }
     
-    func itemTapped(item: MenuItem) {
+    func menuItemTapped(item: MenuItem) {
         let vc = item.viewController()
         vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .Plain, target: self, action: "toggleLeftPanel")
+        AppState.sharedInstance.menuItem = item
         self.centerNavigationController.viewControllers = [vc]
         self.toggleLeftPanel()
+    }
+    
+    func projectSelected(projectId: Int) {
+        AppState.sharedInstance.projectId = projectId
+        let menuItem = AppState.sharedInstance.menuItem
+        if let item = menuItem as MenuItem! {
+            menuItemTapped(item)
+        }
     }
     
     func addChildSidePanelController(sidePanelController: SideMenuViewController) {
@@ -129,11 +138,9 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
             currentState = .LeftPanelExpanded
             animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
         } else {
-            //UIApplication.sharedApplication().statusBarHidden = false
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .AllCollapsed
                 self.leftViewController!.view.removeFromSuperview()
-                
                 self.leftViewController = nil
             }
         }
@@ -209,9 +216,5 @@ extension UIStoryboard {
     
     class func newWorkpackageViewController() -> NewWorkPackageViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("NewWorkPackageViewController") as? NewWorkPackageViewController
-    }
-    
-    class func projectsMenuViewController() -> ProjectsMenuViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("ProjectsMenuViewController") as? ProjectsMenuViewController
     }
 }

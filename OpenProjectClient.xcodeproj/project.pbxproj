@@ -10,12 +10,15 @@
 		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
-		E24F53EA1BDABE8800C675DC /* ProjectsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */; };
+		E260173B1BDB646300AF8332 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project.swift */; };
+		E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage.swift */; };
+		E26017411BDB690900AF8332 /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017401BDB690900AF8332 /* ProjectManager.swift */; };
+		E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */; };
+		E26017451BDB812800AF8332 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017441BDB812800AF8332 /* AppState.swift */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
-		E2CD5A6C1BBDC013009A3C33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A6B1BBDC013009A3C33 /* ViewController.swift */; };
 		E2CD5A6F1BBDC013009A3C33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
@@ -45,13 +48,16 @@
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
-		E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectsMenuViewController.swift; sourceTree = "<group>"; };
+		E260173A1BDB646300AF8332 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		E260173E1BDB673A00AF8332 /* WorkPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackage.swift; sourceTree = "<group>"; };
+		E26017401BDB690900AF8332 /* ProjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
+		E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageManager.swift; sourceTree = "<group>"; };
+		E26017441BDB812800AF8332 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2CD5A6B1BBDC013009A3C33 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E2CD5A6E1BBDC013009A3C33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2CD5A731BBDC013009A3C33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */,
-				E24F53E91BDABE8800C675DC /* ProjectsMenuViewController.swift */,
 				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
 			);
 			name = SideMenu;
@@ -116,6 +121,25 @@
 				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
 			);
 			name = WorkPackages;
+			sourceTree = "<group>";
+		};
+		E26017391BDB61DD00AF8332 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */,
+			);
+			name = Container;
+			sourceTree = "<group>";
+		};
+		E260173D1BDB66F800AF8332 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E260173A1BDB646300AF8332 /* Project.swift */,
+				E26017401BDB690900AF8332 /* ProjectManager.swift */,
+				E260173E1BDB673A00AF8332 /* WorkPackage.swift */,
+				E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		E2CD5A5D1BBDC013009A3C33 = {
@@ -142,12 +166,13 @@
 			isa = PBXGroup;
 			children = (
 				E26017371BDB5CE300AF8332 /* Activities */,
-				E26017381BDB5D0000AF8332 /* WorkPackages */,
+				E26017391BDB61DD00AF8332 /* Container */,
+				E260173D1BDB66F800AF8332 /* Model */,
 				E26017361BDB5C9E00AF8332 /* SideMenu */,
+				E26017381BDB5D0000AF8332 /* WorkPackages */,
 				E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */,
-				E2CD5A6B1BBDC013009A3C33 /* ViewController.swift */,
+				E26017441BDB812800AF8332 /* AppState.swift */,
 				E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */,
-				E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */,
 				E2CD5A701BBDC013009A3C33 /* Assets.xcassets */,
 				E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */,
 				E2CD5A751BBDC013009A3C33 /* Info.plist */,
@@ -305,14 +330,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
-				E2CD5A6C1BBDC013009A3C33 /* ViewController.swift in Sources */,
+				E26017411BDB690900AF8332 /* ProjectManager.swift in Sources */,
+				E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */,
+				E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
+				E260173B1BDB646300AF8332 /* Project.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
+				E26017451BDB812800AF8332 /* AppState.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
-				E24F53EA1BDABE8800C675DC /* ProjectsMenuViewController.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
