@@ -92,11 +92,6 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         
         if notAlreadyExpanded {
             addLeftPanelViewController()
-            
-            //disable 
-            coverCenterNavigationControllerTransparent()
-        } else {
-            removeTransparentFromCenterNavigationController()
         }
         animateLeftPanel(shouldExpand: notAlreadyExpanded)
     }
@@ -169,12 +164,14 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     func animateLeftPanel(shouldExpand shouldExpand: Bool) {
         if (shouldExpand) {
             currentState = .LeftPanelExpanded
+            coverCenterNavigationControllerTransparent()
             animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .AllCollapsed
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil
+                self.removeTransparentFromCenterNavigationController()
             }
         }
     }
