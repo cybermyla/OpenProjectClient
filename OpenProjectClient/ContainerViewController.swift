@@ -92,8 +92,38 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         
         if notAlreadyExpanded {
             addLeftPanelViewController()
+            
+            //disable 
+            coverCenterNavigationControllerTransparent()
+        } else {
+            removeTransparentFromCenterNavigationController()
         }
         animateLeftPanel(shouldExpand: notAlreadyExpanded)
+    }
+    
+    func coverCenterNavigationControllerTransparent() {
+        let totalWidth = centerNavigationController.navigationBar.frame.width
+        let totalHeight = centerNavigationController.view.frame.height
+        let navigationBarHeight = centerNavigationController.navigationBar.frame.height
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+        let transparentView = UIView(frame: CGRect(
+            x: 0,
+            y: navigationBarHeight + statusBarHeight,
+            width: totalWidth,
+            height: totalHeight))
+        transparentView.tag = 1
+        centerNavigationController.view.addSubview(transparentView)
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "toggleLeftPanel")
+        transparentView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    func removeTransparentFromCenterNavigationController() {
+        let views = centerNavigationController.view.subviews
+        for view in views {
+            if (view.tag == 1) {
+                view.removeFromSuperview()
+            }
+        }
     }
     
     func collapseSidePanels() {
