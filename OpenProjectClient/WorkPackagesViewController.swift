@@ -15,13 +15,20 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var workpackages: [WorkPackage] = []
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
+    
+    @IBOutlet weak var addWPButton: UIBarButtonItem!
+    
+    @IBOutlet weak var filterButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Work Packages"
-        addFiltersButton()
+        //addFiltersButton()
         setNeedsStatusBarAppearanceUpdate()
+        
+        //disable filter and add button in case project is not selected
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -38,6 +45,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         if let project = self.project as Project! {
             workpackages = WorkPackageManager.getWorkPackagesByProjectId(project.id!)
         }
+        setButtons()
     }
     
 
@@ -49,15 +57,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        switch (segue.identifier!) {
-            case "ShowWPDetail":
-            let vc = segue.destinationViewController as! WPDetailViewController
-            let wpIndex = self.tableViewWorkPackages.indexPathForSelectedRow!.row
-            vc.workpackage = workpackages[wpIndex]
-            break
-        default:
-            break
-        }
     }
 
     
@@ -81,29 +80,35 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = UIStoryboard.wpDetailViewController()
+        vc?.workpackage = workpackages[indexPath.row]
+        self.navigationController?.pushViewController(vc!, animated: true)
+        
         tableViewWorkPackages.deselectRowAtIndexPath(indexPath, animated: false)
     }
-
-    //add filters button
-
-    func addFiltersButton() {
-        var toolbarButtons: [UIBarButtonItem] = []
-        
-        let filtersButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "filterTapped")
-        
-        toolbarButtons.append(filtersButton)
-        
-        let toolbar = UIToolbar()
-        toolbar.frame = CGRectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
-        toolbar.sizeToFit()
-        toolbar.setItems(toolbarButtons, animated: true)
-        self.view.addSubview(toolbar)
-    }
     
-    func filterTapped() {
+    //button add
+    
+    @IBAction func buttonAddTapped(sender: AnyObject) {
+        let vc = UIStoryboard.wpEditViewController()
+        let navCon = UINavigationController(rootViewController: vc!)
+        self.presentViewController(navCon, animated: true, completion: nil)
+    }
+
+    //filters button
+    @IBAction func filterButtonTapped(sender: AnyObject) {
         let vc = UIStoryboard.filtersViewController()
         delegate?.collapseSidePanels!()
         self.presentViewController(vc!, animated: true, completion: nil)
     }
     
+    func setButtons() {
+        if let _ = project {
+            filterButton.enabled = true
+            addWPButton.enabled = true
+        } else {
+            filterButton.enabled = false
+            addWPButton.enabled = false
+        }
+    }
 }

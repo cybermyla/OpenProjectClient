@@ -37,18 +37,18 @@ class WPDetailViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     */
+   
+    @IBAction func editButtonTapped(sender: AnyObject) {
+        let vc = UIStoryboard.wpEditViewController()
+        vc?.workpackage = self.workpackage
+        let nav = UINavigationController(rootViewController: vc!)
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        switch (segue.identifier!) {
-        case "EditWorkPackage":
-            let vc = segue.destinationViewController as! NewWorkPackageViewController
-                vc.workpackage = self.workpackage
-            break
-        default:
-            break
-            
-        }
     }
 
 

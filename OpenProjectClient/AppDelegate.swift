@@ -122,6 +122,14 @@ extension UIStoryboard {
         return mainStoryboard().instantiateViewControllerWithIdentifier("WPFiltersViewController") as? WPFiltersViewController
     }
     
+    class func wpEditViewController() -> NewWorkPackageViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("NewWorkPackageViewController") as? NewWorkPackageViewController
+    }
+    
+    class func wpDetailViewController() -> WPDetailViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("WPDetailViewController") as? WPDetailViewController
+    }
+    
     class func settingsViewController() -> SettingsViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("SettingsViewController") as? SettingsViewController
     }

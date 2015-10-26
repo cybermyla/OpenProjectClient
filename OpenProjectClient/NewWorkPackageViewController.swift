@@ -16,6 +16,11 @@ class NewWorkPackageViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if let _ = workpackage {
+            self.navigationItem.title = "Edit Work Package"
+        } else {
+            self.navigationItem.title = "New Work Package"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,9 +29,7 @@ class NewWorkPackageViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if let _ = workpackage {
-            self.title = "Edit Work Package"
-        }
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {

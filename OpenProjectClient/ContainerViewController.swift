@@ -107,7 +107,6 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         if (leftViewController == nil) {
             leftViewController = UIStoryboard.leftViewController()
             //show something in the panel (or not) menu
-            
             addChildSidePanelController(leftViewController!)
         }
     }
