@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DF4D3109582405A67CB3C36 /* libPods-OpenProjectClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D68E64A6CD9C7EE35891C17 /* libPods-OpenProjectClient.a */; };
 		E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F21BDC057000071846 /* AddEditInstanceVC.swift */; };
 		E20391F51BDC05AB00071846 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F41BDC05AB00071846 /* Instance.swift */; };
 		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
@@ -25,6 +26,7 @@
 		E28E19081BDEC98F001D1901 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */; };
 		E28E190A1BDECC64001D1901 /* PersistencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19091BDECC64001D1901 /* PersistencyManager.swift */; };
 		E28E190C1BDECED8001D1901 /* HttpRequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */; };
+		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
@@ -54,11 +56,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D68E64A6CD9C7EE35891C17 /* libPods-OpenProjectClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OpenProjectClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		27DA4948D6B7B909E54B6236 /* Pods-OpenProjectClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenProjectClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenProjectClient/Pods-OpenProjectClient.release.xcconfig"; sourceTree = "<group>"; };
+		D041A0CB737AB715E667629D /* Pods-OpenProjectClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenProjectClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenProjectClient/Pods-OpenProjectClient.debug.xcconfig"; sourceTree = "<group>"; };
 		E20391F21BDC057000071846 /* AddEditInstanceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditInstanceVC.swift; sourceTree = "<group>"; };
 		E20391F41BDC05AB00071846 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		E20391F61BDC259300071846 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E20391F81BDD206100071846 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		E20391FA1BDD215F00071846 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenProjectClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +78,7 @@
 		E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
 		E28E19091BDECC64001D1901 /* PersistencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistencyManager.swift; sourceTree = "<group>"; };
 		E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestsManager.swift; sourceTree = "<group>"; };
+		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DF4D3109582405A67CB3C36 /* libPods-OpenProjectClient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +122,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09755EA1BED807BD1AEA7343 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D68E64A6CD9C7EE35891C17 /* libPods-OpenProjectClient.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BB5D143CD3A0980A8B996FBD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D041A0CB737AB715E667629D /* Pods-OpenProjectClient.debug.xcconfig */,
+				27DA4948D6B7B909E54B6236 /* Pods-OpenProjectClient.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E20391F11BDC054800071846 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +186,7 @@
 		E260173D1BDB66F800AF8332 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */,
 				E260173A1BDB646300AF8332 /* Project.swift */,
 				E26017401BDB690900AF8332 /* ProjectManager.swift */,
 				E260173E1BDB673A00AF8332 /* WorkPackage.swift */,
@@ -189,6 +215,8 @@
 				E2CD5A7D1BBDC013009A3C33 /* OpenProjectClientTests */,
 				E2CD5A881BBDC013009A3C33 /* OpenProjectClientUITests */,
 				E2CD5A671BBDC013009A3C33 /* Products */,
+				BB5D143CD3A0980A8B996FBD /* Pods */,
+				09755EA1BED807BD1AEA7343 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -219,6 +247,7 @@
 				E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */,
 				E2CD5A751BBDC013009A3C33 /* Info.plist */,
 				E20391F61BDC259300071846 /* Colors.swift */,
+				E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */,
 			);
 			path = OpenProjectClient;
 			sourceTree = "<group>";
@@ -248,9 +277,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2CD5A8E1BBDC013009A3C33 /* Build configuration list for PBXNativeTarget "OpenProjectClient" */;
 			buildPhases = (
+				5B7CCB49C133669A004AB22A /* Check Pods Manifest.lock */,
 				E2CD5A621BBDC013009A3C33 /* Sources */,
 				E2CD5A631BBDC013009A3C33 /* Frameworks */,
 				E2CD5A641BBDC013009A3C33 /* Resources */,
+				3EDEFF46723E32897734E61C /* Embed Pods Frameworks */,
+				CB7883CD61AD72AEC2BF5CB3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -303,6 +335,7 @@
 		E2CD5A5E1BBDC013009A3C33 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Miloslav Linhart";
 				TargetAttributes = {
@@ -367,6 +400,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3EDEFF46723E32897734E61C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenProjectClient/Pods-OpenProjectClient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B7CCB49C133669A004AB22A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CB7883CD61AD72AEC2BF5CB3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenProjectClient/Pods-OpenProjectClient-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E2CD5A621BBDC013009A3C33 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -381,6 +462,7 @@
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
 				E20391FB1BDD215F00071846 /* SettingsManager.swift in Sources */,
+				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
 				E20391F91BDD206100071846 /* Setting.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
@@ -532,8 +614,10 @@
 		};
 		E2CD5A8F1BBDC013009A3C33 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D041A0CB737AB715E667629D /* Pods-OpenProjectClient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OpenProjectClient/Info.plist;
@@ -542,13 +626,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Miloslav.Linhart.OpenProjectClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "OpenProjectClient/OpenProjectClient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		E2CD5A901BBDC013009A3C33 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27DA4948D6B7B909E54B6236 /* Pods-OpenProjectClient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OpenProjectClient/Info.plist;
@@ -557,6 +645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Miloslav.Linhart.OpenProjectClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "OpenProjectClient/OpenProjectClient-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -648,6 +737,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E2CD5A5E1BBDC013009A3C33 /* Project object */;
 }

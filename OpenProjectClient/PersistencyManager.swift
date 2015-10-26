@@ -6,6 +6,8 @@
 //  Copyright © 2015 Miloslav Linhart. All rights reserved.
 //
 
+
+
 import UIKit
 
 class PersistencyManager: NSObject {
