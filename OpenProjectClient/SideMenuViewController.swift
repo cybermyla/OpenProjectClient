@@ -10,7 +10,7 @@ import UIKit
 
 protocol SideMenuViewControllerDelegate {
     func menuItemTapped(item: MenuItem)
-    func projectSelected(projectId: Int)
+    func projectSelected(project: Project)
 }
 
 enum MenuItem: Int {
@@ -43,6 +43,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var menuTableView: UITableView!
     
+    @IBOutlet weak var projectButton: UIButton!
     @IBOutlet weak var projectsView: UIView!
     @IBOutlet weak var projectsTableView: UITableView!
     
@@ -60,14 +61,12 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         // Do any additional setup after loading the view.
         
         menuTableView.separatorStyle = .None
+        projectsTableView.separatorStyle = .None
+        projectsTableView.backgroundColor = Colors.PaleOP.getUIColor()
     }
     
     override func viewDidAppear(animated: Bool) {
         projectsViewConHeight.constant = 0
-        if let indexPath = AppState.sharedInstance.projectIndexPath {
-            projectsTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
-        }
-        
         if (projects.count > 0) {
             let projectsRowHeight = projectsTableView.rectForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)).height
             if projects.count <= maxProjectsTableViewNr {
@@ -76,11 +75,19 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 projectsTableViewHeight = CGFloat(maxProjectsTableViewNr) * projectsRowHeight
             }
         }
-
+        
+        //highlight selected menuitem
+        highlightSelectedMenuitem()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         projects = ProjectManager.getProjects()
+        if let project = AppState.sharedInstance.project {
+            projectButton.setTitle(project.name, forState: .Normal)
+        } else {
+            projectButton.setTitle("Select Project", forState: .Normal)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,7 +95,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func test(sender: AnyObject) {
+    @IBAction func resizeProjectsView(sender: AnyObject) {
         let height:CGFloat = projectsTableViewHeight
         UIView.animateWithDuration(0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 if (self.projectsViewConHeight.constant == 0) {
@@ -98,7 +105,17 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
                 self.view.layoutIfNeeded()
             }, completion: nil)
-
+/*
+        if let indexPath = AppState.sharedInstance.projectIndexPath {
+            self.projectsTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+        }
+*/
+    }
+    
+    @IBAction func buttonSettingsTapped(sender: AnyObject) {
+        let vc = UIStoryboard.settingsViewController()
+        let navController = UINavigationController(rootViewController: vc!)
+        self.presentViewController(navController, animated: true, completion: nil)
     }
     
 
@@ -133,14 +150,18 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             let cell = tableView.dequeueReusableCellWithIdentifier("MenuItemCell") as UITableViewCell!
             let item = items[indexPath.row];
             cell.textLabel?.text = item.name()
-            if (item.name() == AppState.sharedInstance.menuItem.name()) {
-                menuTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            cell.textLabel?.textColor = UIColor.whiteColor()
+            if let menuItem: MenuItem = AppState.sharedInstance.menuItem {
+                if (item.name() == menuItem.name()) {
+                    cell.backgroundColor = Colors.DarkAzureOP.getUIColor()
+                }
             }
             return cell
         case projectsTableView:
             let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell") as UITableViewCell!
             let project = projects[indexPath.row]
             cell.textLabel?.text = project.name
+            cell.textLabel?.textColor = Colors.DarkAzureOP.getUIColor()
             return cell
         default:
             return UITableViewCell()
@@ -154,7 +175,21 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             break
         case projectsTableView:
             AppState.sharedInstance.projectIndexPath = indexPath
-            delegate?.projectSelected(projects[indexPath.row].id!)
+            delegate?.projectSelected(projects[indexPath.row])
+            break
+        default:
+            break
+        }
+    }
+    
+    func highlightSelectedMenuitem() {
+        let menuItem = AppState.sharedInstance.menuItem
+        switch (menuItem.name()) {
+        case "WorkPackages":
+            menuTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
+            break
+        case "Activities":
+            menuTableView.selectRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), animated: false, scrollPosition: .None)
             break
         default:
             break

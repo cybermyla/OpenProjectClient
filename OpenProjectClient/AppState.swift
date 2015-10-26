@@ -9,9 +9,10 @@
 import UIKit
 
 class AppState: NSObject {
-    var projectId: Int?
+    var project: Project?
     var menuItem: MenuItem = MenuItem.WorkPackages
     var projectIndexPath: NSIndexPath?
+    var instance: Instance?
     
     class var sharedInstance: AppState {
         struct Static {

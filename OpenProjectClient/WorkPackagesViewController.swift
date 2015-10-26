@@ -11,7 +11,7 @@ import UIKit
 class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var delegate: ContainerViewControllerDelegate?
-    var projectId: Int?
+    var project: Project?
     var workpackages: [WorkPackage] = []
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
@@ -20,8 +20,12 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
 
         // Do any additional setup after loading the view.
         self.title = "Work Packages"
-        
         addFiltersButton()
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,9 +34,9 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     override func viewWillAppear(animated: Bool) {
-        projectId = AppState.sharedInstance.projectId
-        if let project = projectId as Int! {
-            workpackages = WorkPackageManager.getWorkPackagesByProjectId(project)
+        project = AppState.sharedInstance.project
+        if let project = self.project as Project! {
+            workpackages = WorkPackageManager.getWorkPackagesByProjectId(project.id!)
         }
     }
     

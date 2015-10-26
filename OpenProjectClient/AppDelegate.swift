@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -24,6 +23,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
+        UINavigationBar.appearance().barTintColor = Colors.DarkAzureOP.getUIColor()
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        UIToolbar.appearance().barTintColor = Colors.DarkAzureOP.getUIColor()
+        UIToolbar.appearance().tintColor = UIColor.whiteColor()
+        
+        UITableView.appearance().backgroundColor = UIColor.clearColor()
+        UITableViewCell.appearance().backgroundColor = UIColor.clearColor()
+        
+        UITextField.appearance().backgroundColor = UIColor.whiteColor()
+        UITextField.appearance().borderStyle = .None
+        UITextField.appearance().font = UIFont(name: "System", size: 20.0)
+        
+        UITextField.appearance().tintColor = Colors.DarkAzureOP.getUIColor()
+        
+        let colorView = UIView()
+        colorView.backgroundColor = Colors.DarkAzureOP.getUIColor()
+        UITableViewCell.appearance().selectedBackgroundView = colorView
+        
+        
+        UIButton.appearance().tintColor = UIColor.whiteColor()
+
         mockupData()
         
         return true
@@ -56,7 +77,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ProjectManager.mockupProject(index)
             WorkPackageManager.mockupWorkPackages(index, count: 15)
         }
+        
+        let instance = Instance(name: "Prvni instance", address: "http://blabla", login: "mila", password: "pass")
+        
+        SettingsManager.addInstance(instance)
     }
 
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(netHex:Int) {
+        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    }
+}
+
+extension UIStoryboard {
+    class func mainStoryboard() -> UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+    }
+    
+    class func leftViewController() -> SideMenuViewController? {
+        let sideMenu: SideMenuViewController = (mainStoryboard().instantiateViewControllerWithIdentifier("LeftViewController") as? SideMenuViewController)!
+        sideMenu.view.backgroundColor = Colors.LightAzureOP.getUIColor()
+        return sideMenu
+    }
+    
+    class func workPackagesViewController() -> WorkPackagesViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("WorkPackagesViewController") as? WorkPackagesViewController
+    }
+    
+    class func activitiesViewController() -> ActivitiesViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("ActivitiesViewController") as? ActivitiesViewController
+    }
+    
+    class func filtersViewController() -> WPFiltersViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("WPFiltersViewController") as? WPFiltersViewController
+    }
+    
+    class func settingsViewController() -> SettingsViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("SettingsViewController") as? SettingsViewController
+    }
+    
+    class func addEditInstanceVC() -> AddEditInstanceVC? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("AddEditInstanceVC") as? AddEditInstanceVC
+    }
 }
 

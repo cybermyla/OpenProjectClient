@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F21BDC057000071846 /* AddEditInstanceVC.swift */; };
+		E20391F51BDC05AB00071846 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F41BDC05AB00071846 /* Instance.swift */; };
+		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
+		E20391F91BDD206100071846 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F81BDD206100071846 /* Setting.swift */; };
+		E20391FB1BDD215F00071846 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391FA1BDD215F00071846 /* SettingsManager.swift */; };
 		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
+		E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24CF4661BDE79F600930E38 /* Main.storyboard */; };
 		E260173B1BDB646300AF8332 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project.swift */; };
 		E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage.swift */; };
 		E26017411BDB690900AF8332 /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017401BDB690900AF8332 /* ProjectManager.swift */; };
@@ -20,7 +26,6 @@
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
-		E2CD5A6F1BBDC013009A3C33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
 		E2CD5A7F1BBDC013009A3C33 /* OpenProjectClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A7E1BBDC013009A3C33 /* OpenProjectClientTests.swift */; };
@@ -46,9 +51,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E20391F21BDC057000071846 /* AddEditInstanceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditInstanceVC.swift; sourceTree = "<group>"; };
+		E20391F41BDC05AB00071846 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
+		E20391F61BDC259300071846 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E20391F81BDD206100071846 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		E20391FA1BDD215F00071846 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
+		E24CF4671BDE79F600930E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenProjectClient/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E260173A1BDB646300AF8332 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		E260173E1BDB673A00AF8332 /* WorkPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackage.swift; sourceTree = "<group>"; };
 		E26017401BDB690900AF8332 /* ProjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
@@ -60,7 +71,6 @@
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2CD5A6E1BBDC013009A3C33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2CD5A731BBDC013009A3C33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2CD5A751BBDC013009A3C33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,11 +108,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E20391F11BDC054800071846 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E20391F21BDC057000071846 /* AddEditInstanceVC.swift */,
+				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		E26017361BDB5C9E00AF8332 /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
 				E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */,
-				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -141,6 +159,9 @@
 				E26017401BDB690900AF8332 /* ProjectManager.swift */,
 				E260173E1BDB673A00AF8332 /* WorkPackage.swift */,
 				E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */,
+				E20391F41BDC05AB00071846 /* Instance.swift */,
+				E20391F81BDD206100071846 /* Setting.swift */,
+				E20391FA1BDD215F00071846 /* SettingsManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -171,14 +192,16 @@
 				E26017371BDB5CE300AF8332 /* Activities */,
 				E26017391BDB61DD00AF8332 /* Container */,
 				E260173D1BDB66F800AF8332 /* Model */,
+				E20391F11BDC054800071846 /* Settings */,
 				E26017361BDB5C9E00AF8332 /* SideMenu */,
 				E26017381BDB5D0000AF8332 /* WorkPackages */,
 				E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */,
 				E26017441BDB812800AF8332 /* AppState.swift */,
-				E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */,
 				E2CD5A701BBDC013009A3C33 /* Assets.xcassets */,
+				E24CF4661BDE79F600930E38 /* Main.storyboard */,
 				E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */,
 				E2CD5A751BBDC013009A3C33 /* Info.plist */,
+				E20391F61BDC259300071846 /* Colors.swift */,
 			);
 			path = OpenProjectClient;
 			sourceTree = "<group>";
@@ -305,9 +328,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */,
 				E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */,
 				E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */,
-				E2CD5A6F1BBDC013009A3C33 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,14 +358,19 @@
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
 				E26017411BDB690900AF8332 /* ProjectManager.swift in Sources */,
 				E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */,
+				E20391F71BDC259300071846 /* Colors.swift in Sources */,
 				E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
+				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
+				E20391FB1BDD215F00071846 /* SettingsManager.swift in Sources */,
+				E20391F91BDD206100071846 /* Setting.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
+				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E26017451BDB812800AF8332 /* AppState.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
@@ -381,12 +409,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E2CD5A6D1BBDC013009A3C33 /* Main.storyboard */ = {
+		E24CF4661BDE79F600930E38 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E2CD5A6E1BBDC013009A3C33 /* Base */,
+				E24CF4671BDE79F600930E38 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */ = {

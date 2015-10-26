@@ -45,6 +45,10 @@ class ContainerViewController: UIViewController {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -116,8 +120,8 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         self.toggleLeftPanel()
     }
     
-    func projectSelected(projectId: Int) {
-        AppState.sharedInstance.projectId = projectId
+    func projectSelected(project: Project) {
+        AppState.sharedInstance.project = project
         let menuItem = AppState.sharedInstance.menuItem
         if let item = menuItem as MenuItem! {
             menuItemTapped(item)
@@ -191,30 +195,4 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension UIStoryboard {
-    class func mainStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-    }
-    
-    class func leftViewController() -> SideMenuViewController? {
-        let sideMenu: SideMenuViewController = (mainStoryboard().instantiateViewControllerWithIdentifier("LeftViewController") as? SideMenuViewController)!
-        sideMenu.view.backgroundColor = UIColor.whiteColor()
-        return sideMenu
-    }
-    
-    class func workPackagesViewController() -> WorkPackagesViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("WorkPackagesViewController") as? WorkPackagesViewController
-    }
-    
-    class func activitiesViewController() -> ActivitiesViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("ActivitiesViewController") as? ActivitiesViewController
-    }
-    
-    class func filtersViewController() -> WPFiltersViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("WPFiltersViewController") as? WPFiltersViewController
-    }
-    
-    class func newWorkpackageViewController() -> NewWorkPackageViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("NewWorkPackageViewController") as? NewWorkPackageViewController
-    }
-}
+
