@@ -24,33 +24,49 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     
     
     var delegate: AddEditInstanceVCDelegate?
-    var instance: Instance?
+    var currentInstance: Instance!
+    
+    var edit: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
         
-        textFieldInstanceName.returnKeyType = .Done
-        textFieldAddress.returnKeyType = .Done
-        textFieldLogin.returnKeyType = .Done
-        textFieldPassword.returnKeyType = .Done
-        
         textFieldInstanceName.delegate = self
         textFieldAddress.delegate = self
         textFieldLogin.delegate = self
         textFieldPassword.delegate = self
         
-        setTextFieldsPadding()
+        setStyles()
         
-        textFieldPassword.secureTextEntry = true
-        self.view.backgroundColor = Colors.PaleOP.getUIColor()
-        buttonSave.backgroundColor = Colors.DarkAzureOP.getUIColor()
-        buttonCancel.backgroundColor = Colors.LightAzureOP.getUIColor()
+        if let _ = currentInstance {
+            //EDIT
+        } else {
+            //CREATE
+            edit = false
+            currentInstance = Instance.MR_createEntity() as Instance
+            currentInstance!.name = ""
+            currentInstance!.address = ""
+            currentInstance!.login = ""
+            currentInstance!.password = ""
+            currentInstance!.id = NSUUID().UUIDString
+        }
+        
+        textFieldInstanceName.text = currentInstance.name
+        textFieldAddress.text = currentInstance.address
+        textFieldLogin.text = currentInstance.login
+        textFieldPassword.text = currentInstance.password
+        
+        if (currentInstance.name == "") {
+            self.title = "New Instance"
+        } else {
+            self.title = currentInstance.name
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        prefillForm()
+
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -63,35 +79,42 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
-        saveForm()
-        delegate?.instanceSaved()
+        currentInstance!.name = textFieldInstanceName.text
+        currentInstance!.address = textFieldAddress.text
+        currentInstance!.login = textFieldLogin.text
+        currentInstance!.password = textFieldPassword.text
+        
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        let s = Instance.MR_findAll() as! [Instance]
+        NSLog("\(s.count)")
+        
+        self.delegate?.instanceSaved()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
+        if (!edit) {
+            currentInstance.MR_deleteEntity()
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
-    func prefillForm() {
-        if let inst = instance {
-            textFieldInstanceName.text = inst.name
-            textFieldAddress.text = inst.address
-            textFieldLogin.text = inst.login
-            textFieldPassword.text = inst.password
-        }
-    }
     
-    func saveForm() {
-        let newInstance = Instance(
-            name: textFieldInstanceName.text!,
-            address: textFieldAddress.text!,
-            login: textFieldLogin.text!,
-            password: textFieldPassword.text!
-        )
-        if let oldInstance = instance {
-            SettingsManager.updateInstance(oldInstance, newInstance: newInstance)
-        } else {
-            SettingsManager.addInstance(newInstance)
+    func textFieldDidEndEditing(textField: UITextField) {
+        switch (textField) {
+        case textFieldInstanceName:
+            currentInstance!.name = textField.text
+            break
+        case textFieldAddress:
+            currentInstance!.address = textField.text
+            break
+        case textFieldLogin:
+            currentInstance!.login = textField.text
+            break
+        case textFieldPassword:
+            currentInstance!.password = textField.text
+            break
+        default:
+            break
         }
     }
     
@@ -105,7 +128,7 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     }
     */
     
-    func setTextFieldsPadding() {
+    func setStyles() {
         let paddingForInstanceName = UIView(frame: CGRectMake(0, 0, 15, self.textFieldInstanceName.frame.size.height))
         self.textFieldInstanceName.leftView = paddingForInstanceName
         self.textFieldInstanceName.leftViewMode = UITextFieldViewMode .Always
@@ -121,6 +144,16 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         let paddingForPassword = UIView(frame: CGRectMake(0, 0, 15, self.textFieldPassword.frame.size.height))
         self.textFieldPassword.leftView = paddingForPassword
         self.textFieldPassword.leftViewMode = UITextFieldViewMode .Always
+        
+        textFieldInstanceName.returnKeyType = .Done
+        textFieldAddress.returnKeyType = .Done
+        textFieldLogin.returnKeyType = .Done
+        textFieldPassword.returnKeyType = .Done
+        
+        textFieldPassword.secureTextEntry = true
+        self.view.backgroundColor = Colors.PaleOP.getUIColor()
+        buttonSave.backgroundColor = Colors.DarkAzureOP.getUIColor()
+        buttonCancel.backgroundColor = Colors.LightAzureOP.getUIColor()
     }
     
     //textfield delegate

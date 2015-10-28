@@ -10,8 +10,8 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddEditInstanceVCDelegate {
 
-    var settings: Setting?
     var tableHeight: CGFloat?
+    var allInstances: [Instance] = []
     
     @IBOutlet weak var addInstanceButton: UIButton!
     @IBOutlet weak var tableViewInstances: UITableView!
@@ -21,8 +21,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        getAllInstances()
         self.view.backgroundColor = Colors.PaleOP.getUIColor()
-        settings = SettingsManager.getSettings()
         
         addInstanceButton.backgroundColor = Colors.LightAzureOP.getUIColor()
         
@@ -75,8 +75,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (settings!.instances.count > 0) {
-            return settings!.instances.count
+        if (allInstances.count > 0) {
+            return allInstances.count
         } else {
             return 1
         }
@@ -84,11 +84,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("InstanceTableViewCell")! as UITableViewCell
-        if (settings?.instances.count > 0) {
-            cell.textLabel?.text = settings?.instances[indexPath.row].name
+        if (allInstances.count > 0) {
+            cell.textLabel?.text = allInstances[indexPath.row].name
+            cell.detailTextLabel?.enabled = true
+            cell.detailTextLabel?.text = allInstances[indexPath.row].address
             cell.accessoryType = .Checkmark
         } else {
             cell.textLabel?.text = "No instance has been defined..."
+            cell.detailTextLabel?.text = ""
             cell.selectionStyle = .None
         }
         cell.backgroundColor = UIColor.whiteColor()
@@ -104,7 +107,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if (settings?.instances.count > 0) {
+        if (allInstances.count > 0) {
             return true
         } else {
             return false
@@ -114,16 +117,18 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .Normal, title: "EDIT", handler: {action ,index in
             let vc = UIStoryboard.addEditInstanceVC()
-            vc?.instance = self.settings?.instances[indexPath.row]
+            vc?.currentInstance = self.allInstances[indexPath.row]
             let navControler: UINavigationController = UINavigationController(rootViewController: vc!)
             vc?.delegate = self
             self.presentViewController(navControler, animated: true, completion: nil)
+            tableView.editing = false
         })
         edit.backgroundColor = Colors.DarkAzureOP.getUIColor()
         
         let delete = UITableViewRowAction(style: .Normal, title: "DELETE", handler: {
             action, index in
-            SettingsManager.deleteInstance((self.settings?.instances[indexPath.row])!)
+            self.allInstances.removeAtIndex(indexPath.row).MR_deleteEntity()
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             self.tableViewInstances.reloadData()
             self.setInstanceTableViewSize(delete: true)
         })
@@ -133,16 +138,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func setInstanceTableViewSize(delete delete: Bool) {
         var height = CGFloat(0)
-        if let s = settings {
-            let count = s.instances.count
-            if count > 0 {
-                height = CGFloat(s.instances.count) * tableHeight!
-            } else {
-                height = tableHeight!
-            }
+        if allInstances.count > 0 {
+            height = CGFloat(allInstances.count) * tableHeight!
         } else {
             height = tableHeight!
         }
+
         if (delete) {
         UIView.animateWithDuration(0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.instanceTableViewHeightCon.constant = height
@@ -161,8 +162,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    func getAllInstances() {
+        allInstances = Instance.MR_findAllSortedBy("name", ascending: true) as! [Instance]
+    }
+    
     //addedit instance view delegate
     func instanceSaved() {
+        getAllInstances()
         self.tableViewInstances.reloadData()
     }
 

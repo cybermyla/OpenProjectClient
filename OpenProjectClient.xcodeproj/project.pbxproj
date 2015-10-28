@@ -12,7 +12,7 @@
 		E20391F51BDC05AB00071846 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F41BDC05AB00071846 /* Instance.swift */; };
 		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
 		E20391F91BDD206100071846 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F81BDD206100071846 /* Setting.swift */; };
-		E20391FB1BDD215F00071846 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391FA1BDD215F00071846 /* SettingsManager.swift */; };
+		E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */; };
 		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
@@ -63,8 +63,8 @@
 		E20391F41BDC05AB00071846 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		E20391F61BDC259300071846 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E20391F81BDD206100071846 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		E20391FA1BDD215F00071846 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenProjectClient-Bridging-Header.h"; sourceTree = "<group>"; };
+		E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instance+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
@@ -191,9 +191,9 @@
 				E26017401BDB690900AF8332 /* ProjectManager.swift */,
 				E260173E1BDB673A00AF8332 /* WorkPackage.swift */,
 				E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */,
-				E20391F41BDC05AB00071846 /* Instance.swift */,
 				E20391F81BDD206100071846 /* Setting.swift */,
-				E20391FA1BDD215F00071846 /* SettingsManager.swift */,
+				E20391F41BDC05AB00071846 /* Instance.swift */,
+				E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -461,7 +461,6 @@
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
-				E20391FB1BDD215F00071846 /* SettingsManager.swift in Sources */,
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
 				E20391F91BDD206100071846 /* Setting.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project.swift in Sources */,
@@ -473,6 +472,7 @@
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E26017451BDB812800AF8332 /* AppState.swift in Sources */,
+				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
 				E28E190C1BDECED8001D1901 /* HttpRequestsManager.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
