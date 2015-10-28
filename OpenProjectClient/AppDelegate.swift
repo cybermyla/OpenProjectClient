@@ -78,12 +78,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITextField.appearance().tintColor = Colors.DarkAzureOP.getUIColor()
         
-        let colorView = UIView()
-        colorView.backgroundColor = Colors.DarkAzureOP.getUIColor()
-        UITableViewCell.appearance().selectedBackgroundView = colorView
+        let darkColorView = UIView()
+        darkColorView.backgroundColor = Colors.DarkAzureOP.getUIColor()
+
+        let clearView = UIView()
+        clearView.backgroundColor = UIColor.clearColor()
         
+        
+        UITableViewCell.appearance().selectedBackgroundView = darkColorView
+        UITableViewCell.appearanceWhenContainedInInstancesOfClasses([InstanceTableViewCell.self]).selectedBackgroundView = clearView
         
         UIButton.appearance().tintColor = UIColor.whiteColor()
+        UIButton.appearanceWhenContainedInInstancesOfClasses([InstanceTableViewCell.self]).tintColor = Colors.DarkAzureOP.getUIColor()
     }
 
 }

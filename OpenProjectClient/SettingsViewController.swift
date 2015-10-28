@@ -27,6 +27,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         addInstanceButton.backgroundColor = Colors.LightAzureOP.getUIColor()
         
         tableHeight = 50
+        tableViewInstances.backgroundColor = UIColor.whiteColor()
         tableViewInstances.rowHeight = tableHeight!
         tableViewInstances.separatorStyle = .None
     }
@@ -83,18 +84,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("InstanceTableViewCell")! as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("InstanceTableViewCell")! as! InstanceTableViewCell
         if (allInstances.count > 0) {
             cell.textLabel?.text = allInstances[indexPath.row].name
             cell.detailTextLabel?.enabled = true
             cell.detailTextLabel?.text = allInstances[indexPath.row].address
-            cell.accessoryType = .Checkmark
         } else {
             cell.textLabel?.text = "No instance has been defined..."
             cell.detailTextLabel?.text = ""
             cell.selectionStyle = .None
         }
-        cell.backgroundColor = UIColor.whiteColor()
+        //cell.backgroundColor = UIColor.whiteColor()
         return cell
     }
     

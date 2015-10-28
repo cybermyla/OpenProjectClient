@@ -150,15 +150,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/SettingsViewController.swift"
-            timestampString = "467683284.199199"
+            timestampString = "467719406.754417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "instanceSaved()"
             landmarkType = "5">
          </BreakpointContent>
@@ -208,8 +208,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[NSObject(NSObject) doesNotRecognizeSelector:]"
-                  moduleName = "CoreFoundation"
+                  symbolName = "-[NSObject doesNotRecognizeSelector:]"
+                  moduleName = "libobjc.A.dylib"
                   usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>

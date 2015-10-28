@@ -85,9 +85,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         currentInstance!.password = textFieldPassword.text
         
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        let s = Instance.MR_findAll() as! [Instance]
-        NSLog("\(s.count)")
-        
         self.delegate?.instanceSaved()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -97,25 +94,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
             currentInstance.MR_deleteEntity()
         }
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        switch (textField) {
-        case textFieldInstanceName:
-            currentInstance!.name = textField.text
-            break
-        case textFieldAddress:
-            currentInstance!.address = textField.text
-            break
-        case textFieldLogin:
-            currentInstance!.login = textField.text
-            break
-        case textFieldPassword:
-            currentInstance!.password = textField.text
-            break
-        default:
-            break
-        }
     }
     
     /*

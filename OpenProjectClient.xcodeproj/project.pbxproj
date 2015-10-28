@@ -23,6 +23,7 @@
 		E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */; };
 		E26017451BDB812800AF8332 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017441BDB812800AF8332 /* AppState.swift */; };
 		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
+		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
 		E28E19081BDEC98F001D1901 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */; };
 		E28E190A1BDECC64001D1901 /* PersistencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19091BDECC64001D1901 /* PersistencyManager.swift */; };
 		E28E190C1BDECED8001D1901 /* HttpRequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */; };
@@ -75,6 +76,7 @@
 		E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageManager.swift; sourceTree = "<group>"; };
 		E26017441BDB812800AF8332 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
+		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
 		E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
 		E28E19091BDECC64001D1901 /* PersistencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistencyManager.swift; sourceTree = "<group>"; };
 		E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestsManager.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			children = (
 				E20391F21BDC057000071846 /* AddEditInstanceVC.swift */,
 				E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */,
+				E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,
 				E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
+				E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
