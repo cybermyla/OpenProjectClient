@@ -7,6 +7,7 @@
 //
 import UIKit
 import CoreData
+import MagicalRecord
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,9 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.makeKeyAndVisible()
         
         setAppearance()
-
-        mockupData()
-        
+    
         MagicalRecord.setupCoreDataStackWithStoreNamed("DataModel")
         
         return true
@@ -53,13 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-    }
-
-    func mockupData() {
-        for index in 1...50 {
-            ProjectManager.mockupProject(index)
-            WorkPackageManager.mockupWorkPackages(index, count: 15)
-        }
     }
     
     func setAppearance() {

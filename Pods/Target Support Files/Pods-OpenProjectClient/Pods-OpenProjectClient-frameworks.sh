@@ -82,3 +82,14 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-OpenProjectClient/Alamofire.framework"
+  install_framework "Pods-OpenProjectClient/MagicalRecord.framework"
+  install_framework "Pods-OpenProjectClient/SwiftyJSON.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-OpenProjectClient/Alamofire.framework"
+  install_framework "Pods-OpenProjectClient/MagicalRecord.framework"
+  install_framework "Pods-OpenProjectClient/SwiftyJSON.framework"
+fi

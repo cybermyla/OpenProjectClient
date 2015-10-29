@@ -32,6 +32,7 @@ class ContainerViewController: UIViewController {
     
     let centerPanelExpandedOffset: CGFloat = 100
     
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
 
@@ -139,16 +140,18 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     func menuItemTapped(item: MenuItem) {
         let vc = item.viewController()
         vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .Plain, target: self, action: "toggleLeftPanel")
-        AppState.sharedInstance.menuItem = item
+        defaults.setInteger(item.id(), forKey: "MenuId")
         self.centerNavigationController.viewControllers = [vc]
         self.toggleLeftPanel()
     }
     
     func projectSelected(project: Project) {
-        AppState.sharedInstance.project = project
-        let menuItem = AppState.sharedInstance.menuItem
-        if let item = menuItem as MenuItem! {
-            menuItemTapped(item)
+        defaults.setValue(project.id, forKey: "ProjectId")
+        if let menuId = defaults.valueForKey("MenuId") as? Int {
+            let menuItem = MenuItem.menuItemById(menuId)
+            if let item = menuItem as MenuItem! {
+                menuItemTapped(item)
+            }
         }
     }
     
@@ -164,15 +167,15 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     func animateLeftPanel(shouldExpand shouldExpand: Bool) {
         if (shouldExpand) {
             currentState = .LeftPanelExpanded
-            coverCenterNavigationControllerTransparent()
             animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
+            coverCenterNavigationControllerTransparent()
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .AllCollapsed
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil
-                self.removeTransparentFromCenterNavigationController()
             }
+            self.removeTransparentFromCenterNavigationController()
         }
     }
     
@@ -182,11 +185,12 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
             }, completion: completion)
     }
     
+    //this is causing lags - http://stackoverflow.com/questions/27311917/shadow-lagging-the-user-interface
     func showShadowForCenterViewController(shouldShowShadow: Bool) {
         if (shouldShowShadow) {
-            centerNavigationController.view.layer.shadowOpacity = 0.8
+            //centerNavigationController.view.layer.shadowOpacity = 0.8
         } else {
-            centerNavigationController.view.layer.shadowOpacity = 0.0
+            //centerNavigationController.view.layer.shadowOpacity = 0.0
         }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddEditInstanceVCDelegate {
-    func instanceSaved()
+    func instanceSaved(instanceId: String)
 }
 
 class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
@@ -85,7 +85,7 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         currentInstance!.password = textFieldPassword.text
         
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        self.delegate?.instanceSaved()
+        self.delegate?.instanceSaved(currentInstance!.id!)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 

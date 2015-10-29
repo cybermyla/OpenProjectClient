@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '127AC2DD705D64F1B10387C1'
+               BlueprintIdentifier = '3C0CA235CCE3771BFDF1C6E0'
                BlueprintName = 'Pods-OpenProjectClient'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-OpenProjectClient.a'>
+               BuildableName = 'Pods_OpenProjectClient.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

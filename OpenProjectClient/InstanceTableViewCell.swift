@@ -18,8 +18,8 @@ class InstanceTableViewCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
-        
         self.selectionStyle = .None
+
         if (selected) {
             let colorView = UIView()
             colorView.backgroundColor = UIColor.clearColor()

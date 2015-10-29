@@ -20,12 +20,14 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var filterButton: UIBarButtonItem!
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Work Packages"
-        //addFiltersButton()
+        
         setNeedsStatusBarAppearanceUpdate()
         
         //disable filter and add button in case project is not selected
@@ -41,9 +43,32 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     override func viewWillAppear(animated: Bool) {
-        project = AppState.sharedInstance.project
-        if let project = self.project as Project! {
-            workpackages = WorkPackageManager.getWorkPackagesByProjectId(project.id!)
+        if let _ = defaults.valueForKey("InstanceId") as? String {
+            if let projectId = defaults.valueForKey("ProjectId") as? Int {
+                //let projects = ProjectManager.getProjects()
+                //    for p in projects {
+                 //       if (p.id == projectId) {
+                 //           self.project = p
+                 //           break
+                 //       }
+                 //   }
+                if let project = self.project as Project! {
+                    //workpackages = WorkPackageManager.getWorkPackagesByProjectId(project.id!)
+                }
+            }
+        } else {
+            ///show alert notifying that there is no instance selected. consider showing this alert just once after application start
+            let alertController = UIAlertController(title: "ERROR", message: "No instance is defined\nGo to settings and setup new instance", preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
+                switch (action.style) {
+                case .Default:
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    break
+                default:
+                    break
+                }
+            }))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
         setButtons()
     }

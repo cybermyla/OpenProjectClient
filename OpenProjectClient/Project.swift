@@ -8,14 +8,6 @@
 
 import UIKit
 
-class Project: NSObject {
-    var id: Int?
-    var name: String?
-    var desc: String?
-    
-    init(id: Int, name: String, desc: String) {
-        self.id = id
-        self.name = name
-        self.desc = desc
-    }
+class Project: NSManagedObject {
+
 }

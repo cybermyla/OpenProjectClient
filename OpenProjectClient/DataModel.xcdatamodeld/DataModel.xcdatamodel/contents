@@ -7,7 +7,19 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Project" representedClassName=".Project" syncable="YES">
+        <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="project_type_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="responsible_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
     </elements>
 </model>

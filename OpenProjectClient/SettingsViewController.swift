@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SettingsViewControllerDelegate {
+    func settingsHaveChanged()
+}
+
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddEditInstanceVCDelegate {
 
     var tableHeight: CGFloat?
@@ -17,9 +21,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var tableViewInstances: UITableView!
     @IBOutlet weak var instanceTableViewHeightCon: NSLayoutConstraint!
     
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    var selectedInstanceIndexPath: NSIndexPath?
+    var newSelectedInstanceId: String?
+    
+    var delegate: SettingsViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         getAllInstances()
         self.view.backgroundColor = Colors.PaleOP.getUIColor()
@@ -30,14 +42,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableViewInstances.backgroundColor = UIColor.whiteColor()
         tableViewInstances.rowHeight = tableHeight!
         tableViewInstances.separatorStyle = .None
+        
+        //save button is disabled unless any change is performed
+        saveButton.enabled = false
     }
     
     override func viewWillAppear(animated: Bool) {
+        setAllowSelection()
         setInstanceTableViewSize(delete: false)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+   //     tableViewInstances.selectRowAtIndexPath(selectedInstanceIndexPath, animated: false, scrollPosition: .None)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -50,12 +67,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func cancelTapped(sender: AnyObject) {
-
         self.dismissViewControllerAnimated(true, completion: nil);
     }
 
+    //button is enabled only when new instance id does not match old
     @IBAction func saveTapped(sender: AnyObject) {
-        
+        defaults.setValue(newSelectedInstanceId, forKey: "InstanceId")
+        delegate?.settingsHaveChanged()
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
@@ -83,19 +101,56 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (allInstances.count > 0 && indexPath == selectedInstanceIndexPath) {
+            tableViewInstances.selectRowAtIndexPath(selectedInstanceIndexPath, animated: false, scrollPosition: .None)
+        } else if (allInstances.count == 0) {
+            tableViewInstances.allowsSelection = false
+        } else {
+            tableViewInstances.allowsSelection = true
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("InstanceTableViewCell")! as! InstanceTableViewCell
+        
         if (allInstances.count > 0) {
-            cell.textLabel?.text = allInstances[indexPath.row].name
+            let instance = allInstances[indexPath.row]
+            cell.textLabel?.text = instance.name
             cell.detailTextLabel?.enabled = true
-            cell.detailTextLabel?.text = allInstances[indexPath.row].address
+            cell.detailTextLabel?.text = instance.address
+            
+            if let newSelectedInstanceIdUn = newSelectedInstanceId {
+                if (newSelectedInstanceIdUn == instance.id!) {
+                    selectedInstanceIndexPath = indexPath
+                }
+                
+            } else if let currentInstanceId = defaults.valueForKey("InstanceId") as? String {
+                if (currentInstanceId == instance.id!) {
+                    selectedInstanceIndexPath = indexPath
+                }
+            }
         } else {
             cell.textLabel?.text = "No instance has been defined..."
             cell.detailTextLabel?.text = ""
             cell.selectionStyle = .None
         }
-        //cell.backgroundColor = UIColor.whiteColor()
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if allInstances.count > 0 {
+            newSelectedInstanceId = allInstances[indexPath.row].id
+            if let currentInstanceId = defaults.valueForKey("InstanceId") as! String! {
+                if (currentInstanceId == newSelectedInstanceId) {
+                    saveButton.enabled = false
+                } else {
+                    saveButton.enabled = true
+                }
+            } else {
+                saveButton.enabled = true
+            }
+        }
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -127,8 +182,22 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let delete = UITableViewRowAction(style: .Normal, title: "DELETE", handler: {
             action, index in
+            
+            //if deleting new selected instance - change
+            let deletedInstance = self.allInstances[indexPath.row]
+            if (self.newSelectedInstanceId == deletedInstance.id) {
+                self.newSelectedInstanceId = nil
+            }
+            
+            if let currentInstanceId = self.defaults.valueForKey("InstanceId") {
+                if ((currentInstanceId as! String) == deletedInstance.id) {
+                    self.defaults.setValue(nil, forKey: "InstanceId")
+                }
+            }
+            
             self.allInstances.removeAtIndex(indexPath.row).MR_deleteEntity()
             NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            
             self.tableViewInstances.reloadData()
             self.setInstanceTableViewSize(delete: true)
         })
@@ -167,9 +236,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     //addedit instance view delegate
-    func instanceSaved() {
+    func instanceSaved(instanceId: String) {
         getAllInstances()
+        setAllowSelection()
+        newSelectedInstanceId = instanceId
         self.tableViewInstances.reloadData()
+        saveButton.enabled = true
     }
-
+    
+    func setAllowSelection() {
+        if (allInstances.count > 0) {
+            tableViewInstances.allowsSelection = true
+        } else {
+            tableViewInstances.allowsSelection = false
+        }
+    }
 }
