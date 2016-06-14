@@ -1,0 +1,6 @@
+framework module Pods_OpenProjectClientTests {
+  umbrella header "Pods-OpenProjectClientTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

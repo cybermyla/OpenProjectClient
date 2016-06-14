@@ -6,7 +6,7 @@ use_frameworks!
 target 'OpenProjectClient' do
 
 pod "MagicalRecord"
-pod 'Alamofire', '~> 3.0'
+pod 'Alamofire', '~> 3.4'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 
 end
