@@ -13,18 +13,16 @@ protocol AddEditInstanceVCDelegate {
 }
 
 class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var textFieldInstanceName: UITextField!
+
     @IBOutlet weak var textFieldAddress: UITextField!
-    
-    @IBOutlet weak var textFieldLogin: UITextField!
-    
     @IBOutlet weak var buttonSave: UIButton!
     @IBOutlet weak var buttonCancel: UIButton!
-    @IBOutlet weak var textFieldPassword: UITextField!
-    
+    @IBOutlet weak var textFieldApiKey: UITextField!
     
     var delegate: AddEditInstanceVCDelegate?
-    var currentInstance: Instance!
+    //var currentInstance: Instance!
+    var currentInstanceAddress: String?
+    var currentInstanceApiKey: String?
     
     var edit: Bool = true
     
@@ -32,37 +30,25 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
-        
-        textFieldInstanceName.delegate = self
         textFieldAddress.delegate = self
-        textFieldLogin.delegate = self
-        textFieldPassword.delegate = self
+        textFieldApiKey.delegate = self
         
         setStyles()
         
-        if let _ = currentInstance {
+        if let _ = currentInstanceAddress {
             //EDIT
+            self.title = currentInstanceAddress
+            textFieldAddress.text = currentInstanceAddress
+            textFieldApiKey.text = currentInstanceApiKey
+            
         } else {
             //CREATE
             edit = false
-            currentInstance = Instance.MR_createEntity() as Instance
-            currentInstance!.name = ""
-            currentInstance!.address = ""
-            currentInstance!.login = ""
-            currentInstance!.password = ""
-            currentInstance!.id = NSUUID().UUIDString
-        }
-        
-        textFieldInstanceName.text = currentInstance.name
-        textFieldAddress.text = currentInstance.address
-        textFieldLogin.text = currentInstance.login
-        textFieldPassword.text = currentInstance.password
-        
-        if (currentInstance.name == "") {
             self.title = "New Instance"
-        } else {
-            self.title = currentInstance.name
-        }
+        }   
+        
+        textFieldAddress.text = "https://community.openproject.org"
+        textFieldApiKey.text = "9cfa5e3eea8f3537c50d30c2a0f6bb14a40f0217"
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -79,19 +65,15 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
-        currentInstance!.name = textFieldInstanceName.text
-        currentInstance!.address = textFieldAddress.text
-        currentInstance!.login = textFieldLogin.text
-        currentInstance!.password = textFieldPassword.text
+        currentInstanceAddress = textFieldAddress.text
+        currentInstanceApiKey = textFieldApiKey.text
         
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        self.delegate?.instanceSaved(currentInstance!.id!)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        getInstanceDetails()
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         if (!edit) {
-            currentInstance.MR_deleteEntity()
+
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -107,28 +89,19 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     */
     
     func setStyles() {
-        let paddingForInstanceName = UIView(frame: CGRectMake(0, 0, 15, self.textFieldInstanceName.frame.size.height))
-        self.textFieldInstanceName.leftView = paddingForInstanceName
-        self.textFieldInstanceName.leftViewMode = UITextFieldViewMode .Always
-        
+
         let paddingForAddress = UIView(frame: CGRectMake(0, 0, 15, self.textFieldAddress.frame.size.height))
         self.textFieldAddress.leftView = paddingForAddress
         self.textFieldAddress.leftViewMode = UITextFieldViewMode .Always
+ 
+        let paddingForApiKey = UIView(frame: CGRectMake(0, 0, 15, self.textFieldApiKey.frame.size.height))
+        self.textFieldApiKey.leftView = paddingForApiKey
+        self.textFieldApiKey.leftViewMode = UITextFieldViewMode .Always
         
-        let paddingForLogin = UIView(frame: CGRectMake(0, 0, 15, self.textFieldLogin.frame.size.height))
-        self.textFieldLogin.leftView = paddingForLogin
-        self.textFieldLogin.leftViewMode = UITextFieldViewMode .Always
-        
-        let paddingForPassword = UIView(frame: CGRectMake(0, 0, 15, self.textFieldPassword.frame.size.height))
-        self.textFieldPassword.leftView = paddingForPassword
-        self.textFieldPassword.leftViewMode = UITextFieldViewMode .Always
-        
-        textFieldInstanceName.returnKeyType = .Done
         textFieldAddress.returnKeyType = .Done
-        textFieldLogin.returnKeyType = .Done
-        textFieldPassword.returnKeyType = .Done
+        textFieldApiKey.returnKeyType = .Done
         
-        textFieldPassword.secureTextEntry = true
+        textFieldApiKey.secureTextEntry = true
         self.view.backgroundColor = Colors.PaleOP.getUIColor()
         buttonSave.backgroundColor = Colors.DarkAzureOP.getUIColor()
         buttonCancel.backgroundColor = Colors.LightAzureOP.getUIColor()
@@ -138,5 +111,19 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func getInstanceDetails() {
+        OpenProjectAPI.sharedInstance.getInstance(currentInstanceAddress!, apikey: currentInstanceApiKey!, onCompletion: {(responseObject:Instance?, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+            } else {
+                if let fetchedInstance = responseObject {
+                    print("Version: \(fetchedInstance.coreVersion), InstanceName: \(fetchedInstance.instanceName)")
+                    self.delegate?.instanceSaved(fetchedInstance.id!)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+        })
     }
 }

@@ -89,15 +89,16 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if let _ = defaults.valueForKey("InstanceId") as? String {
+        if let instanceId = defaults.valueForKey("InstanceId") as? String {
             instanceSelected = true
+            getProjects(instanceId)
         }
         
         menuTableView.separatorStyle = .None
         projectsTableView.separatorStyle = .None
         projectsTableView.backgroundColor = Colors.PaleOP.getUIColor()
         
-        getProjects()
+        //getProjects()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -125,13 +126,11 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             //disable buttons and menus
             projectButton.enabled = false
         }
-        
-        
-        projects = Project.MR_findAll() as! [Project]
-        
-        if let projectId = defaults.valueForKey("ProjectId") {
+                
+        if let projectId = defaults.valueForKey("ProjectId") as? NSNumber {
             //will have to get data from Core data
-            projectButton.setTitle("Project \(projectId)", forState: .Normal)
+            let project = Project.MR_findFirstByAttribute("id", withValue: projectId)
+            projectButton.setTitle("\(project.name!)", forState: .Normal)
         } else {
             projectButton.setTitle("Select Project", forState: .Normal)
         }
@@ -260,63 +259,36 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //SettingsViewController delegate implementation
     func settingsHaveChanged() {
-        projects = Project.MR_findAll() as! [Project]
+        
+        if let instanceId = defaults.valueForKey("InstanceId") as? String {
+            getRemoteProjects(instanceId)
+            projects = Project.MR_findAll() as! [Project]
+        }
     }
     
-    ///
-    ///Requests to the API
-    ///
-    func getProjects() {
-        let projectsRequest = "https://community.openproject.org/api/v2/projects.json?key=9cfa5e3eea8f3537c50d30c2a0f6bb14a40f0217"
-        Alamofire.request(Method.GET, projectsRequest)
-        .validate(statusCode: 200..<300)
-        .validate(contentType: ["application/json"])
-        .responseJSON { response in
-            switch response.result {
-            case .Success:
-                    NSLog("Projects response validation successful")
-                    if let value = response.result.value {
-                        let json = JSON(value)
-                        
-                        //delete all projects from core data
-                        Project.MR_truncateAll()
-                        
-                        for item in json["projects"].arrayValue {
-                            let project = Project.MR_createEntity() as Project
-                            
-                            if let projectId:Int = item["id"].int{
-                                project.id = NSNumber(integer: projectId)
-                            }
-                            if let responsibleId:Int = item["responsible_id"].int{
-                                project.responsible_id = NSNumber(integer: responsibleId)
-                            }
-                            if let projectTypeId:Int = item["project_type_id"].int{
-                                project.project_type_id = NSNumber(integer: projectTypeId)
-                            }
-                            if let identifier:String = item["identifier"].string {
-                                project.identifier = identifier
-                            }
-                            if let parentId:Int = item["parent_id"].int {
-                                project.parent_id = NSNumber(integer: parentId)
-                            }
-                            if let desc:String = item["description"].string {
-                                project.desc = desc
-                            }
-                            if let name:String = item["name"].string {
-                                project.name = name
-                            }
-                        }
-                        NSLog("Project json has been parsed\(json)")
-                        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-                        
-                        //just a test
-                        self.projectsTableView.reloadData()
-                    }
-                break
-            case .Failure(let error):
-                    NSLog("Projects response validation failure - \(error)")
-                break
-            }
+    func getProjects(instanceId: String) {
+        
+        self.projects = Project.MR_findAll() as! [Project]
+        
+        if projects.count > 0 {
+            self.projectsTableView.reloadData()
         }
+        else
+        {
+            getRemoteProjects(instanceId)
+        }
+    }
+    
+    func getRemoteProjects(instanceId: String) {
+        OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:[Project]?, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+            } else {
+                if let projects = responseObject {
+                    self.projects = projects
+                    self.projectsTableView.reloadData()
+                }
+            }
+        })
     }
 }

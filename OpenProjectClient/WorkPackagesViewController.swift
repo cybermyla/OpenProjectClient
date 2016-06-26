@@ -43,18 +43,9 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     override func viewWillAppear(animated: Bool) {
-        if let _ = defaults.valueForKey("InstanceId") as? String {
-            if let projectId = defaults.valueForKey("ProjectId") as? Int {
-                //let projects = ProjectManager.getProjects()
-                //    for p in projects {
-                 //       if (p.id == projectId) {
-                 //           self.project = p
-                 //           break
-                 //       }
-                 //   }
-                if let project = self.project as Project! {
-                    //workpackages = WorkPackageManager.getWorkPackagesByProjectId(project.id!)
-                }
+        if let instanceId = defaults.valueForKey("InstanceId") as? String {
+            if let projectId = defaults.valueForKey("ProjectId") as? NSNumber {
+                getWorkPackages(projectId, instanceId: instanceId)
             }
         } else {
             ///show alert notifying that there is no instance selected. consider showing this alert just once after application start
@@ -99,8 +90,13 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WorkpackageCell") as UITableViewCell!
-        cell.textLabel?.text = workpackages[indexPath.row].subject
+        let cell = tableView.dequeueReusableCellWithIdentifier("WorkpackageCell") as! WorkPackagesTableViewCell!
+        let wp = workpackages[indexPath.row]
+        cell.labelSubject.lineBreakMode = .ByWordWrapping
+        cell.labelSubject.numberOfLines = 2
+        cell.labelSubject.text = wp.subject
+        cell.labelDescription.font = UIFont.italicSystemFontOfSize(12)
+        cell.labelDescription.text = "Status: \(wp.statusTitle!), Priority: \(wp.priorityTitle!), Type: \(wp.typeTitle!)"
         return cell;
     }
     
@@ -135,5 +131,18 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             filterButton.enabled = false
             addWPButton.enabled = false
         }
+    }
+    
+    func getWorkPackages(projectId: NSNumber, instanceId: String) {
+        OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+            } else {
+                if let workpackages = responseObject {
+                    self.workpackages = workpackages
+                    self.tableViewWorkPackages.reloadData()
+                }
+            }
+        })
     }
 }

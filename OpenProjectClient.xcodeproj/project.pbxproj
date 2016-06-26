@@ -14,22 +14,21 @@
 		E20391F51BDC05AB00071846 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F41BDC05AB00071846 /* Instance.swift */; };
 		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
 		E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */; };
+		E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */; };
 		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
 		E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24CF4661BDE79F600930E38 /* Main.storyboard */; };
 		E260173B1BDB646300AF8332 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project.swift */; };
 		E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage.swift */; };
-		E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */; };
 		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
 		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
-		E28E19081BDEC98F001D1901 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */; };
-		E28E190A1BDECC64001D1901 /* PersistencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E19091BDECC64001D1901 /* PersistencyManager.swift */; };
-		E28E190C1BDECED8001D1901 /* HttpRequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */; };
 		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
+		E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */; };
+		E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
@@ -70,22 +69,21 @@
 		E20391F61BDC259300071846 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenProjectClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instance+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
 		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
 		E24CF4671BDE79F600930E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenProjectClient/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E260173A1BDB646300AF8332 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		E260173E1BDB673A00AF8332 /* WorkPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackage.swift; sourceTree = "<group>"; };
-		E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageManager.swift; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
-		E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
-		E28E19091BDECC64001D1901 /* PersistencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistencyManager.swift; sourceTree = "<group>"; };
-		E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestsManager.swift; sourceTree = "<group>"; };
 		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
+		E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesTableViewCell.swift; sourceTree = "<group>"; };
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +184,7 @@
 				E229FA411BD835750095010D /* WPFiltersViewController.swift */,
 				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
 				E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */,
+				E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */,
 			);
 			name = WorkPackages;
 			sourceTree = "<group>";
@@ -202,10 +201,10 @@
 			isa = PBXGroup;
 			children = (
 				E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */,
-				E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */,
 				E260173A1BDB646300AF8332 /* Project.swift */,
+				E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */,
 				E260173E1BDB673A00AF8332 /* WorkPackage.swift */,
-				E26017421BDB6E4400AF8332 /* WorkPackageManager.swift */,
+				E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */,
 				E20391F41BDC05AB00071846 /* Instance.swift */,
 				E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */,
 			);
@@ -223,9 +222,7 @@
 		E28E19061BDEC95F001D1901 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				E28E19071BDEC98F001D1901 /* OpenProjectAPI.swift */,
-				E28E19091BDECC64001D1901 /* PersistencyManager.swift */,
-				E28E190B1BDECED8001D1901 /* HttpRequestsManager.swift */,
+				E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -557,7 +554,8 @@
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
 				E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */,
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,
-				E26017431BDB6E4400AF8332 /* WorkPackageManager.swift in Sources */,
+				E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */,
+				E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
 				E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
@@ -567,14 +565,12 @@
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E2D569DB1BE18E5F000BECCC /* Project+CoreDataProperties.swift in Sources */,
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
-				E28E190A1BDECC64001D1901 /* PersistencyManager.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
-				E28E19081BDEC98F001D1901 /* OpenProjectAPI.swift in Sources */,
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
-				E28E190C1BDECED8001D1901 /* HttpRequestsManager.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
+				E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */,
 				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -116,7 +116,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if (allInstances.count > 0) {
             let instance = allInstances[indexPath.row]
-            cell.textLabel?.text = instance.name
+            cell.textLabel?.text = instance.instanceName
             cell.detailTextLabel?.enabled = true
             cell.detailTextLabel?.text = instance.address
             
@@ -172,7 +172,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .Normal, title: "EDIT", handler: {action ,index in
             let vc = UIStoryboard.addEditInstanceVC()
-            vc?.currentInstance = self.allInstances[indexPath.row]
+            
+            let instance = self.allInstances[indexPath.row]
+            vc?.currentInstanceAddress = instance.address
+            vc?.currentInstanceApiKey = instance.apikey
+            
             let navControler: UINavigationController = UINavigationController(rootViewController: vc!)
             vc?.delegate = self
             self.presentViewController(navControler, animated: true, completion: nil)
@@ -232,7 +236,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func getAllInstances() {
-        allInstances = Instance.MR_findAllSortedBy("name", ascending: true) as! [Instance]
+        allInstances = Instance.MR_findAllSortedBy("instanceName", ascending: true) as! [Instance]
     }
     
     //addedit instance view delegate

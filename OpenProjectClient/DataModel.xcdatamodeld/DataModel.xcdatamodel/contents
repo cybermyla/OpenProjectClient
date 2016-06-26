@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
     <entity name="Instance" representedClassName=".Instance" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="apikey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="auth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="configurationHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coreVersion" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="login" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instanceName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prioritiesHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusesHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typesHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workPackagesHref" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Project" representedClassName=".Project" syncable="YES">
         <attribute name="created_on" optional="YES" attributeType="Date" syncable="YES"/>
@@ -18,8 +24,21 @@
         <attribute name="responsible_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
+    <entity name="WorkPackage" representedClassName=".WorkPackage" syncable="YES">
+        <attribute name="authorHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authorTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="priorityHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priorityTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Instance" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="195"/>
     </elements>
 </model>

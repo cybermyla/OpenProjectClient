@@ -7,18 +7,58 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class WorkPackage: NSObject {
-    var id: Int
-    var subject: String
-    var desc: String
+class WorkPackage: NSManagedObject {
     
-    var projectId: Int
-    
-    init(id: Int, subject: String, desc: String, projectId: Int) {
-        self.id = id
-        self.subject = subject
-        self.desc = desc
-        self.projectId = projectId
+    class func buildWorkpackages(json: JSON) {
+        WorkPackage.MR_truncateAll()
+        
+        guard let array = json["_embedded"]["elements"].arrayObject else
+        {
+            return
+        }
+        
+        for dataObject: AnyObject in array {
+            guard let dict = dataObject as? NSDictionary else {
+                continue
+            }
+            
+            let wp = WorkPackage.MR_createEntity() as WorkPackage
+            
+            if let id:Int = dict["id"] as? Int {
+                wp.id = NSNumber(integer: id)
+            }
+            
+            if let subject: String = dict["subject"] as? String {
+                wp.subject = subject
+            }
+            
+            guard let dictLinks = dict["_links"] as? NSDictionary else {
+                continue
+            }
+            
+            if let d = dictLinks["type"] as? NSDictionary {
+                wp.typeTitle = d["title"] as! String!
+                wp.typeHref = d["href"] as! String!
+            }
+            
+            if let d = dictLinks["priority"] as? NSDictionary {
+                wp.priorityTitle = d["title"] as! String!
+                wp.priorityHref = d["href"] as! String!
+            }
+            
+            if let d = dictLinks["status"] as? NSDictionary {
+                wp.statusTitle = d["title"] as! String!
+                wp.statusHref = d["href"] as! String!
+            }
+            
+            if let d = dictLinks["author"] as? NSDictionary {
+                wp.authorTitle = d["title"] as! String!
+                wp.authorHref = d["href"] as! String!
+            }
+        }
+        
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
     }
 }
