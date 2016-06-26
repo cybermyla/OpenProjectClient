@@ -24,5 +24,16 @@ extension WorkPackage {
     @NSManaged var statusHref: String?
     @NSManaged var authorTitle: String?
     @NSManaged var authorHref: String?
+    @NSManaged var parentId: NSNumber?
+    @NSManaged var createdAt: NSDate?
+    @NSManaged var startDate: NSDate?
+    @NSManaged var updatedAt: NSDate?
+    @NSManaged var dueDate: NSDate?
+    @NSManaged var descriptionRaw: String?
+    @NSManaged var storyPoints: NSNumber?
+    @NSManaged var lockVersion: NSNumber?
+    @NSManaged var descriptionHtml: String?
+    @NSManaged var assigneeTitle: String?
+    @NSManaged var assigneeHref: String?
 
 }

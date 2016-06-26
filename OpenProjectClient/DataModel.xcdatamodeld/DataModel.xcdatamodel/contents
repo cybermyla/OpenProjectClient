@@ -25,20 +25,31 @@
         <attribute name="updated_on" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="WorkPackage" representedClassName=".WorkPackage" syncable="YES">
+        <attribute name="assigneeHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assigneeTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authorHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authorTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="descriptionHtml" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionRaw" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lockVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="parentId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="priorityHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="priorityTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="statusHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="statusTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storyPoints" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
-        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="195"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="360"/>
     </elements>
 </model>

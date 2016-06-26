@@ -124,7 +124,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func setButtons() {
-        if let _ = project {
+        
+        if let _ = defaults.valueForKey("ProjectId") as? NSNumber {
             filterButton.enabled = true
             addWPButton.enabled = true
         } else {
@@ -138,8 +139,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             if let issue = error {
                 print(issue.description)
             } else {
-                if let workpackages = responseObject {
-                    self.workpackages = workpackages
+                if let _ = responseObject {
+                    self.workpackages = WorkPackage.MR_findAllSortedBy("id", ascending: false) as! [WorkPackage]
                     self.tableViewWorkPackages.reloadData()
                 }
             }
