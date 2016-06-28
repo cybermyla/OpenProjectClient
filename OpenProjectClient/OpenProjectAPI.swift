@@ -125,7 +125,7 @@ class OpenProjectAPI {
                 "Accept": "application/hal+json"
             ]
             
-            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages"
+            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1,"
             
             Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()
@@ -143,7 +143,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
-                    WorkPackage.buildWorkpackages(json)
+                    WorkPackage.buildWorkpackages(projectId, json: json)
                     workpackages = WorkPackage.MR_findAll() as! [WorkPackage]
                     onCompletion(workpackages, nil)
                 case .Failure(let error):

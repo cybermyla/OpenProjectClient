@@ -2,7 +2,7 @@
 //  WorkPackage+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 26/06/16.
+//  Created by Miloslav Linhart on 27/06/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -35,5 +35,8 @@ extension WorkPackage {
     @NSManaged var descriptionHtml: String?
     @NSManaged var assigneeTitle: String?
     @NSManaged var assigneeHref: String?
+    @NSManaged var responsibleTitle: String?
+    @NSManaged var responsibleHref: String?
+    @NSManaged var projectId: NSNumber?
 
 }
