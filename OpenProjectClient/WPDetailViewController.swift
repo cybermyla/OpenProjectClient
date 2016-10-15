@@ -33,7 +33,7 @@ class WPDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         fillWP()
     }
     
@@ -41,48 +41,52 @@ class WPDetailViewController: UIViewController {
     
     func fillWP() {
         if let wp = workpackage {
-            labelSubject.font = UIFont.boldSystemFontOfSize(22)
+            labelSubject.font = UIFont.boldSystemFont(ofSize: 22)
             labelSubject.text = wp.subject!
-            labelSubject.lineBreakMode = .ByWordWrapping
+            labelSubject.lineBreakMode = .byWordWrapping
             labelSubject.numberOfLines = 0
             
             typeNrStatus.text = "\(wp.typeTitle!) #\(wp.id!) - \(wp.statusTitle!) (\(wp.priorityTitle!))"
-            typeNrStatus.font = UIFont.boldSystemFontOfSize(18)
+            typeNrStatus.font = UIFont.boldSystemFont(ofSize: 18)
             
-            textViewDescription.text = wp.descriptionRaw!
+            if let description = wp.descriptionRaw {
+                textViewDescription.text = description
+            } else {
+                textViewDescription.text = ""
+            }
             
             labelUpdated.text = "Last update on \(wp.updatedAt!.shortDate)"
-            labelUpdated.font = UIFont.italicSystemFontOfSize(14)
+            labelUpdated.font = UIFont.italicSystemFont(ofSize: 14)
             
             labelCreated.text = "Created by \(wp.authorTitle!) on \(wp.createdAt!.shortDate)"
-            labelCreated.font = UIFont.italicSystemFontOfSize(14)
+            labelCreated.font = UIFont.italicSystemFont(ofSize: 14)
             
             if let assignee = wp.assigneeTitle as String! {
                 labelAssginee.text = "Assignee: \(assignee)"
             } else {
                 labelAssginee.text = "Assignee: -"
             }
-            labelAssginee.font = UIFont.systemFontOfSize(14)
+            labelAssginee.font = UIFont.systemFont(ofSize: 14)
             
             if let responsible = wp.responsibleTitle as String! {
                 labelResponsible.text = "Responsible: \(responsible)"
             } else {
                 labelResponsible.text = "Responsible: -"
             }
-            labelResponsible.font = UIFont.systemFontOfSize(14)
+            labelResponsible.font = UIFont.systemFont(ofSize: 14)
             
             var startDate = "No start date"
             var endDate = "No end date"
-            if let dtStartDate = wp.startDate as NSDate! {
+            if let dtStartDate = wp.startDate as Date! {
                 startDate = dtStartDate.shortDate
             }
-            if let dtEndDate = wp.dueDate as NSDate! {
+            if let dtEndDate = wp.dueDate as Date! {
                 endDate = dtEndDate.shortDate
             }
             labelDate.text = "Date: \(startDate) - \(endDate)"
-            labelDate.font = UIFont.systemFontOfSize(14)
+            labelDate.font = UIFont.systemFont(ofSize: 14)
             
-            lableEstimate.font = UIFont.systemFontOfSize(14)
+            lableEstimate.font = UIFont.systemFont(ofSize: 14)
             
         }
     }
@@ -93,15 +97,15 @@ class WPDetailViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     */
    
-    @IBAction func editButtonTapped(sender: AnyObject) {
+    @IBAction func editButtonTapped(_ sender: AnyObject) {
         let vc = UIStoryboard.wpEditViewController()
         vc?.workpackage = self.workpackage
         let nav = UINavigationController(rootViewController: vc!)
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
@@ -124,18 +128,18 @@ extension String {
 }
 */
 
-extension NSDateFormatter {
+extension DateFormatter {
     convenience init(dateFormat: String) {
         self.init()
         self.dateFormat = dateFormat
     }
 }
 
-extension NSDate {
+extension Date {
     struct Formatter {
-        static let shortDate = NSDateFormatter(dateFormat: "MM/dd/yyyy")
+        static let shortDate = DateFormatter(dateFormat: "MM/dd/yyyy")
     }
     var shortDate: String {
-        return Formatter.shortDate.stringFromDate(self)
+        return Formatter.shortDate.string(from: self)
     }
 }

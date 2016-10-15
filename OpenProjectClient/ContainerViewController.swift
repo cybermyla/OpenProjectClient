@@ -9,22 +9,22 @@
 import UIKit
 
 enum SlideOutState {
-    case AllCollapsed
-    case LeftPanelExpanded
+    case allCollapsed
+    case leftPanelExpanded
 }
 
 @objc
 protocol ContainerViewControllerDelegate {
-    optional func toggleLeftPanel()
-    optional func collapseSidePanels()
+    @objc optional func toggleLeftPanel()
+    @objc optional func collapseSidePanels()
 }
 
 class ContainerViewController: UIViewController {
     var centerNavigationController: UINavigationController!
     
-    var currentState: SlideOutState = .AllCollapsed {
+    var currentState: SlideOutState = .allCollapsed {
         didSet {
-            let shouldShowShadow = currentState != .AllCollapsed
+            let shouldShowShadow = currentState != .allCollapsed
             showShadowForCenterViewController(shouldShowShadow)
         }
     }
@@ -32,7 +32,7 @@ class ContainerViewController: UIViewController {
     
     let centerPanelExpandedOffset: CGFloat = 100
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
 
@@ -41,14 +41,14 @@ class ContainerViewController: UIViewController {
         // Do any additional setup after loading the view.
         showWorkPackages()
         //showActivities()
-        centerNavigationController.didMoveToParentViewController(self)
+        centerNavigationController.didMove(toParentViewController: self)
         
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +70,7 @@ class ContainerViewController: UIViewController {
         var activitiesViewController: ActivitiesViewController!
         activitiesViewController = UIStoryboard.activitiesViewController()
         activitiesViewController.delegate = self
-        activitiesViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .Plain, target: self, action: "toggleLeftPanel")
+        activitiesViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
         centerNavigationController = UINavigationController(rootViewController: activitiesViewController)
         view.addSubview(centerNavigationController.view)
         addChildViewController(centerNavigationController)
@@ -89,7 +89,7 @@ class ContainerViewController: UIViewController {
 
 extension ContainerViewController: ContainerViewControllerDelegate, SideMenuViewControllerDelegate {
     func toggleLeftPanel() {
-        let notAlreadyExpanded = (currentState != .LeftPanelExpanded)
+        let notAlreadyExpanded = (currentState != .leftPanelExpanded)
         
         if notAlreadyExpanded {
             addLeftPanelViewController()
@@ -101,7 +101,7 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         let totalWidth = centerNavigationController.navigationBar.frame.width
         let totalHeight = centerNavigationController.view.frame.height
         let navigationBarHeight = centerNavigationController.navigationBar.frame.height
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
         let transparentView = UIView(frame: CGRect(
             x: 0,
             y: navigationBarHeight + statusBarHeight,
@@ -109,7 +109,7 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
             height: totalHeight))
         transparentView.tag = 1
         centerNavigationController.view.addSubview(transparentView)
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "toggleLeftPanel")
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
         transparentView.addGestureRecognizer(gestureRecognizer)
     }
     
@@ -123,7 +123,7 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     }
     
     func collapseSidePanels() {
-        let expanded = (currentState == .LeftPanelExpanded)
+        let expanded = (currentState == .leftPanelExpanded)
         if expanded {
             toggleLeftPanel()
         }
@@ -137,17 +137,17 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         }
     }
     
-    func menuItemTapped(item: MenuItem) {
+    func menuItemTapped(_ item: MenuItem) {
         let vc = item.viewController()
-        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .Plain, target: self, action: "toggleLeftPanel")
-        defaults.setInteger(item.id(), forKey: "MenuId")
+        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
+        defaults.set(item.id(), forKey: "MenuId")
         self.centerNavigationController.viewControllers = [vc]
         self.toggleLeftPanel()
     }
     
-    func projectSelected(project: Project) {
+    func projectSelected(_ project: Project) {
         defaults.setValue(project.id, forKey: "ProjectId")
-        if let menuId = defaults.valueForKey("MenuId") as? Int {
+        if let menuId = defaults.value(forKey: "MenuId") as? Int {
             let menuItem = MenuItem.menuItemById(menuId)
             if let item = menuItem as MenuItem! {
                 menuItemTapped(item)
@@ -155,23 +155,23 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         }
     }
     
-    func addChildSidePanelController(sidePanelController: SideMenuViewController) {
+    func addChildSidePanelController(_ sidePanelController: SideMenuViewController) {
         sidePanelController.delegate = self;
         
-        view.insertSubview(sidePanelController.view, atIndex: 0)
+        view.insertSubview(sidePanelController.view, at: 0)
         addChildViewController(sidePanelController)
-        sidePanelController.didMoveToParentViewController(self)
+        sidePanelController.didMove(toParentViewController: self)
     }
     
     
-    func animateLeftPanel(shouldExpand shouldExpand: Bool) {
+    func animateLeftPanel(shouldExpand: Bool) {
         if (shouldExpand) {
-            currentState = .LeftPanelExpanded
-            animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
+            currentState = .leftPanelExpanded
+            animateCenterPanelXPosition(targetPosition: centerNavigationController.view.frame.width - centerPanelExpandedOffset)
             coverCenterNavigationControllerTransparent()
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
-                self.currentState = .AllCollapsed
+                self.currentState = .allCollapsed
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil
             }
@@ -179,14 +179,14 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         }
     }
     
-    func animateCenterPanelXPosition(targetPosition targetPosition: CGFloat, completion: ((Bool) -> Void)! = nil) {
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
+    func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)! = nil) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions(), animations: {
             self.centerNavigationController.view.frame.origin.x = targetPosition
             }, completion: completion)
     }
     
     //this is causing lags - http://stackoverflow.com/questions/27311917/shadow-lagging-the-user-interface
-    func showShadowForCenterViewController(shouldShowShadow: Bool) {
+    func showShadowForCenterViewController(_ shouldShowShadow: Bool) {
         if (shouldShowShadow) {
             //centerNavigationController.view.layer.shadowOpacity = 0.8
         } else {
@@ -196,24 +196,24 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
 }
 
 extension ContainerViewController: UIGestureRecognizerDelegate {
-    func handlePanGesture(recognizer: UIPanGestureRecognizer) {
-        let gestureIsDraggingFromLeftToRight = (recognizer.velocityInView(view).x > 0)
+    func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+        let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
         
         switch (recognizer.state) {
-        case .Began:
-            if (currentState == .AllCollapsed) {
+        case .began:
+            if (currentState == .allCollapsed) {
                     if (gestureIsDraggingFromLeftToRight) {
                     addLeftPanelViewController()
                     showShadowForCenterViewController(true)
                 }
             }
-        case .Changed:
+        case .changed:
             if (leftViewController != nil) {
-                recognizer.view!.center.x = recognizer.view!.center.x + recognizer.translationInView(view).x
-                recognizer.setTranslation(CGPointZero, inView: view)
+                recognizer.view!.center.x = recognizer.view!.center.x + recognizer.translation(in: view).x
+                recognizer.setTranslation(CGPoint.zero, in: view)
             }
             
-        case .Ended:
+        case .ended:
             if (leftViewController != nil) {
                 // animate the side panel open or closed based on whether the view has moved more or less than halfway
                 let hasMovedGreaterThanHalfway = recognizer.view!.center.x > view.bounds.size.width

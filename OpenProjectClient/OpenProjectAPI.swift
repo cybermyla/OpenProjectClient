@@ -19,7 +19,7 @@ protocol OpenProjectAPIManagerDelegate {
 class OpenProjectAPI {
     //var delegate: OpenProjectAPIManagerDelegate?
     static let sharedInstance = OpenProjectAPI()
-    private init() {}
+    fileprivate init() {}
     
     typealias RemoteRootResponse = (Instance?, NSError?) -> Void
     
@@ -27,7 +27,7 @@ class OpenProjectAPI {
     
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
     
-    func getInstance(address: String, apikey: String, onCompletion: RemoteRootResponse) {
+    func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
         let auth = getBasicAuth(apikey)
         
@@ -37,20 +37,20 @@ class OpenProjectAPI {
         ]
         let url = "\(address)/api/v3"
         
-        Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
-            var instance = Instance.MR_createEntity() as Instance
+        Alamofire.request(url, encoding: URLEncoding.default, headers: headers).validate().responseString { response in
+            var instance = Instance.mr_createEntity() as Instance
             instance.address = address
             instance.apikey = apikey
             instance.auth = auth
-            instance.id = NSUUID().UUIDString
+            instance.id = NSUUID().uuidString
             switch response.result {
-            case .Success:
+            case .success(let value):
                 guard let responseValue = response.result.value else {
                     onCompletion(instance, nil)
                     return
                 }
                 
-                guard let dataFromResponse = responseValue.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+                guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
                     onCompletion(instance, nil)
                     return
                 }
@@ -60,41 +60,42 @@ class OpenProjectAPI {
                 instance = Instance.buildInstance(instance, json: json)
                 onCompletion(instance, nil)
                 print("Root successfully received")
-                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
                 print("\(response)")
-            case .Failure(let error):
+            case .failure(let error):
                 print(error)
-                onCompletion(nil, error)
+                onCompletion(nil, error as NSError?)
             }
         }
     }
     
-    func getProjects(instanceId: String, onCompletion: RemoteProjectsResponse) {
+    func getProjects(_ instanceId: String, onCompletion: @escaping RemoteProjectsResponse) {
         
-        guard let instances = Instance.MR_findByAttribute("id", withValue: instanceId) as? [Instance] else {
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
         }
         
         if instances.count > 0 {
             let instance = instances[0]
-            
+            /*
             let headers = [
                 "Authorization": "\(instance.auth)",
                 "Accept": "application/json"
             ]
+            */
+            let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
             
-            let url = "\(instance.address!)/api/v2/projects.json"
-            
-            Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
+            //Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
+            Alamofire.request(url).validate().responseString { response in
                 var projects = [Project]()
                 switch response.result {
-                case .Success:
+                case .success(let value):
                     guard let responseValue = response.result.value else {
                         onCompletion(projects, nil)
                         return
                     }
                     
-                    guard let dataFromResponse = responseValue.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
                         onCompletion(projects, nil)
                         return
                     }
@@ -102,18 +103,18 @@ class OpenProjectAPI {
                     let json = JSON(data: dataFromResponse)
                     print("Projects successfully received - \(json)")
                     Project.buildProjects(json)
-                    projects = Project.MR_findAll() as! [Project]
+                    projects = Project.mr_findAll() as! [Project]
                     onCompletion(projects, nil)
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
-                    onCompletion(nil, error)
+                    onCompletion(nil, error as NSError?)
                 }
             }
         }
     }
     
-    func getWorkPackagesByProjectId(projectId: NSNumber, instanceId: String, onCompletion: RemoteWorkpackagesResponse) {
-        guard let instances = Instance.MR_findByAttribute("id", withValue: instanceId) as? [Instance] else {
+    func getWorkPackagesByProjectId(_ projectId: NSNumber, instanceId: String, onCompletion: @escaping RemoteWorkpackagesResponse) {
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
         }
         
@@ -121,22 +122,22 @@ class OpenProjectAPI {
             let instance = instances[0]
             
             let headers = [
-                "Authorization": "\(instance.auth)",
+                "Authorization": "\(instance.auth!)",
                 "Accept": "application/hal+json"
             ]
             
-            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1,"
+            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1"
             
-            Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
+            Alamofire.request(url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()
                 switch response.result {
-                case .Success:
+                case .success(let value):
                     guard let responseValue = response.result.value else {
                         onCompletion(workpackages, nil)
                         return
                     }
                     
-                    guard let dataFromResponse = responseValue.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
                         onCompletion(workpackages, nil)
                         return
                     }
@@ -144,19 +145,19 @@ class OpenProjectAPI {
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
                     WorkPackage.buildWorkpackages(projectId, json: json)
-                    workpackages = WorkPackage.MR_findAll() as! [WorkPackage]
+                    workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
                     onCompletion(workpackages, nil)
-                case .Failure(let error):
+                case .failure(let error):
                     print(error)
-                    onCompletion(nil, error)
+                    onCompletion(nil, error as NSError?)
                 }
             }
         }
     }
     
-    private func getBasicAuth(apiKey: String) -> String {
+    fileprivate func getBasicAuth(_ apiKey: String) -> String {
         let loginString = NSString(format: "apikey:%@", apiKey)
-        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
-        return "Basic \(loginData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength))"
+        let loginData: Data = loginString.data(using: String.Encoding.utf8.rawValue)!
+        return "Basic \(loginData.base64EncodedString(options: NSData.Base64EncodingOptions.lineLength64Characters))"
     }
 }

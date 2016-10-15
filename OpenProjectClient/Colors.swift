@@ -9,19 +9,19 @@
 import UIKit
 
 enum Colors: Int {
-    case DarkAzureOP
-    case LightAzureOP
-    case PaleOP
+    case darkAzureOP
+    case lightAzureOP
+    case paleOP
     
     func getUIColor() -> UIColor {
         switch (self) {
-        case DarkAzureOP: return {
+        case .darkAzureOP: return {
             return UIColor(netHex: 0x00466C)
             }()
-        case .LightAzureOP: return {
+        case .lightAzureOP: return {
             return UIColor(netHex: 0x3493B3)
             }()
-        case .PaleOP: return {
+        case .paleOP: return {
             return UIColor(netHex: 0xE7E7E7)
             }()
         }

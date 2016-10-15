@@ -13,126 +13,94 @@ import SwiftyJSON
 
 class WorkPackage: NSManagedObject {
     
-    class func buildWorkpackages(projectId: NSNumber, json: JSON) {
-        
-        guard let array = json["_embedded"]["elements"].arrayObject else
+    class func buildWorkpackages(_ projectId: NSNumber, json: JSON) {
+        guard let array = json["_embedded"]["elements"].array else
         {
             return
         }
         
-        for dataObject: AnyObject in array {
-            guard let dict = dataObject as? NSDictionary else {
-                continue
-            }
+        for item in array {
             
             var wp: WorkPackage?
             
-            if let id:Int = dict["id"] as? Int {
-                let predicate = NSPredicate(format: "id = %d AND projectId = %d" , argumentArray: [id, projectId])
-                
-                let wps = WorkPackage.MR_findAllWithPredicate(predicate) as! [WorkPackage]
+            if let dic = item.dictionary {
+
+                let id = dic["id"]?.intValue
+                let predicate = NSPredicate(format: "id = %i AND projectId = %i", id!, projectId.intValue)
+                let wps = WorkPackage.mr_findAll(with: predicate) as! [WorkPackage]
                 
                 if wps.count > 0 {
                     wp = wps[0]
                 } else {
-                    wp = WorkPackage.MR_createEntity() as WorkPackage
-                    wp!.id = NSNumber(integer: id)
+                    wp = WorkPackage.mr_createEntity() as WorkPackage
+                    wp!.id = NSNumber(value: id!)
                     wp!.projectId = projectId
                 }
             }
             
-            if let subject: String = dict["subject"] as? String {
-                wp!.subject = subject
-            }
-            
-            if let parentId: Int = dict["parentId"] as? Int {
-                wp!.parentId = NSNumber(integer: parentId)
-            }
-            
-            if let storyPoints: Int = dict["storyPoints"] as? Int {
-                wp!.storyPoints = NSNumber(integer: storyPoints)
-            }
-            
-            if let lockVersion: Int = dict["lockVersion"] as? Int {
-                wp!.lockVersion = NSNumber(integer: lockVersion)
-            }
-            
-            if let date: String = dict["createdAt"] as? String {
-                wp!.createdAt = stringToNSDate(date)
-            }
-            
-            if let date: String = dict["startDate"] as? String {
-                wp!.startDate = stringToNSDate(date)
-            }
-            
-            if let date: String = dict["updatedAt"] as? String {
-                wp!.updatedAt = stringToNSDate(date)
-            }
-            
-            if let date: String = dict["dueDate"] as? String {
-                wp!.dueDate = stringToNSDate(date)
-            }
+            wp!.subject = item["subject"].stringValue
+            wp!.parentId = item["parentId"].intValue as NSNumber?
+            wp!.storyPoints = item["storyPoints"].intValue as NSNumber?
+            wp!.lockVersion = item["lockVersion"].intValue as NSNumber?
+            wp!.createdAt = stringToNSDate(item["createdAt"].stringValue)
+            wp!.startDate = stringToNSDate(item["startDate"].stringValue)
+            wp!.updatedAt = stringToNSDate(item["updatedAt"].stringValue)
+            wp!.dueDate = stringToNSDate(item["dueDate"].stringValue)
 
-            guard let dictLinks = dict["_links"] as? NSDictionary else {
+            guard let dictLinks = item["_links"].dictionary else {
                 continue
             }
             
-            if let d = dictLinks["type"] as? NSDictionary {
-                wp!.typeTitle = d["title"] as! String!
-                wp!.typeHref = d["href"] as! String!
+            if let d = dictLinks["type"]?.dictionary {
+                wp!.typeTitle = d["title"]?.rawString()
+                wp!.typeHref = d["href"]?.rawString()
             }
             
-            if let d = dictLinks["priority"] as? NSDictionary {
-                wp!.priorityTitle = d["title"] as! String!
-                wp!.priorityHref = d["href"] as! String!
+            if let d = dictLinks["priority"]?.dictionary {
+                wp!.priorityTitle = d["title"]?.rawString()
+                wp!.priorityHref = d["href"]?.rawString()
             }
             
-            if let d = dictLinks["status"] as? NSDictionary {
-                wp!.statusTitle = d["title"] as! String!
-                wp!.statusHref = d["href"] as! String!
+            if let d = dictLinks["status"]?.dictionary {
+                wp!.statusTitle = d["title"]?.rawString()
+                wp!.statusHref = d["href"]?.rawString()
             }
             
-            if let d = dictLinks["author"] as? NSDictionary {
-                wp!.authorTitle = d["title"] as! String!
-                wp!.authorHref = d["href"] as! String!
+            if let d = dictLinks["author"]?.dictionary {
+                wp!.authorTitle = d["title"]?.rawString()
+                wp!.authorHref = d["href"]?.rawString()
             }
             
-            if let d = dictLinks["assignee"] as? NSDictionary {
+            if let d = dictLinks["assignee"]?.dictionary {
                 if d.count == 2 {
-                    wp!.assigneeTitle = d["title"] as! String!
-                    wp!.assigneeHref = d["href"] as! String!
+                    wp!.assigneeTitle = d["title"]?.rawString()
+                    wp!.assigneeHref = d["href"]?.rawString()
                 }
             }
             
-            if let d = dictLinks["responsible"] as? NSDictionary {
+            if let d = dictLinks["responsible"]?.dictionary {
                 if d.count == 2 {
-                    wp!.responsibleTitle = d["title"] as! String!
-                    wp!.responsibleHref = d["href"] as! String!
+                    wp!.responsibleTitle = d["title"]?.rawString()
+                    wp!.responsibleHref = d["href"]?.rawString()
                 }
             }
             
-            guard let dictDescription = dict["description"] as? NSDictionary else {
+            guard let dictDescription = item["description"].dictionary else {
                 continue
             }
-            
-            if let raw = dictDescription["raw"] as? String {
-                wp!.descriptionRaw = raw
-            }
-            
-            if let html = dictDescription["html"] as? String {
-                wp!.descriptionHtml = html
-            }
+            wp!.descriptionRaw = dictDescription["raw"]?.rawString()
+            wp!.descriptionHtml = dictDescription["html"]?.rawString()
         }
         
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
-    class func stringToNSDate(str: String) -> NSDate? {
+    class func stringToNSDate(_ str: String) -> Date? {
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
-        guard let date = dateFormatter.dateFromString(str) else {
+        guard let date = dateFormatter.date(from: str) else {
             return nil
         }
         return date

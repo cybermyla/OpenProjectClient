@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddEditInstanceVCDelegate {
-    func instanceSaved(instanceId: String)
+    func instanceSaved(_ instanceId: String)
 }
 
 class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
@@ -47,15 +47,15 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
             self.title = "New Instance"
         }   
         
-        textFieldAddress.text = "https://community.openproject.org"
-        textFieldApiKey.text = "9cfa5e3eea8f3537c50d30c2a0f6bb14a40f0217"
+        textFieldAddress.text = "http://10.0.0.48"
+        textFieldApiKey.text = "7b0d7c5e7c0fa1089d2426c69b2c8013052a43e7"
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -64,18 +64,18 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func saveButtonTapped(sender: AnyObject) {
+    @IBAction func saveButtonTapped(_ sender: AnyObject) {
         currentInstanceAddress = textFieldAddress.text
         currentInstanceApiKey = textFieldApiKey.text
         
         getInstanceDetails()
     }
 
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         if (!edit) {
 
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     /*
@@ -90,25 +90,25 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     
     func setStyles() {
 
-        let paddingForAddress = UIView(frame: CGRectMake(0, 0, 15, self.textFieldAddress.frame.size.height))
+        let paddingForAddress = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.textFieldAddress.frame.size.height))
         self.textFieldAddress.leftView = paddingForAddress
-        self.textFieldAddress.leftViewMode = UITextFieldViewMode .Always
+        self.textFieldAddress.leftViewMode = UITextFieldViewMode .always
  
-        let paddingForApiKey = UIView(frame: CGRectMake(0, 0, 15, self.textFieldApiKey.frame.size.height))
+        let paddingForApiKey = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.textFieldApiKey.frame.size.height))
         self.textFieldApiKey.leftView = paddingForApiKey
-        self.textFieldApiKey.leftViewMode = UITextFieldViewMode .Always
+        self.textFieldApiKey.leftViewMode = UITextFieldViewMode .always
         
-        textFieldAddress.returnKeyType = .Done
-        textFieldApiKey.returnKeyType = .Done
+        textFieldAddress.returnKeyType = .done
+        textFieldApiKey.returnKeyType = .done
         
-        textFieldApiKey.secureTextEntry = true
-        self.view.backgroundColor = Colors.PaleOP.getUIColor()
-        buttonSave.backgroundColor = Colors.DarkAzureOP.getUIColor()
-        buttonCancel.backgroundColor = Colors.LightAzureOP.getUIColor()
+        textFieldApiKey.isSecureTextEntry = true
+        self.view.backgroundColor = Colors.paleOP.getUIColor()
+        buttonSave.backgroundColor = Colors.darkAzureOP.getUIColor()
+        buttonCancel.backgroundColor = Colors.lightAzureOP.getUIColor()
     }
     
     //textfield delegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -121,7 +121,7 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
                 if let fetchedInstance = responseObject {
                     print("Version: \(fetchedInstance.coreVersion), InstanceName: \(fetchedInstance.instanceName)")
                     self.delegate?.instanceSaved(fetchedInstance.id!)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         })

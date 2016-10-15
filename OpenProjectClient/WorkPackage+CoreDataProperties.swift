@@ -25,10 +25,10 @@ extension WorkPackage {
     @NSManaged var authorTitle: String?
     @NSManaged var authorHref: String?
     @NSManaged var parentId: NSNumber?
-    @NSManaged var createdAt: NSDate?
-    @NSManaged var startDate: NSDate?
-    @NSManaged var updatedAt: NSDate?
-    @NSManaged var dueDate: NSDate?
+    @NSManaged var createdAt: Date?
+    @NSManaged var startDate: Date?
+    @NSManaged var updatedAt: Date?
+    @NSManaged var dueDate: Date?
     @NSManaged var descriptionRaw: String?
     @NSManaged var storyPoints: NSNumber?
     @NSManaged var lockVersion: NSNumber?

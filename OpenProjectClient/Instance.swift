@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class Instance: NSManagedObject {
 
-    class func buildInstance(instance: Instance, json: JSON) -> Instance {
+    class func buildInstance(_ instance: Instance, json: JSON) -> Instance {
         
         instance.instanceName = json["instanceName"].stringValue
         instance.coreVersion = json["coreVersion"].stringValue

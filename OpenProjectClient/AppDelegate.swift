@@ -14,10 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
         
         let containerViewController = ContainerViewController()
         
@@ -26,62 +26,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setAppearance()
     
-        MagicalRecord.setupCoreDataStackWithStoreNamed("DataModel")
+        MagicalRecord.setupCoreDataStack(withStoreNamed: "DataModel")
         
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
     func setAppearance() {
-        UINavigationBar.appearance().barTintColor = Colors.DarkAzureOP.getUIColor()
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        UIToolbar.appearance().barTintColor = Colors.DarkAzureOP.getUIColor()
-        UIToolbar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = Colors.darkAzureOP.getUIColor()
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        UIToolbar.appearance().barTintColor = Colors.darkAzureOP.getUIColor()
+        UIToolbar.appearance().tintColor = UIColor.white
         
-        UITableView.appearance().backgroundColor = UIColor.clearColor()
-        UITableViewCell.appearance().backgroundColor = UIColor.clearColor()
+        UITableView.appearance().backgroundColor = UIColor.clear
+        UITableViewCell.appearance().backgroundColor = UIColor.clear
         
-        UITextField.appearance().backgroundColor = UIColor.whiteColor()
-        UITextField.appearance().borderStyle = .None
+        UITextField.appearance().backgroundColor = UIColor.white
+        UITextField.appearance().borderStyle = .none
         UITextField.appearance().font = UIFont(name: "System", size: 20.0)
         
-        UITextField.appearance().tintColor = Colors.DarkAzureOP.getUIColor()
+        UITextField.appearance().tintColor = Colors.darkAzureOP.getUIColor()
         
         let darkColorView = UIView()
-        darkColorView.backgroundColor = Colors.DarkAzureOP.getUIColor()
+        darkColorView.backgroundColor = Colors.darkAzureOP.getUIColor()
 
         let clearView = UIView()
-        clearView.backgroundColor = UIColor.clearColor()
+        clearView.backgroundColor = UIColor.clear
         
         
         UITableViewCell.appearance().selectedBackgroundView = darkColorView
-        UITableViewCell.appearanceWhenContainedInInstancesOfClasses([InstanceTableViewCell.self]).selectedBackgroundView = clearView
+        UITableViewCell.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).selectedBackgroundView = clearView
         
-        UIButton.appearance().tintColor = UIColor.whiteColor()
-        UIButton.appearanceWhenContainedInInstancesOfClasses([InstanceTableViewCell.self]).tintColor = Colors.DarkAzureOP.getUIColor()
+        UIButton.appearance().tintColor = UIColor.white
+        UIButton.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
     }
 
 }
@@ -102,41 +102,41 @@ extension UIColor {
 
 extension UIStoryboard {
     class func mainStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
     
     class func leftViewController() -> SideMenuViewController? {
-        let sideMenu: SideMenuViewController = (mainStoryboard().instantiateViewControllerWithIdentifier("LeftViewController") as? SideMenuViewController)!
-        sideMenu.view.backgroundColor = Colors.LightAzureOP.getUIColor()
+        let sideMenu: SideMenuViewController = (mainStoryboard().instantiateViewController(withIdentifier: "LeftViewController") as? SideMenuViewController)!
+        sideMenu.view.backgroundColor = Colors.lightAzureOP.getUIColor()
         return sideMenu
     }
     
     class func workPackagesViewController() -> WorkPackagesViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("WorkPackagesViewController") as? WorkPackagesViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "WorkPackagesViewController") as? WorkPackagesViewController
     }
     
     class func activitiesViewController() -> ActivitiesViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("ActivitiesViewController") as? ActivitiesViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "ActivitiesViewController") as? ActivitiesViewController
     }
     
     class func filtersViewController() -> WPFiltersViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("WPFiltersViewController") as? WPFiltersViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "WPFiltersViewController") as? WPFiltersViewController
     }
     
     class func wpEditViewController() -> NewWorkPackageViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("NewWorkPackageViewController") as? NewWorkPackageViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "NewWorkPackageViewController") as? NewWorkPackageViewController
     }
     
     class func wpDetailViewController() -> WPDetailViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("WPDetailViewController") as? WPDetailViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "WPDetailViewController") as? WPDetailViewController
     }
     
     class func settingsViewController() -> SettingsViewController? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("SettingsViewController") as? SettingsViewController
+        return mainStoryboard().instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController
     }
     
     class func addEditInstanceVC() -> AddEditInstanceVC? {
-        return mainStoryboard().instantiateViewControllerWithIdentifier("AddEditInstanceVC") as? AddEditInstanceVC
+        return mainStoryboard().instantiateViewController(withIdentifier: "AddEditInstanceVC") as? AddEditInstanceVC
     }
 }
 

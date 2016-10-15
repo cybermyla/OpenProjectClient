@@ -20,7 +20,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var filterButton: UIBarButtonItem!
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         //disable filter and add button in case project is not selected
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,24 +42,14 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        if let instanceId = defaults.valueForKey("InstanceId") as? String {
-            if let projectId = defaults.valueForKey("ProjectId") as? NSNumber {
+    override func viewWillAppear(_ animated: Bool) {
+        if let instanceId = defaults.value(forKey: "InstanceId") as? String {
+            if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
                 getWorkPackages(projectId, instanceId: instanceId)
             }
         } else {
             ///show alert notifying that there is no instance selected. consider showing this alert just once after application start
-            let alertController = UIAlertController(title: "ERROR", message: "No instance is defined\nGo to settings and setup new instance", preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
-                switch (action.style) {
-                case .Default:
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    break
-                default:
-                    break
-                }
-            }))
-            self.presentViewController(alertController, animated: true, completion: nil)
+            showNoInstanceAlert()
         }
         setButtons()
     }
@@ -70,81 +60,100 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
 
     
-    @IBAction func menuTapped(sender: AnyObject) {
+    @IBAction func menuTapped(_ sender: AnyObject) {
         delegate?.toggleLeftPanel!()
     }
     
     //UITableViewDataSource + UITableViewDelegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workpackages.count;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WorkpackageCell") as! WorkPackagesTableViewCell!
-        let wp = workpackages[indexPath.row]
-        cell.labelSubject.lineBreakMode = .ByWordWrapping
-        cell.labelSubject.numberOfLines = 2
-        cell.labelSubject.text = wp.subject
-        cell.labelDescription.font = UIFont.italicSystemFontOfSize(12)
-        cell.labelDescription.text = "Status: \(wp.statusTitle!), Priority: \(wp.priorityTitle!), Type: \(wp.typeTitle!)"
-        return cell;
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WorkpackageCell") as! WorkPackagesTableViewCell!
+        let wp = workpackages[(indexPath as NSIndexPath).row] as WorkPackage
+        cell?.labelSubject.lineBreakMode = .byWordWrapping
+        cell?.labelSubject.numberOfLines = 2
+        cell?.labelSubject.text = wp.subject
+        cell?.labelDescription.font = UIFont.italicSystemFont(ofSize: 12)
+        cell?.labelDescription.text = "Status: \(wp.statusTitle!), Priority: \(wp.priorityTitle!), Type: \(wp.typeTitle!)"
+        return cell!;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard.wpDetailViewController()
-        vc?.workpackage = workpackages[indexPath.row]
+        vc?.workpackage = workpackages[(indexPath as NSIndexPath).row]
         self.navigationController?.pushViewController(vc!, animated: true)
         
-        tableViewWorkPackages.deselectRowAtIndexPath(indexPath, animated: false)
+        tableViewWorkPackages.deselectRow(at: indexPath, animated: false)
     }
     
     //button add
     
-    @IBAction func buttonAddTapped(sender: AnyObject) {
+    @IBAction func buttonAddTapped(_ sender: AnyObject) {
         let vc = UIStoryboard.wpEditViewController()
         let navCon = UINavigationController(rootViewController: vc!)
-        self.presentViewController(navCon, animated: true, completion: nil)
+        self.present(navCon, animated: true, completion: nil)
     }
 
     //filters button
-    @IBAction func filterButtonTapped(sender: AnyObject) {
+    @IBAction func filterButtonTapped(_ sender: AnyObject) {
         let vc = UIStoryboard.filtersViewController()
         delegate?.collapseSidePanels!()
-        self.presentViewController(vc!, animated: true, completion: nil)
+        self.present(vc!, animated: true, completion: nil)
     }
     
     func setButtons() {
         
-        if let _ = defaults.valueForKey("ProjectId") as? NSNumber {
-            filterButton.enabled = true
-            addWPButton.enabled = true
+        if let _ = defaults.value(forKey: "ProjectId") as? NSNumber {
+            filterButton.isEnabled = true
+            addWPButton.isEnabled = true
         } else {
-            filterButton.enabled = false
-            addWPButton.enabled = false
+            filterButton.isEnabled = false
+            addWPButton.isEnabled = false
         }
     }
     
-    func getWorkPackages(projectId: NSNumber, instanceId: String) {
+    func getWorkPackages(_ projectId: NSNumber, instanceId: String) {
+        getWorkPackagesFromServer(projectId, instanceId: instanceId)
+    }
+    
+    func getWorkPackagesFromServer(_ projectId: NSNumber, instanceId: String) {
         OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
             } else {
                 if let _ = responseObject {
-                    let predicate = NSPredicate(format: "projectId = %d" , argumentArray: [projectId])
-                    self.workpackages = WorkPackage.MR_findAllSortedBy("id", ascending: false, withPredicate: predicate) as! [WorkPackage]
+                    let predicate = NSPredicate(format: "projectId = %@" , argumentArray: [projectId])
+                    //self.workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: false, with: predicate) as! [WorkPackage]
+                    self.workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
                     self.tableViewWorkPackages.reloadData()
                 }
             }
         })
+    }
+    
+    func showNoInstanceAlert() {
+        let alertController = UIAlertController(title: "ERROR", message: "No instance is defined\nGo to settings and setup new instance", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch (action.style) {
+            case .default:
+                self.dismiss(animated: true, completion: nil)
+                break
+            default:
+                break
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
     }
 }

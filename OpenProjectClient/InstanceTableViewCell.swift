@@ -15,18 +15,18 @@ class InstanceTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
-        self.selectionStyle = .None
+        self.selectionStyle = .none
 
         if (selected) {
             let colorView = UIView()
-            colorView.backgroundColor = UIColor.clearColor()
+            colorView.backgroundColor = UIColor.clear
             self.selectedBackgroundView = colorView
-            self.accessoryType = .Checkmark
+            self.accessoryType = .checkmark
         } else {
-            self.accessoryType = .None
+            self.accessoryType = .none
         }
     }
 }

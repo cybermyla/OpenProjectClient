@@ -20,8 +20,8 @@ extension Project {
     @NSManaged var identifier: String?
     @NSManaged var parent_id: NSNumber?
     @NSManaged var desc: String?
-    @NSManaged var created_on: NSDate?
+    @NSManaged var created_on: Date?
     @NSManaged var name: String?
-    @NSManaged var updated_on: NSDate?
+    @NSManaged var updated_on: Date?
 
 }
