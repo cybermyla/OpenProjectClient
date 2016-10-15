@@ -26,7 +26,7 @@ class WorkPackage: NSManagedObject {
             if let dic = item.dictionary {
 
                 let id = dic["id"]?.intValue
-                let predicate = NSPredicate(format: "id = %i AND projectId = %i", id!, projectId.intValue)
+                let predicate = NSPredicate(format: "id = %i AND projectId = %i", argumentArray: [id!, projectId.intValue])
                 let wps = WorkPackage.mr_findAll(with: predicate) as! [WorkPackage]
                 
                 if wps.count > 0 {
