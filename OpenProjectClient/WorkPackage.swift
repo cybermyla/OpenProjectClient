@@ -88,7 +88,11 @@ class WorkPackage: NSManagedObject {
             guard let dictDescription = item["description"].dictionary else {
                 continue
             }
-            wp!.descriptionRaw = dictDescription["raw"]?.rawString()
+            if let raw = dictDescription["raw"]?.rawString() {
+                if raw != "null" {
+                    wp!.descriptionRaw = raw
+                }
+            }
             wp!.descriptionHtml = dictDescription["html"]?.rawString()
         }
         

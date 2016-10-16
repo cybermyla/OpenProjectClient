@@ -34,6 +34,8 @@ class WPDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //disable description textview editing
+        textViewDescription.isEditable = false
         fillWP()
     }
     
@@ -50,7 +52,11 @@ class WPDetailViewController: UIViewController {
             typeNrStatus.font = UIFont.boldSystemFont(ofSize: 18)
             
             if let description = wp.descriptionRaw {
-                textViewDescription.text = description
+                if description != "null" {
+                    textViewDescription.text = description
+                } else {
+                    textViewDescription.text = ""
+                }
             } else {
                 textViewDescription.text = ""
             }

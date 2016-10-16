@@ -15,7 +15,7 @@ class WPFiltersViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         //UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
-        setNeedsStatusBarAppearanceUpdate()
+        //setNeedsStatusBarAppearanceUpdate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,18 +26,19 @@ class WPFiltersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
     }
-    
+    /*
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
     }
-    
+    */
     override var prefersStatusBarHidden : Bool {
         return true
     }
-    
+    /*
     override var preferredStatusBarUpdateAnimation : UIStatusBarAnimation {
         return .slide
     }
+ */
     
     @IBAction func cancelTapped(_ sender: AnyObject) {
         //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)

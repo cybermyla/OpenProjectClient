@@ -98,8 +98,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         tableViewWorkPackages.deselectRow(at: indexPath, animated: false)
     }
     
-    //button add
-    
+    //button add    
     @IBAction func buttonAddTapped(_ sender: AnyObject) {
         let vc = UIStoryboard.wpEditViewController()
         let navCon = UINavigationController(rootViewController: vc!)
@@ -109,8 +108,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     //filters button
     @IBAction func filterButtonTapped(_ sender: AnyObject) {
         let vc = UIStoryboard.filtersViewController()
-        delegate?.collapseSidePanels!()
-        self.present(vc!, animated: true, completion: nil)
+        let navVc = UINavigationController(rootViewController: vc!)
+        self.present(navVc, animated: true, completion: nil)
     }
     
     func setButtons() {
