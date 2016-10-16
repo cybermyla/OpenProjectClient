@@ -133,8 +133,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                 print(issue.description)
             } else {
                 if let _ = responseObject {
-                    let predicate = NSPredicate(format: "projectId = %@" , argumentArray: [projectId])
-                    //self.workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: false, with: predicate) as! [WorkPackage]
                     self.workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
                     self.tableViewWorkPackages.reloadData()
                 }
