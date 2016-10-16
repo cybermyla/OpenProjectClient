@@ -8,14 +8,16 @@
 
 import UIKit
 
-class WPFiltersViewController: UIViewController {
-
+class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let filterCategories = ["Status", "Type"]
+    
+    @IBOutlet weak var filtersTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
-        //setNeedsStatusBarAppearanceUpdate()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,21 +26,13 @@ class WPFiltersViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        filtersTableView.reloadData()
     }
-    /*
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
-    }
-    */
+
     override var prefersStatusBarHidden : Bool {
         return true
     }
-    /*
-    override var preferredStatusBarUpdateAnimation : UIStatusBarAnimation {
-        return .slide
-    }
- */
+
     
     @IBAction func cancelTapped(_ sender: AnyObject) {
         //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
@@ -57,5 +51,29 @@ class WPFiltersViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //UITableViewDataSource + UITableViewDelegate
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filterCategories.count;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilterTableViewCell") as! FilterTableViewCell!
+        let filterCategory = filterCategories[(indexPath as NSIndexPath).row] as String
+        cell?.textLabel?.text = filterCategory
+        return cell!;
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let vc = UIStoryboard.wpDetailViewController()
+
+        //self.navigationController?.pushViewController(vc!, animated: true)
+        
+        filtersTableView.deselectRow(at: indexPath, animated: false)
+    }
 
 }

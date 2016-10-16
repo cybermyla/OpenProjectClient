@@ -32,6 +32,7 @@
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
 		E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */; };
 		E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */; };
+		E2B9FED31DB429E0009B944D /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
@@ -90,6 +91,7 @@
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
 		E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesTableViewCell.swift; sourceTree = "<group>"; };
+		E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
 				E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */,
 				E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */,
+				E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */,
 			);
 			name = WorkPackages;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
+				E2B9FED31DB429E0009B944D /* FilterTableViewCell.swift in Sources */,
 				E24F6A771D46C38600CADC8F /* Priority+CoreDataProperties.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
 				E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */,

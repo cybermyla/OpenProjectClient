@@ -322,7 +322,32 @@
                     <view key="view" contentMode="scaleToFill" id="uZD-r9-l4R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SF0-is-C8O">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterTableViewCell" id="GNJ-Od-ekd" customClass="FilterTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GNJ-Od-ekd" id="C4C-AW-zsk">
+                                            <frame key="frameInset" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ncq-L8-NZy" id="LJR-2a-LSG"/>
+                                    <outlet property="delegate" destination="ncq-L8-NZy" id="Qyt-8b-HI2"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SF0-is-C8O" firstAttribute="top" secondItem="Qs2-74-ReX" secondAttribute="bottom" id="CRg-Cr-cSb"/>
+                            <constraint firstItem="SF0-is-C8O" firstAttribute="leading" secondItem="uZD-r9-l4R" secondAttribute="leadingMargin" id="Ts4-JN-s2Q"/>
+                            <constraint firstItem="hyg-oJ-0PX" firstAttribute="top" secondItem="SF0-is-C8O" secondAttribute="bottom" constant="300" id="Zd6-0e-IT8"/>
+                            <constraint firstItem="SF0-is-C8O" firstAttribute="trailing" secondItem="uZD-r9-l4R" secondAttribute="trailingMargin" id="bEN-zK-e2b"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Filter" id="voc-8T-28I">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MHC-vJ-1uU">
@@ -338,10 +363,13 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="filtersTableView" destination="SF0-is-C8O" id="TyP-cK-0E9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="geP-jc-BRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="655.5" y="-341.5"/>
+            <point key="canvasLocation" x="655.20000000000005" y="-342.27886056971516"/>
         </scene>
         <!--New Work Package-->
         <scene sceneID="ukK-SW-Y9A">
