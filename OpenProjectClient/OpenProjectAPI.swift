@@ -27,6 +27,12 @@ class OpenProjectAPI {
     
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
     
+    typealias RemotePrioritiesResponse = ([Priority]?, NSError?) -> Void
+    
+    typealias RemoteStatusesResponse = ([Status]?, NSError?) -> Void
+    
+    typealias RemoteTypesResponse = ([Type]?, NSError?) -> Void
+    
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
         let auth = getBasicAuth(apikey)
@@ -147,6 +153,142 @@ class OpenProjectAPI {
                     WorkPackage.buildWorkpackages(projectId, json: json)
                     workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
                     onCompletion(workpackages, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(nil, error as NSError?)
+                }
+            }
+        }
+    }
+    
+    func getPriorities(_ projectId:NSNumber, onCompletion: @escaping RemotePrioritiesResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = [
+                "Authorization": "\(instance.auth!)",
+                "Accept": "application/hal+json"
+            ]
+            
+            let url = "\(instance.address!)\(instance.prioritiesHref!)"
+            
+            Alamofire.request(url, headers: headers).validate().responseString { response in
+                var priorities = [Priority]()
+                switch response.result {
+                case .success(let value):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(priorities, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(priorities, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Priorities successfully received - \(json)")
+                    Priority.buildPriorities(projectId, json: json)
+                    /*priorities = Priority.mr_findAllSorted(by: "position", ascending: true) as! [Priority]*/
+                    priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
+                    onCompletion(priorities, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(nil, error as NSError?)
+                }
+            }
+        }
+    }
+    
+    func getStatuses(_ projectId:NSNumber, onCompletion: @escaping RemoteStatusesResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = [
+                "Authorization": "\(instance.auth!)",
+                "Accept": "application/hal+json"
+            ]
+            
+            let url = "\(instance.address!)\(instance.statusesHref!)"
+            
+            Alamofire.request(url, headers: headers).validate().responseString { response in
+                var statuses = [Status]()
+                switch response.result {
+                case .success(let value):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(statuses, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(statuses, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Statuses successfully received - \(json)")
+                    Status.buildStatuses(projectId, json: json)
+                    statuses = Status.mr_findAllSorted(by: "position", ascending: true) as! [Status]
+                    onCompletion(statuses, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(nil, error as NSError?)
+                }
+            }
+        }
+    }
+    
+    func getTypes(_ projectId:NSNumber, onCompletion: @escaping RemoteTypesResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = [
+                "Authorization": "\(instance.auth!)",
+                "Accept": "application/hal+json"
+            ]
+            
+            let url = "\(instance.address!)\(instance.typesHref!)"
+            
+            Alamofire.request(url, headers: headers).validate().responseString { response in
+                var types = [Type]()
+                switch response.result {
+                case .success(let value):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(types, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(types, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Statuses successfully received - \(json)")
+                    Type.buildTypes(projectId, json: json)
+                    types = Type.mr_findAllSorted(by: "position", ascending: true) as! [Type]
+                    onCompletion(types, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(nil, error as NSError?)

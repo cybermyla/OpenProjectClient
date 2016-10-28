@@ -9,7 +9,7 @@
 import UIKit
 
 class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let filterCategories = ["Status", "Type"]
+    let filterCategories = [Filters.status, Filters.type, Filters.priority]
     
     @IBOutlet weak var filtersTableView: UITableView!
     
@@ -17,7 +17,9 @@ class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
+        //removes empty rows in UITableView
+        filtersTableView.tableFooterView = UIView()
+        self.title = "Filters"
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,31 +28,28 @@ class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.automaticallyAdjustsScrollViewInsets = false
         filtersTableView.reloadData()
     }
 
     override var prefersStatusBarHidden : Bool {
         return true
     }
-
     
-    @IBAction func cancelTapped(_ sender: AnyObject) {
-        //UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-        self.dismiss(animated: true, completion: nil)
-    }
-
-    @IBAction func doneTapped(_ sender: AnyObject) {
-        
-    }
-    /*
     // MARK: - Navigation
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueFilterDetail" {
+            if let destination = segue.destination as? FilterDetailViewController {
+                destination.filter = filterCategories[(filtersTableView.indexPathForSelectedRow?.row)!]
+            }
+        }
+    }
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    //override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+ 
     
     //UITableViewDataSource + UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -63,17 +62,8 @@ class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilterTableViewCell") as! FilterTableViewCell!
-        let filterCategory = filterCategories[(indexPath as NSIndexPath).row] as String
-        cell?.textLabel?.text = filterCategory
+        let filterCategory = filterCategories[(indexPath as NSIndexPath).row] as Filters
+        cell?.textLabel?.text = filterCategory.rawValue
         return cell!;
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let vc = UIStoryboard.wpDetailViewController()
-
-        //self.navigationController?.pushViewController(vc!, animated: true)
-        
-        filtersTableView.deselectRow(at: indexPath, animated: false)
-    }
-
 }

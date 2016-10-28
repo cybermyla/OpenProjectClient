@@ -31,21 +31,21 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InstanceTableViewCell" textLabel="kdC-ot-H2e" detailTextLabel="ciQ-G0-mil" style="IBUITableViewCellStyleSubtitle" id="tqu-Wp-Cgy" customClass="InstanceTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tqu-Wp-Cgy" id="1W5-ay-OOw">
-                                            <frame key="frameInset" width="375" height="44"/>
+                                            <frame key="frameInset" width="1000" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kdC-ot-H2e">
-                                                    <frame key="frameInset" minX="15" minY="6" width="31.5" height="19.5"/>
+                                                    <frame key="frameInset" minX="164" minY="6" width="31.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ciQ-G0-mil">
-                                                    <frame key="frameInset" minX="15" minY="25.5" width="40.5" height="13.5"/>
+                                                    <frame key="frameInset" minX="164" minY="25.5" width="40.5" height="13.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -311,7 +311,54 @@
             </objects>
             <point key="canvasLocation" x="-365.5" y="1126.5"/>
         </scene>
-        <!--Filter-->
+        <!--Filter Detail View Controller-->
+        <scene sceneID="cUg-kO-y33">
+            <objects>
+                <viewController id="uVA-XA-9p4" customClass="FilterDetailViewController" customModule="OpenProjectClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xF6-D3-yrO"/>
+                        <viewControllerLayoutGuide type="bottom" id="tve-mf-YFT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u59-0y-TG0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yeB-qL-nK6">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterDetailTableViewCell" id="EvP-jn-lnH" customClass="FilterDetailTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EvP-jn-lnH" id="akw-Nc-Wqj">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="uVA-XA-9p4" id="7JZ-l3-TrN"/>
+                                    <outlet property="delegate" destination="uVA-XA-9p4" id="lGo-XN-1g7"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tve-mf-YFT" firstAttribute="top" secondItem="yeB-qL-nK6" secondAttribute="bottom" id="Dry-aD-a6W"/>
+                            <constraint firstItem="yeB-qL-nK6" firstAttribute="top" secondItem="xF6-D3-yrO" secondAttribute="bottom" id="ZsS-nP-gjw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yeB-qL-nK6" secondAttribute="trailing" constant="-16" id="jtC-Xa-ULG"/>
+                            <constraint firstItem="yeB-qL-nK6" firstAttribute="leading" secondItem="u59-0y-TG0" secondAttribute="leadingMargin" constant="-16" id="mCR-v0-Ixn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PUI-Wu-A6v"/>
+                    <connections>
+                        <outlet property="tableView" destination="yeB-qL-nK6" id="Sau-O1-6L4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WWl-fS-IQb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="653.60000000000002" y="-1039.4302848575712"/>
+        </scene>
+        <!--Filters View Controller-->
         <scene sceneID="pNx-Re-KqV">
             <objects>
                 <viewController storyboardIdentifier="WPFiltersViewController" id="ncq-L8-NZy" customClass="WPFiltersViewController" customModule="OpenProjectClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -326,13 +373,16 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SF0-is-C8O">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterTableViewCell" id="GNJ-Od-ekd" customClass="FilterTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="343" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FilterTableViewCell" id="GNJ-Od-ekd" customClass="FilterTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GNJ-Od-ekd" id="C4C-AW-zsk">
-                                            <frame key="frameInset" width="343" height="43"/>
+                                            <frame key="frameInset" width="342" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="uVA-XA-9p4" kind="show" identifier="SegueFilterDetail" id="JQT-2n-sFj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -343,24 +393,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SF0-is-C8O" firstAttribute="top" secondItem="Qs2-74-ReX" secondAttribute="bottom" id="CRg-Cr-cSb"/>
-                            <constraint firstItem="SF0-is-C8O" firstAttribute="leading" secondItem="uZD-r9-l4R" secondAttribute="leadingMargin" id="Ts4-JN-s2Q"/>
-                            <constraint firstItem="hyg-oJ-0PX" firstAttribute="top" secondItem="SF0-is-C8O" secondAttribute="bottom" constant="300" id="Zd6-0e-IT8"/>
-                            <constraint firstItem="SF0-is-C8O" firstAttribute="trailing" secondItem="uZD-r9-l4R" secondAttribute="trailingMargin" id="bEN-zK-e2b"/>
+                            <constraint firstItem="hyg-oJ-0PX" firstAttribute="top" secondItem="SF0-is-C8O" secondAttribute="bottom" constant="300" id="AUc-bB-fqC"/>
+                            <constraint firstAttribute="trailing" secondItem="SF0-is-C8O" secondAttribute="trailing" id="iqY-Uv-Kpu"/>
+                            <constraint firstItem="SF0-is-C8O" firstAttribute="top" secondItem="Qs2-74-ReX" secondAttribute="bottom" id="sIv-nD-BlJ"/>
+                            <constraint firstItem="SF0-is-C8O" firstAttribute="leading" secondItem="uZD-r9-l4R" secondAttribute="leading" id="yTe-UF-gpF"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Filter" id="voc-8T-28I">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MHC-vJ-1uU">
-                            <connections>
-                                <action selector="cancelTapped:" destination="ncq-L8-NZy" id="Bvm-nC-zqt"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="sc2-uB-A1W">
-                            <connections>
-                                <action selector="doneTapped:" destination="ncq-L8-NZy" id="yqd-DT-emd"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -420,6 +458,7 @@
                                     <barButtonItem title="Filter" id="fRB-jH-Xiy">
                                         <connections>
                                             <action selector="filterButtonTapped:" destination="1Cc-Bm-hxH" id="t0k-WB-dCv"/>
+                                            <segue destination="ncq-L8-NZy" kind="show" identifier="SegueFilters" id="ONM-Ao-sWj"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -428,10 +467,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkpackageCell" rowHeight="100" id="7R9-hP-yM6" customClass="WorkPackagesTableViewCell" customModule="OpenProjectClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7R9-hP-yM6" id="lsC-JF-8MN">
-                                            <frame key="frameInset" width="375" height="100"/>
+                                            <frame key="frameInset" width="1000" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPi-cD-RNP">

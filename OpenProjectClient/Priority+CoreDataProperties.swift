@@ -2,24 +2,28 @@
 //  Priority+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 26/07/16.
+//  Created by Miloslav Linhart on 28/10/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
-//
-//  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
-//  to delete and recreate this implementation file for your updated model.
 //
 
 import Foundation
 import CoreData
 
+
 extension Priority {
 
-    @NSManaged var required: NSNumber?
-    @NSManaged var writable: NSNumber?
-    @NSManaged var id: NSNumber?
-    @NSManaged var name: String?
-    @NSManaged var position: NSNumber?
-    @NSManaged var isDefault: NSNumber?
-    @NSManaged var isActive: NSNumber?
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Priority> {
+        return NSFetchRequest<Priority>(entityName: "Priority");
+    }
+
+    @NSManaged public var id: NSNumber?
+    @NSManaged public var isActive: NSNumber?
+    @NSManaged public var isDefault: NSNumber?
+    @NSManaged public var name: String?
+    @NSManaged public var position: NSNumber?
+    @NSManaged public var projectId: NSNumber?
+    @NSManaged public var required: NSNumber?
+    @NSManaged public var writable: NSNumber?
+    @NSManaged public var show: Bool
 
 }

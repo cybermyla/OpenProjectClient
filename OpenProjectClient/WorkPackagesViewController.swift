@@ -63,6 +63,9 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "SegueFilters" {
+
+        }
     }
 
     
@@ -107,9 +110,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
 
     //filters button
     @IBAction func filterButtonTapped(_ sender: AnyObject) {
-        let vc = UIStoryboard.filtersViewController()
-        let navVc = UINavigationController(rootViewController: vc!)
-        self.present(navVc, animated: true, completion: nil)
+
     }
     
     func setButtons() {

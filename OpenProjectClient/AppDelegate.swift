@@ -75,12 +75,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let clearView = UIView()
         clearView.backgroundColor = UIColor.clear
-        
+ 
         
         UITableViewCell.appearance().selectedBackgroundView = darkColorView
         UITableViewCell.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).selectedBackgroundView = clearView
-        
-        UIButton.appearance().tintColor = UIColor.white
+ 
+        UIButton.appearance(whenContainedInInstancesOf: [SideMenuViewController.self]).tintColor = UIColor.white
+        UIButton.appearance(whenContainedInInstancesOf: [SettingsViewController.self]).tintColor = UIColor.white
         UIButton.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
     }
 
@@ -119,9 +120,9 @@ extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "ActivitiesViewController") as? ActivitiesViewController
     }
     
-    class func filtersViewController() -> WPFiltersViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "WPFiltersViewController") as? WPFiltersViewController
-    }
+    //class func filtersViewController() -> WPFiltersViewController? {
+    //    return mainStoryboard().instantiateViewController(withIdentifier: "WPFiltersViewController") as? WPFiltersViewController
+    //}
     
     class func wpEditViewController() -> NewWorkPackageViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "NewWorkPackageViewController") as? NewWorkPackageViewController
