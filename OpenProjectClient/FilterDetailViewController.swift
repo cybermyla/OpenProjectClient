@@ -79,17 +79,68 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
             case Filters.priority:
                 let filterValue = priorities[(indexPath as NSIndexPath).row] as Priority
                 cell.textLabel?.text = filterValue.name
+                if filterValue.show {
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                }
                 break
             case Filters.status:
                 let filterValue = statuses[(indexPath as NSIndexPath).row] as Status
                 cell.textLabel?.text = filterValue.name
+                if filterValue.show {
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                }
             case Filters.type:
                 let filterValue = types[(indexPath as NSIndexPath).row] as Type
                 cell.textLabel?.text = filterValue.name
+                if filterValue.show {
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                }
             }
         return cell;
         }
         return FilterDetailTableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch filter! {
+        case Filters.priority:
+            let priority = priorities[indexPath.row] as Priority
+            let updatedPriority = Priority.mr_findFirst(with: NSPredicate(format: "id == %@ AND projectId == %@", argumentArray: [priority.id!, priority.projectId!])) as Priority
+            updatedPriority.show = true
+            break
+        case Filters.status:
+            let status = statuses[indexPath.row] as Status
+            let updatedStatus = Status.mr_findFirst(with: NSPredicate(format: "id == \(status.id) AND projectId == \(status.projectId)")) as Status
+            updatedStatus.show = true
+            break
+        case Filters.type:
+            let type = types[indexPath.row] as Type
+            let updatedType = Type.mr_findFirst(with: NSPredicate(format: "id == \(type.id) AND projectId == \(type.projectId)")) as Type
+            updatedType.show = true
+            break
+        }
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch filter! {
+        case Filters.priority:
+            let priority = priorities[indexPath.row] as Priority
+            let updatedPriority = Priority.mr_findFirst(with: NSPredicate(format: "id == %@ AND projectId == %@", argumentArray: [priority.id!, priority.projectId!])) as Priority
+            updatedPriority.show = false
+            break
+        case Filters.status:
+            let status = statuses[indexPath.row] as Status
+            let updatedStatus = Status.mr_findFirst(with: NSPredicate(format: "id == \(status.id) AND projectId == \(status.projectId)")) as Status
+            updatedStatus.show = false
+            break
+        case Filters.type:
+            let type = types[indexPath.row] as Type
+            let updatedType = Type.mr_findFirst(with: NSPredicate(format: "id == \(type.id) AND projectId == \(type.projectId)")) as Type
+            updatedType.show = false
+            break
+        }
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
     func getData() {
@@ -107,6 +158,7 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func getPriorities() {
+        getPrioritiesFromDB()
         getPrioritiesFromServer()
     }
     
@@ -118,14 +170,19 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
         getStatusesFromServer()
     }
     
+    func getPrioritiesFromDB() {
+        self.priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
+        self.tableView.reloadData()
+    }
+    
     func getPrioritiesFromServer() {
         let projectId = defaults.integer(forKey: "ProjectId") as NSNumber
-        OpenProjectAPI.sharedInstance.getPriorities(projectId, onCompletion: {(responseObject:[Priority]?, error:NSError?) in
+        OpenProjectAPI.sharedInstance.getPriorities(projectId, onCompletion: {(changed:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
             } else {
-                if let priorities = responseObject {
-                    self.priorities = priorities
+                if changed {
+                    self.priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
                     self.tableView.reloadData()
                 }
             }

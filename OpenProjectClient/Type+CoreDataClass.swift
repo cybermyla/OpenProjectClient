@@ -56,4 +56,15 @@ public class Type: NSManagedObject {
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
+    
+    static func getFilterString() -> String {
+        
+        let types = Type.mr_findAll(with: NSPredicate(format: "show = true")) as! [Type]
+        var list: [String] = []
+        for type in types {
+            list.append("\u{22}\(type.id)\u{22}")
+        }
+        return "{\u{22}type\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
+        
+    }
 }

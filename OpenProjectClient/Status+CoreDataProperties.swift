@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Status {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Status> {

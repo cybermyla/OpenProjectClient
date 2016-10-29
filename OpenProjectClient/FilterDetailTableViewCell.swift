@@ -22,6 +22,10 @@ class FilterDetailTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         
         if (selected) {
+            let colorView = UIView()
+            colorView.backgroundColor = UIColor.clear
+            self.selectedBackgroundView = colorView
+            
             self.tintColor = Colors.darkAzureOP.getUIColor()
             self.accessoryType = .checkmark
         } else {

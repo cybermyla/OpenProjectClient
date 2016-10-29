@@ -27,7 +27,7 @@ class OpenProjectAPI {
     
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
     
-    typealias RemotePrioritiesResponse = ([Priority]?, NSError?) -> Void
+    typealias RemotePrioritiesResponse = (Bool, NSError?) -> Void
     
     typealias RemoteStatusesResponse = ([Status]?, NSError?) -> Void
     
@@ -50,7 +50,7 @@ class OpenProjectAPI {
             instance.auth = auth
             instance.id = NSUUID().uuidString
             switch response.result {
-            case .success(let value):
+            case .success( _):
                 guard let responseValue = response.result.value else {
                     onCompletion(instance, nil)
                     return
@@ -90,12 +90,11 @@ class OpenProjectAPI {
             ]
             */
             let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
-            
-            //Alamofire.request(.GET, url, headers: headers).validate().responseString { response in
+
             Alamofire.request(url).validate().responseString { response in
                 var projects = [Project]()
                 switch response.result {
-                case .success(let value):
+                case .success( _):
                     guard let responseValue = response.result.value else {
                         onCompletion(projects, nil)
                         return
@@ -131,13 +130,14 @@ class OpenProjectAPI {
                 "Authorization": "\(instance.auth!)",
                 "Accept": "application/hal+json"
             ]
+            let filters = "&filters=[\(Type.getFilterString()),\(Status.getFilterString()),\(Priority.getFilterString())]"
             
-            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1"
+            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1&pageSize=30\(filters.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
             
             Alamofire.request(url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()
                 switch response.result {
-                case .success(let value):
+                case .success( _):
                     guard let responseValue = response.result.value else {
                         onCompletion(workpackages, nil)
                         return
@@ -180,28 +180,25 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(instance.prioritiesHref!)"
             
             Alamofire.request(url, headers: headers).validate().responseString { response in
-                var priorities = [Priority]()
                 switch response.result {
-                case .success(let value):
+                case .success( _):
                     guard let responseValue = response.result.value else {
-                        onCompletion(priorities, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(priorities, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     let json = JSON(data: dataFromResponse)
                     print("Priorities successfully received - \(json)")
-                    Priority.buildPriorities(projectId, json: json)
-                    /*priorities = Priority.mr_findAllSorted(by: "position", ascending: true) as! [Priority]*/
-                    priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
-                    onCompletion(priorities, nil)
+                    let changed = Priority.buildPriorities(projectId, json: json)
+                    onCompletion(changed, nil)
                 case .failure(let error):
                     print(error)
-                    onCompletion(nil, error as NSError?)
+                    onCompletion(false, error as NSError?)
                 }
             }
         }
@@ -228,7 +225,7 @@ class OpenProjectAPI {
             Alamofire.request(url, headers: headers).validate().responseString { response in
                 var statuses = [Status]()
                 switch response.result {
-                case .success(let value):
+                case .success( _):
                     guard let responseValue = response.result.value else {
                         onCompletion(statuses, nil)
                         return
@@ -273,7 +270,7 @@ class OpenProjectAPI {
             Alamofire.request(url, headers: headers).validate().responseString { response in
                 var types = [Type]()
                 switch response.result {
-                case .success(let value):
+                case .success( _):
                     guard let responseValue = response.result.value else {
                         onCompletion(types, nil)
                         return

@@ -55,5 +55,13 @@ public class Status: NSManagedObject {
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
-
+    
+    static func getFilterString() -> String {
+        let statuses = Status.mr_findAll(with: NSPredicate(format: "show = true")) as! [Status]
+        var list: [String] = []
+        for status in statuses {
+            list.append("\u{22}\(status.id)\u{22}")
+        }
+        return "{\u{22}status\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
+    }
 }

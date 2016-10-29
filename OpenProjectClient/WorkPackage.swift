@@ -19,6 +19,8 @@ class WorkPackage: NSManagedObject {
             return
         }
         
+        WorkPackage.mr_truncateAll()
+        
         for item in array {
             
             var wp: WorkPackage?
