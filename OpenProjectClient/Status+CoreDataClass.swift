@@ -11,14 +11,16 @@ import SwiftyJSON
 
 public class Status: NSManagedObject {
     
-    class func buildStatuses(_ projectId: NSNumber, json: JSON) {
+    class func buildStatuses(_ projectId: NSNumber, instanceId:String, json: JSON) {
         
-        for element in json["_embedded"]["elements"].arrayValue {
+        let allowedValues = json["_embedded"]["schema"]["status"]["_embedded"]["allowedValues"]
+        
+        for element in allowedValues.arrayValue {
             
             var status: Status?
             
             if let statusId:Int = element["id"].int {
-                let predicate = NSPredicate(format: "id = %i AND projectId = %i", argumentArray: [statusId, projectId.intValue])
+                let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i AND id = %i", argumentArray: [instanceId, projectId.intValue, statusId])
                 
                 let statuses = Status.mr_findAll(with: predicate) as! [Status]
                 
@@ -29,6 +31,7 @@ public class Status: NSManagedObject {
                     status = Status.mr_createEntity() as Status
                     status!.id = Int32(statusId)
                     status!.projectId = projectId.int32Value
+                    status!.instanceId = instanceId
                     print("Status \(statusId) for project \(projectId) did not exist")
                 }
             

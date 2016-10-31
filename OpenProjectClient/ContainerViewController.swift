@@ -145,8 +145,7 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
         self.toggleLeftPanel()
     }
     
-    func projectSelected(_ project: Project) {
-        defaults.setValue(project.id, forKey: "ProjectId")
+    func projectSelected() {
         if let menuId = defaults.value(forKey: "MenuId") as? Int {
             let menuItem = MenuItem.menuItemById(menuId)
             if let item = menuItem as MenuItem! {

@@ -17,6 +17,8 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
     var types: [Type] = []
     
     let defaults = UserDefaults.standard
+    var instanceId: String = ""
+    var projectId: Int = 0
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,6 +31,9 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
         self.tableView.allowsMultipleSelection = true
         //don't show empty rows
         self.tableView.tableFooterView = UIView()
+        
+        instanceId = defaults.value(forKey: "InstanceId") as! String
+        projectId = defaults.value(forKey: "ProjectId") as! Int
         
         getData()
     }
@@ -159,61 +164,28 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     func getPriorities() {
         getPrioritiesFromDB()
-        getPrioritiesFromServer()
     }
     
     func getTypes() {
-        getTypesFromServer()
+        getTypesFromDB()
     }
     
     func getStatuses() {
-        getStatusesFromServer()
+        getStatusesFromDB()
     }
     
     func getPrioritiesFromDB() {
-        self.priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
+        self.priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "instanceId = %i AND projectId = %i AND isActive == true", argumentArray: [instanceId, projectId])) as! [Priority]
         self.tableView.reloadData()
     }
     
-    func getPrioritiesFromServer() {
-        let projectId = defaults.integer(forKey: "ProjectId") as NSNumber
-        OpenProjectAPI.sharedInstance.getPriorities(projectId, onCompletion: {(changed:Bool, error:NSError?) in
-            if let issue = error {
-                print(issue.description)
-            } else {
-                if changed {
-                    self.priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "isActive == true")) as! [Priority]
-                    self.tableView.reloadData()
-                }
-            }
-        })
+    func getTypesFromDB() {
+        self.types = Type.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])) as! [Type]
+        self.tableView.reloadData()
     }
     
-    func getTypesFromServer() {
-        let projectId = defaults.integer(forKey: "ProjectId") as NSNumber
-        OpenProjectAPI.sharedInstance.getTypes(projectId, onCompletion: {(responseObject:[Type]?, error:NSError?) in
-            if let issue = error {
-                print(issue.description)
-            } else {
-                if let types = responseObject {
-                    self.types = types
-                    self.tableView.reloadData()
-                }
-            }
-        })
-    }
-    
-    func getStatusesFromServer() {
-        let projectId = defaults.integer(forKey: "ProjectId") as NSNumber
-        OpenProjectAPI.sharedInstance.getStatuses(projectId, onCompletion: {(responseObject:[Status]?, error:NSError?) in
-            if let issue = error {
-                print(issue.description)
-            } else {
-                if let statuses = responseObject {
-                    self.statuses = statuses
-                    self.tableView.reloadData()
-                }
-            }
-        })
+    func getStatusesFromDB() {
+        self.statuses = Status.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])) as! [Status]
+        self.tableView.reloadData()
     }
 }

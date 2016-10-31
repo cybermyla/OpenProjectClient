@@ -12,14 +12,16 @@ import SwiftyJSON
 
 public class Type: NSManagedObject {
     
-    class func buildTypes(_ projectId: NSNumber, json: JSON) {
-    
-        for element in json["_embedded"]["elements"].arrayValue {
+    class func buildTypes(_ projectId: NSNumber, instanceId:String, json: JSON) {
+        
+        let allowedValues = json["_embedded"]["schema"]["type"]["_embedded"]["allowedValues"]
+        
+        for element in allowedValues.arrayValue {
             
             var type: Type?
             
             if let typeId:Int = element["id"].int {
-                let predicate = NSPredicate(format: "id = %i AND projectId = %i", argumentArray: [typeId, projectId.intValue])
+                let predicate = NSPredicate(format: "instanceId = %i AND id = %i AND projectId = %i", argumentArray: [instanceId, typeId, projectId.intValue])
                 
                 let types = Type.mr_findAll(with: predicate) as! [Type]
                 
@@ -29,6 +31,7 @@ public class Type: NSManagedObject {
                 } else {
                     type = Type.mr_createEntity() as Type
                     type!.id = Int32(typeId)
+                    type!.instanceId = instanceId
                     type!.projectId = projectId.int32Value
                     print("Type \(typeId) for project \(projectId) did not exist")
                 }

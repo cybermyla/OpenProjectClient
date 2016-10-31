@@ -33,6 +33,8 @@ class OpenProjectAPI {
     
     typealias RemoteTypesResponse = ([Type]?, NSError?) -> Void
     
+    typealias RemotePrioritiesStatusesTypesResponse = (Bool, NSError?) -> Void
+    
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
         let auth = getBasicAuth(apikey)
@@ -83,12 +85,7 @@ class OpenProjectAPI {
         
         if instances.count > 0 {
             let instance = instances[0]
-            /*
-            let headers = [
-                "Authorization": "\(instance.auth)",
-                "Accept": "application/json"
-            ]
-            */
+
             let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
 
             Alamofire.request(url).validate().responseString { response in
@@ -126,10 +123,8 @@ class OpenProjectAPI {
         if instances.count > 0 {
             let instance = instances[0]
             
-            let headers = [
-                "Authorization": "\(instance.auth!)",
-                "Accept": "application/hal+json"
-            ]
+            let headers = getHeaders(auth: instance.auth!)
+            
             let filters = "&filters=[\(Type.getFilterString()),\(Status.getFilterString()),\(Priority.getFilterString())]"
             
             let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1&pageSize=30\(filters.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
@@ -161,6 +156,53 @@ class OpenProjectAPI {
         }
     }
     
+    func getPrioritiesStatusesTypes(onCompletion: @escaping RemotePrioritiesStatusesTypesResponse) {
+        
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/work_packages/form"
+            
+            Alamofire.request(url, method:.post, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("PrioritiesStatusesTypes (wp forms) successfully received - \(json)")
+                    let p = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                    let t = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                    let s = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        }
+    }
+    
     func getPriorities(_ projectId:NSNumber, onCompletion: @escaping RemotePrioritiesResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
@@ -172,10 +214,7 @@ class OpenProjectAPI {
         if instances.count > 0 {
             let instance = instances[0]
             
-            let headers = [
-                "Authorization": "\(instance.auth!)",
-                "Accept": "application/hal+json"
-            ]
+            let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.prioritiesHref!)"
             
@@ -194,8 +233,8 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Priorities successfully received - \(json)")
-                    let changed = Priority.buildPriorities(projectId, json: json)
-                    onCompletion(changed, nil)
+   //                 let changed = Priority.buildPriorities(projectId, json: json)
+                    onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(false, error as NSError?)
@@ -215,10 +254,7 @@ class OpenProjectAPI {
         if instances.count > 0 {
             let instance = instances[0]
             
-            let headers = [
-                "Authorization": "\(instance.auth!)",
-                "Accept": "application/hal+json"
-            ]
+            let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.statusesHref!)"
             
@@ -238,7 +274,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Statuses successfully received - \(json)")
-                    Status.buildStatuses(projectId, json: json)
+   //                 Status.buildStatuses(projectId, json: json)
                     statuses = Status.mr_findAllSorted(by: "position", ascending: true) as! [Status]
                     onCompletion(statuses, nil)
                 case .failure(let error):
@@ -260,10 +296,7 @@ class OpenProjectAPI {
         if instances.count > 0 {
             let instance = instances[0]
             
-            let headers = [
-                "Authorization": "\(instance.auth!)",
-                "Accept": "application/hal+json"
-            ]
+            let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.typesHref!)"
             
@@ -283,7 +316,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Statuses successfully received - \(json)")
-                    Type.buildTypes(projectId, json: json)
+  //                  Type.buildTypes(projectId, json: json)
                     types = Type.mr_findAllSorted(by: "position", ascending: true) as! [Type]
                     onCompletion(types, nil)
                 case .failure(let error):
@@ -292,6 +325,13 @@ class OpenProjectAPI {
                 }
             }
         }
+    }
+    
+    fileprivate func getHeaders(auth: String) -> [String : String] {
+        return [
+            "Authorization": "\(auth)",
+            "Accept": "application/hal+json"
+        ]
     }
     
     fileprivate func getBasicAuth(_ apiKey: String) -> String {

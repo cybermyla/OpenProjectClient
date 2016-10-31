@@ -10,18 +10,20 @@ import UIKit
 import SwiftyJSON
 
 public class Priority: NSManagedObject {
-    class func buildPriorities(_ projectId: NSNumber, json: JSON) -> Bool {
+    class func buildPriorities(_ projectId: NSNumber, instanceId:String, json: JSON) -> Bool {
         
         var changed = false
         
-        for element in json["_embedded"]["elements"].arrayValue {
+        let allowedValues = json["_embedded"]["schema"]["priority"]["_embedded"]["allowedValues"]
+        
+        for element in allowedValues.arrayValue {
             
             var priority: Priority?
             
             var newPriority = false
 
             if let priorityId:Int = element["id"].int {
-                let predicate = NSPredicate(format: "id = %i AND projectId = %i", argumentArray: [priorityId, projectId.intValue])
+                let predicate = NSPredicate(format: "instanceId = %i AND id = %i AND projectId = %i", argumentArray: [instanceId, priorityId, projectId.intValue])
                 
                 let priorities = Priority.mr_findAll(with: predicate) as! [Priority]
                 
@@ -34,6 +36,7 @@ public class Priority: NSManagedObject {
                     priority = Priority.mr_createEntity() as Priority
                     priority!.id = priorityId as NSNumber?
                     priority!.projectId = projectId
+                    priority!.instanceId = instanceId
                     print("Priority \(priorityId) for project \(projectId) did not exist")
                 }
                 

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 protocol SideMenuViewControllerDelegate {
     func menuItemTapped(_ item: MenuItem)
-    func projectSelected(_ project: Project)
+    func projectSelected()
 }
 
 enum MenuItem: Int {
@@ -234,7 +234,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             case projectsTableView:
                 let p = projects[(indexPath as NSIndexPath).row] as Project
                 defaults.set(Int(p.id!), forKey: "ProjectId")
-                delegate?.projectSelected(projects[(indexPath as NSIndexPath).row])
+                getPrioritiesStatusesTypesFromServer() //
                 break
             default:
                 break
@@ -291,4 +291,15 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         })
     }
+    
+    func getPrioritiesStatusesTypesFromServer() {
+        OpenProjectAPI.sharedInstance.getPrioritiesStatusesTypes(onCompletion: {(success:Bool, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+            } else {
+                    self.delegate?.projectSelected()
+            }
+        })
+    }
+    
 }

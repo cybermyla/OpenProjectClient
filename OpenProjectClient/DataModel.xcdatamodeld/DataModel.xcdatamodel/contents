@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G1108" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1108" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Instance" representedClassName=".Instance" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="apikey" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +15,7 @@
     </entity>
     <entity name="Priority" representedClassName=".Priority" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,6 +39,7 @@
     <entity name="Status" representedClassName=".Status" syncable="YES">
         <attribute name="defaultDoneRatio" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isClosed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,6 +51,7 @@
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMilestone" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -85,10 +88,10 @@
     </entity>
     <elements>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="30"/>
-        <element name="Priority" positionX="-54" positionY="144" width="128" height="180"/>
+        <element name="Priority" positionX="-54" positionY="144" width="128" height="195"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
+        <element name="Status" positionX="-54" positionY="144" width="128" height="180"/>
+        <element name="Type" positionX="-45" positionY="153" width="128" height="210"/>
         <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
-        <element name="Status" positionX="-54" positionY="144" width="128" height="165"/>
-        <element name="Type" positionX="-45" positionY="153" width="128" height="195"/>
     </elements>
 </model>
