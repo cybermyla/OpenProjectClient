@@ -274,7 +274,6 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Statuses successfully received - \(json)")
-   //                 Status.buildStatuses(projectId, json: json)
                     statuses = Status.mr_findAllSorted(by: "position", ascending: true) as! [Status]
                     onCompletion(statuses, nil)
                 case .failure(let error):

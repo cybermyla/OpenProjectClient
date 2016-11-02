@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FilterNewEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let filterCategories = [Filters.status, Filters.type, Filters.priority]
     
     @IBOutlet weak var filtersTableView: UITableView!
@@ -61,7 +61,7 @@ class WPFiltersViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilterTableViewCell") as! FilterTableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilterNewEditTableViewCell") as! FilterNewEditTableViewCell!
         let filterCategory = filterCategories[(indexPath as NSIndexPath).row] as Filters
         cell?.textLabel?.text = filterCategory.rawValue
         return cell!;

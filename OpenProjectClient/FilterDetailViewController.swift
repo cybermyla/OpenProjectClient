@@ -185,6 +185,7 @@ class FilterDetailViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func getStatusesFromDB() {
+        let shit = Status.mr_findAll() as! [Status]
         self.statuses = Status.mr_findAllSorted(by: "position", ascending: true, with: NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])) as! [Status]
         self.tableView.reloadData()
     }

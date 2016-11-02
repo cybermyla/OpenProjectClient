@@ -1,5 +1,5 @@
 //
-//  FilterTableViewCell.swift
+//  FilterAddEditTableViewCell.swift
 //  OpenProjectClient
 //
 //  Created by Miloslav Linhart on 01/11/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterTableViewCell: UITableViewCell {
+class FilterAddEditTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,5 +33,4 @@ class FilterTableViewCell: UITableViewCell {
             self.accessoryType = .none
         }
     }
-
 }

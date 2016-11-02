@@ -82,6 +82,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  
         UIButton.appearance(whenContainedInInstancesOf: [SideMenuViewController.self]).tintColor = UIColor.white
         UIButton.appearance(whenContainedInInstancesOf: [SettingsViewController.self]).tintColor = UIColor.white
+        UIButton.appearance(whenContainedInInstancesOf: [AddEditInstanceVC.self]).tintColor = UIColor.white
+        
+        UIButton.appearance(whenContainedInInstancesOf: [FilterTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
+        
         UIButton.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
     }
 

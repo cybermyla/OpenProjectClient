@@ -15,11 +15,8 @@
 		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
 		E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */; };
 		E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */; };
-		E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA411BD835750095010D /* WPFiltersViewController.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
-		E24322AF1DB8142C000A44BD /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24322AE1DB8142C000A44BD /* FilterDetailViewController.swift */; };
-		E24322B11DB8190E000A44BD /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24322B01DB8190E000A44BD /* Filters.swift */; };
 		E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24CF4661BDE79F600930E38 /* Main.storyboard */; };
 		E24F6A731D46AD9D00CADC8F /* NewWpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */; };
 		E24F6A771D46C38600CADC8F /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */; };
@@ -27,6 +24,7 @@
 		E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage.swift */; };
 		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
 		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
+		E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E287CC851DC7E87800743229 /* FilterViewController.swift */; };
 		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */; };
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
@@ -38,15 +36,18 @@
 		E29D4FCD1DC3E95A00EB3BB6 /* Type+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D4FCB1DC3E95A00EB3BB6 /* Type+CoreDataProperties.swift */; };
 		E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */; };
 		E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */; };
-		E2B9FED31DB429E0009B944D /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
 		E2CD5A7F1BBDC013009A3C33 /* OpenProjectClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A7E1BBDC013009A3C33 /* OpenProjectClientTests.swift */; };
 		E2CD5A8A1BBDC013009A3C33 /* OpenProjectClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A891BBDC013009A3C33 /* OpenProjectClientUITests.swift */; };
 		E2D569DB1BE18E5F000BECCC /* Project+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */; };
-		E2E3C3071DBD5F3F003EECE5 /* FilterDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E3C3061DBD5F3F003EECE5 /* FilterDetailTableViewCell.swift */; };
 		E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */; };
+		E2F1AD271DC928E200DC0649 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1AD261DC928E200DC0649 /* FilterTableViewCell.swift */; };
+		E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1AD2A1DC9491700DC0649 /* FilterAddEditViewController.swift */; };
+		E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1AD2C1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift */; };
+		E2FD32401DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FD323E1DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift */; };
+		E2FD32411DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FD323F1DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,11 +82,8 @@
 		E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenProjectClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instance+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
-		E229FA411BD835750095010D /* WPFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPFiltersViewController.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
-		E24322AE1DB8142C000A44BD /* FilterDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
-		E24322B01DB8190E000A44BD /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		E24CF4671BDE79F600930E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenProjectClient/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWpForm.swift; sourceTree = "<group>"; };
 		E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -93,6 +91,7 @@
 		E260173E1BDB673A00AF8332 /* WorkPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackage.swift; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
+		E287CC851DC7E87800743229 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +103,6 @@
 		E29D4FCB1DC3E95A00EB3BB6 /* Type+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesTableViewCell.swift; sourceTree = "<group>"; };
-		E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,8 +115,12 @@
 		E2CD5A891BBDC013009A3C33 /* OpenProjectClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenProjectClientUITests.swift; sourceTree = "<group>"; };
 		E2CD5A8B1BBDC013009A3C33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E2E3C3061DBD5F3F003EECE5 /* FilterDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E2F1AD261DC928E200DC0649 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
+		E2F1AD2A1DC9491700DC0649 /* FilterAddEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterAddEditViewController.swift; sourceTree = "<group>"; };
+		E2F1AD2C1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterAddEditTableViewCell.swift; sourceTree = "<group>"; };
+		E2FD323E1DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WPFilter+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E2FD323F1DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WPFilter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EAEA47ECA097C8D766823D7B /* Pods_OpenProjectClientTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenProjectClientTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -202,14 +204,11 @@
 		E26017381BDB5D0000AF8332 /* WorkPackages */ = {
 			isa = PBXGroup;
 			children = (
+				E287CC841DC7E79C00743229 /* Filters */,
 				E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */,
-				E229FA411BD835750095010D /* WPFiltersViewController.swift */,
 				E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */,
 				E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */,
 				E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */,
-				E2B9FED21DB429E0009B944D /* FilterTableViewCell.swift */,
-				E24322AE1DB8142C000A44BD /* FilterDetailViewController.swift */,
-				E2E3C3061DBD5F3F003EECE5 /* FilterDetailTableViewCell.swift */,
 			);
 			name = WorkPackages;
 			sourceTree = "<group>";
@@ -225,6 +224,8 @@
 		E260173D1BDB66F800AF8332 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2FD323E1DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift */,
+				E2FD323F1DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift */,
 				E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */,
 				E29D4FCB1DC3E95A00EB3BB6 /* Type+CoreDataProperties.swift */,
 				E29D4FC61DC3E48600EB3BB6 /* Status+CoreDataClass.swift */,
@@ -247,9 +248,19 @@
 			isa = PBXGroup;
 			children = (
 				E20391F61BDC259300071846 /* Colors.swift */,
-				E24322B01DB8190E000A44BD /* Filters.swift */,
 			);
 			name = Enums;
+			sourceTree = "<group>";
+		};
+		E287CC841DC7E79C00743229 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				E287CC851DC7E87800743229 /* FilterViewController.swift */,
+				E2F1AD261DC928E200DC0649 /* FilterTableViewCell.swift */,
+				E2F1AD2A1DC9491700DC0649 /* FilterAddEditViewController.swift */,
+				E2F1AD2C1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift */,
+			);
+			name = Filters;
 			sourceTree = "<group>";
 		};
 		E28E19061BDEC95F001D1901 /* API */ = {
@@ -587,38 +598,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2FD32401DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift in Sources */,
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
 				E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */,
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,
 				E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */,
 				E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
-				E24322B11DB8190E000A44BD /* Filters.swift in Sources */,
 				E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */,
 				E24F6A731D46AD9D00CADC8F /* NewWpForm.swift in Sources */,
-				E24322AF1DB8142C000A44BD /* FilterDetailViewController.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
 				E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project.swift in Sources */,
+				E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */,
 				E29D4FC91DC3E48600EB3BB6 /* Status+CoreDataProperties.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
+				E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */,
 				E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */,
 				E29D4FCC1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift in Sources */,
 				E2D569DB1BE18E5F000BECCC /* Project+CoreDataProperties.swift in Sources */,
+				E2F1AD271DC928E200DC0649 /* FilterTableViewCell.swift in Sources */,
 				E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */,
 				E29D4FCD1DC3E95A00EB3BB6 /* Type+CoreDataProperties.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */,
+				E2FD32411DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift in Sources */,
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
-				E2B9FED31DB429E0009B944D /* FilterTableViewCell.swift in Sources */,
-				E2E3C3071DBD5F3F003EECE5 /* FilterDetailTableViewCell.swift in Sources */,
+				E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */,
 				E24F6A771D46C38600CADC8F /* Priority+CoreDataProperties.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,
 				E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */,
-				E229FA421BD835750095010D /* WPFiltersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

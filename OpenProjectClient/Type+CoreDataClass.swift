@@ -61,13 +61,27 @@ public class Type: NSManagedObject {
     }
     
     static func getFilterString() -> String {
-        
         let types = Type.mr_findAll(with: NSPredicate(format: "show = true")) as! [Type]
         var list: [String] = []
         for type in types {
             list.append("\u{22}\(type.id)\u{22}")
         }
         return "{\u{22}type\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
+    }
+    
+    static func getAllTypeIds(_ projectId: NSNumber, instanceId: String) -> [Int32] {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
         
+        let types = Type.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Type]
+        var values: [Int32] = []
+        for type in types {
+            values.append(type.id)
+        }
+        return values
+    }
+    
+    static func getAllTypes(_ projectId: NSNumber, instanceId: String) -> [Type] {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        return (Type.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Type])
     }
 }

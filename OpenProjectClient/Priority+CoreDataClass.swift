@@ -87,4 +87,20 @@ public class Priority: NSManagedObject {
         }
         return "{\u{22}priority\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
     }
+    
+    static func getAllPriorityIds(_ projectId: NSNumber, instanceId: String) -> [Int32] {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        
+        let priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Priority]
+        var values: [Int32] = []
+        for priority in priorities {
+            values.append(priority.id as! Int32)
+        }
+        return values
+    }
+    
+    static func getAllPriorities(_ projectId: NSNumber, instanceId: String) -> [Priority] {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        return (Priority.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Priority])
+    }
 }
