@@ -59,6 +59,7 @@ public class Status: NSManagedObject {
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
+    /*
     static func getFilterString() -> String {
         let statuses = Status.mr_findAll(with: NSPredicate(format: "show = true")) as! [Status]
         var list: [String] = []
@@ -78,6 +79,7 @@ public class Status: NSManagedObject {
         }
         return values
     }
+ */
     
     static func getAllStatuses(_ projectId: NSNumber, instanceId: String) -> [Status] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])

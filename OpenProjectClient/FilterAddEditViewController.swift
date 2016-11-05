@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FilterAddEditViewControllerDelegate {
+    func filterEditFinished()
+}
+
 class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
@@ -16,9 +20,6 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var cancelButton: UIButton!
     
-    @IBOutlet weak var filterNameTextField: UITextField!
-    
-    var edit = false
     private var priorities: [Priority] = []
     private var types: [Type] = []
     private var statuses: [Status] = []
@@ -29,23 +30,25 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var sections: [Section] = []
     
+    var delegate: FilterAddEditViewControllerDelegate?
+    var editedFilter: WPFilter? = nil
+    internal var edit: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         // Do any additional setup after loading the view.
         self.automaticallyAdjustsScrollViewInsets = false
         //don't show empty rows
         self.tableView.tableFooterView = UIView()
         //multiple items selection
         self.tableView.allowsMultipleSelection = true
-        
+        edit = editedFilter != nil ? true : false
         self.title = edit ? "Edit Filter" : "Create Filter"
 
         setupGraphics()
         
         getData()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,14 +57,63 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        addEditWPFilter()
+        delegate?.filterEditFinished()
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func cancelButtonTapped(_ sender: Any) {
+        delegate?.filterEditFinished()
         self.dismiss(animated: true, completion: nil)
     }
     
     override var prefersStatusBarHidden : Bool {
         return true
+    }
+    
+    func addEditWPFilter() {
+        var filter: WPFilter?
+        if edit {
+            let editedF = editedFilter!
+            let predicate = NSPredicate(format: "instanceId = %@ AND projectId == %@ AND name == %@", argumentArray: [editedF.instanceId!, editedF.projectId, editedF.name!])
+            filter = WPFilter.mr_findFirst(with: predicate) as WPFilter
+        } else {
+            filter = WPFilter.mr_createEntity()
+        }
+        
+        filter?.projectId = Int32(projectId)
+        filter?.instanceId = instanceId
+        filter?.selected = true
+        
+        var typeIds: [Int32] = []
+        var typeNames: [String] = []
+        let typeRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 0};
+        for row in typeRows! {
+            typeNames.append(types[row[1]].name!)
+            typeIds.append(Int32(types[row[1]].id))
+        }
+        filter?.types = typeIds as NSObject?
+        
+        var statusIds: [Int32] = []
+        var statusNames: [String] = []
+        let statusRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 1};
+        for row in statusRows! {
+            statusNames.append(statuses[row[1]].name!)
+            statusIds.append(Int32(statuses[row[1]].id))
+        }
+        filter?.statuses = statusIds as NSObject?
+        
+        var priorityIds: [Int32] = []
+        var priorityNames: [String] = []
+        let priorityRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 2};
+        for row in priorityRows! {
+            priorityNames.append(priorities[row[1]].name!)
+            priorityIds.append(Int32(priorities[row[1]].id!))
+        }
+        filter?.priorities = priorityIds as NSObject?
+        
+        filter?.name = "[\(typeNames.joined(separator: ";"))],[\(statusNames.joined(separator: ";"))],[\(priorityNames.joined(separator: ";"))]"
+        
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
     func getData() {
@@ -72,20 +124,37 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
         statuses = Status.getAllStatuses(projectId, instanceId: instanceId)
         
         var typeFilterItems: [FilterItem] = []
+        
+        var editedFilterTypes: [Int] = []
+        if edit {
+            editedFilterTypes = editedFilter?.types as! [Int]
+        }
         for item in types {
-            typeFilterItems.append(FilterItem(name: item.name!, id: item.id, checked: false))
+            let checked = editedFilterTypes.contains(Int(item.id))
+            typeFilterItems.append(FilterItem(name: item.name!, id: item.id, checked: checked))
         }
         sections.append(Section(heading: "Types", items: typeFilterItems))
         
+        
         var statusFilterItems: [FilterItem] = []
+        var editedFilterStatuses: [Int] = []
+        if edit {
+            editedFilterStatuses = editedFilter?.statuses as! [Int]
+        }
         for item in statuses {
-            statusFilterItems.append(FilterItem(name: item.name!, id: item.id, checked: false))
+            let checked = editedFilterStatuses.contains(Int(item.id))
+            statusFilterItems.append(FilterItem(name: item.name!, id: item.id, checked: checked))
         }
         sections.append(Section(heading: "Statuses", items: statusFilterItems))
         
         var priorityFilterItems: [FilterItem] = []
+        var editedFilterPriorities: [Int] = []
+        if edit {
+            editedFilterPriorities = editedFilter?.priorities as! [Int]
+        }
         for item in priorities {
-            priorityFilterItems.append(FilterItem(name: item.name!, id: item.id as! Int32, checked: false))
+            let checked = editedFilterPriorities.contains(Int(item.id!))
+            priorityFilterItems.append(FilterItem(name: item.name!, id: item.id as! Int32, checked: checked))
         }
         sections.append(Section(heading: "Priorities", items: priorityFilterItems))
     }
@@ -98,11 +167,6 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
         
         cancelButton.backgroundColor = Colors.lightAzureOP.getUIColor()
         cancelButton.tintColor = UIColor.white
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
-        filterNameTextField.leftView = paddingView;
-        filterNameTextField.leftViewMode = UITextFieldViewMode.always
-        filterNameTextField.placeholder = "Enter filter name"
     }
 
     /*
@@ -130,6 +194,7 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilterAddEditTableViewCell") as! FilterAddEditTableViewCell!
+        cell?.selectionStyle = .none
         let item = sections[indexPath.section].items[indexPath.row]
         cell?.textLabel?.text = item.name
         if item.checked {
@@ -137,6 +202,15 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
         }
         return cell!;
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        sections[indexPath[0]].items[indexPath[1]].checked = true
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        sections[indexPath[0]].items[indexPath[1]].checked = false
+    }
+    
     
     private struct Section {
         var heading: String

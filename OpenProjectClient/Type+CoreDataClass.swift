@@ -59,7 +59,7 @@ public class Type: NSManagedObject {
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
-    
+    /*
     static func getFilterString() -> String {
         let types = Type.mr_findAll(with: NSPredicate(format: "show = true")) as! [Type]
         var list: [String] = []
@@ -79,6 +79,7 @@ public class Type: NSManagedObject {
         }
         return values
     }
+ */
     
     static func getAllTypes(_ projectId: NSNumber, instanceId: String) -> [Type] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])

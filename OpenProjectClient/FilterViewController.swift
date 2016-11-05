@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FilterAddEditViewControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     var filters: [WPFilter] = []
     
@@ -32,14 +32,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         addFilterButton.tintColor = UIColor.white
         //set title
         self.title = "Filters"
+        self.navigationItem.rightBarButtonItem = editButtonItem
         
         self.view.backgroundColor = Colors.paleOP.getUIColor()
         
         instanceId = defaults.value(forKey: "InstanceId") as! String!
         projectId = defaults.value(forKey: "ProjectId") as! NSNumber!
-        print("InstanceId: \(instanceId), projectId: \(projectId)")
-        getFilters()
+        filters = WPFilter.getFilters(projectId, instanceId: instanceId)
+
         tableView.reloadData()
+        tableView.selectRow(at: [0,1], animated: false, scrollPosition: .none)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,24 +53,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return true
     }
     
-    func getFilters() {
-        
-        let predicate = NSPredicate(format: "instanceId = %@ AND projectId == %@", argumentArray: [instanceId, projectId])
-        filters = WPFilter.mr_findAll(with: predicate) as! [WPFilter]
-        if filters.count == 0 {
-            createDefaultFilter()
-        }
-    }
-    
 
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddFilterSegue" {
-            if let vc = segue.destination as? FilterAddEditViewController {
-       
+            if let adpostVC = segue.destination as? FilterAddEditViewController {
+                let popVC = adpostVC.popoverPresentationController
+                popVC?.delegate = self
+                adpostVC.delegate = self
             }
         }
         // Get the new view controller using segue.destinationViewController.
@@ -87,26 +81,128 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilterTableViewCell") as! FilterTableViewCell!
+        cell?.selectionStyle = .none
         let filter = filters[(indexPath as NSIndexPath).row] as WPFilter
-        cell?.textLabel?.text = filter.name!
+        let labelArray = getLabels(str: filter.name!)
+        cell?.labelType.attributedText = labelArray[0]
+        cell?.labelStatus.attributedText = labelArray[1]
+        cell?.labelPriority.attributedText = labelArray[2]
         if filter.selected {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
         return cell!;
     }
     
-    func createDefaultFilter() {
-        let filter = WPFilter.mr_createEntity() as WPFilter
-        filter.instanceId = instanceId
-        filter.projectId = Int32(projectId)
-        filter.name = "All"
-        filter.selected = true
-        filter.priorities = Priority.getAllPriorityIds(projectId, instanceId: instanceId) as NSObject?
-        filter.statuses = Status.getAllStatusIds(projectId, instanceId: instanceId) as NSObject?
-        filter.types = Type.getAllTypeIds(projectId, instanceId: instanceId) as NSObject?
-        
-        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        WPFilter.deselectAllFilters(projectId, instanceId: instanceId)
+        WPFilter.selectFilter(filters[indexPath.row])
     }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        WPFilter.deselectFilter(filters[indexPath.row])
+    }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        self.tableView.setEditing(editing, animated: animated)
+        self.addFilterButton.isEnabled = false
+        if editing == false {
+            self.addFilterButton.isEnabled = true
+            tableView.reloadData()
+        }
+    }
+    
+    // Override to support editing the table view.
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let edit = UITableViewRowAction(style: .normal, title: "EDIT", handler: {action ,index in
+            let vc = UIStoryboard.filterAddEditViewController()
+            
+            let navControler: UINavigationController = UINavigationController(rootViewController: vc!)
+            vc?.delegate = self
+            vc?.editedFilter = self.filters[indexPath.row]
+            self.present(navControler, animated: true, completion: nil)
+        })
+        edit.backgroundColor = Colors.darkAzureOP.getUIColor()
+        
+        let delete = UITableViewRowAction(style: .destructive, title: "DELETE", handler: {
+            action, index in
+            WPFilter.deleteWPFilter(filter: self.filters[indexPath.row])
+            self.filters.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        })
+        delete.backgroundColor = UIColor.red
+        return [delete, edit]
+    }
+    
+    //FilterAddEditViewControllerDelegate 
+    func filterEditFinished() {
+        filters = WPFilter.getFilters(projectId, instanceId: instanceId)
+        self.tableView.reloadData()
+    }
+    
+    //UIPopoverPresentationControllerDelegate functions
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.fullScreen
+    }
+    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        return UINavigationController(rootViewController: controller.presentedViewController)
+    }
+    
+    //misc
+    func getLabels(str: String) -> [NSAttributedString] {
+        let arr = str.components(separatedBy: ",")
+        
+        let typeString = createParametersLabel("Types", str: arr[0])
+        let statusString = createParametersLabel("Statuses", str: arr[1])
+        let priorityString = createParametersLabel("Priorities", str: arr[2])
+        return [typeString,statusString,priorityString]
+    }
+    
+    func createParametersLabel(_ name: String, str: String) -> NSAttributedString {
+        let strRange = str.index(after: str.startIndex)..<str.index(before: str.endIndex)
+        let substr = str.substring(with: strRange)
+        if substr.characters.count > 0 {
+            let arr = substr.components(separatedBy: ";")
+            let string = "\(name): \(arr.joined(separator: ", "))"
+            let nonBoldRange = NSRange(location: 0, length: 5)
+            let attString = attributedString(from: string, nonBoldRange: nonBoldRange)
+            
+            return attString
+        } else {
+            let nonBoldRange = NSRange(location: 0, length: 5)
+            return attributedString(from: "\(name): All", nonBoldRange: nonBoldRange)
+        }
+    }
+    
+    func attributedString(from string: String, nonBoldRange: NSRange?) -> NSAttributedString {
+        let fontSize = UIFont.systemFontSize
+        let attrs = [
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: fontSize),
+            NSForegroundColorAttributeName: UIColor.black
+        ]
+        let nonBoldAttribute = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: fontSize),
+            ]
+        let attrStr = NSMutableAttributedString(string: string, attributes: attrs)
+        if let range = nonBoldRange {
+            attrStr.setAttributes(nonBoldAttribute, range: range)
+        }
+        return attrStr
+    }
 }

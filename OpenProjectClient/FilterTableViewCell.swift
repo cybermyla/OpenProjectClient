@@ -9,7 +9,10 @@
 import UIKit
 
 class FilterTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var labelStatus: UILabel!
+    @IBOutlet weak var labelType: UILabel!
+    @IBOutlet weak var labelPriority: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,13 +23,8 @@ class FilterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        self.selectionStyle = .none
         
-        if (selected) {
-            let colorView = UIView()
-            colorView.backgroundColor = UIColor.clear
-            self.selectedBackgroundView = colorView
-            
+        if (selected) {            
             self.tintColor = Colors.darkAzureOP.getUIColor()
             self.accessoryType = .checkmark
         } else {

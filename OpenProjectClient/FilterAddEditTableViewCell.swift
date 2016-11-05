@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterAddEditTableViewCell: UITableViewCell {
+class FilterAddEditTableViewCell: UITableViewCell {  
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,7 +20,6 @@ class FilterAddEditTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        self.selectionStyle = .none
         
         if (selected) {
             let colorView = UIView()
