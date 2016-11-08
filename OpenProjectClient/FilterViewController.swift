@@ -41,7 +41,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         filters = WPFilter.getFilters(projectId, instanceId: instanceId)
 
         tableView.reloadData()
-        tableView.selectRow(at: [0,1], animated: false, scrollPosition: .none)
     }
 
     override func didReceiveMemoryWarning() {
@@ -180,13 +179,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if substr.characters.count > 0 {
             let arr = substr.components(separatedBy: ";")
             let string = "\(name): \(arr.joined(separator: ", "))"
-            let nonBoldRange = NSRange(location: 0, length: 5)
+            let nonBoldRange = NSRange(location: name.characters.count + 1, length: string.characters.count - name.characters.count - 1)
             let attString = attributedString(from: string, nonBoldRange: nonBoldRange)
-            
             return attString
         } else {
-            let nonBoldRange = NSRange(location: 0, length: 5)
-            return attributedString(from: "\(name): All", nonBoldRange: nonBoldRange)
+            let string = "\(name): All"
+            let nonBoldRange = NSRange(location: name.characters.count + 1, length: string.characters.count - name.characters.count - 1)
+            return attributedString(from: string, nonBoldRange: nonBoldRange)
         }
     }
     
@@ -194,10 +193,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let fontSize = UIFont.systemFontSize
         let attrs = [
             NSFontAttributeName: UIFont.boldSystemFont(ofSize: fontSize),
-            NSForegroundColorAttributeName: UIColor.black
+            NSForegroundColorAttributeName: Colors.darkAzureOP.getUIColor()
         ]
         let nonBoldAttribute = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: fontSize),
+            NSFontAttributeName: UIFont.italicSystemFont(ofSize: fontSize),
             ]
         let attrStr = NSMutableAttributedString(string: string, attributes: attrs)
         if let range = nonBoldRange {

@@ -111,4 +111,8 @@ class WorkPackage: NSManagedObject {
         }
         return date
     }
+    
+    static func getWorkPackages() -> [WorkPackage] {
+        return (WorkPackage.mr_findAllSorted(by: "id", ascending: false) as! [WorkPackage])
+    }
 }

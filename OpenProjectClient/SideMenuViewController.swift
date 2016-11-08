@@ -94,11 +94,10 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             getProjects(instanceId)
         }
         
+        projectButton.tintColor = UIColor.white
         menuTableView.separatorStyle = .none
         projectsTableView.separatorStyle = .none
         projectsTableView.backgroundColor = Colors.paleOP.getUIColor()
-        
-        //getProjects()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -111,10 +110,6 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 projectsTableViewHeight = CGFloat(maxProjectsTableViewNr) * projectsRowHeight
             }
         }
-        
-        //highlight selected menuitem
-        highlightSelectedMenuitem()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -195,17 +190,22 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (tableView) {
         case menuTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItemCell") as UITableViewCell!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItemCell") as! MenuItemSideMenuTableViewCell!
             let item = items[(indexPath as NSIndexPath).row];
             cell?.textLabel?.text = item.name()
             
             //check if instance selected
             if (instanceSelected) {
                 cell?.textLabel?.textColor = UIColor.white
+                cell?.selectionStyle = .none
                 if let menuId = defaults.value(forKey: "MenuId") as? Int {
                     if (item.name() == MenuItem.nameById(menuId)) {
-                        cell?.backgroundColor = Colors.darkAzureOP.getUIColor()
+                        //cell?.backgroundColor = Colors.darkAzureOP.getUIColor()
+                        menuTableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
+                } else {
+                    menuTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
+                    defaults.set(MenuItem.workPackages.id(), forKey: "MenuId")
                 }
             } else {
             //disable cell selection if instance not selected
@@ -239,21 +239,6 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             default:
                 break
             }
-        }
-    }
-    
-    func highlightSelectedMenuitem() {
-        if let menuId = defaults.value(forKey: "MenuId") as? Int {
-        switch (MenuItem.nameById(menuId)) {
-        case "WorkPackages":
-            menuTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
-            break
-        case "Activities":
-            menuTableView.selectRow(at: IndexPath(row: 1, section: 0), animated: false, scrollPosition: .none)
-            break
-        default:
-            break
-        }
         }
     }
     

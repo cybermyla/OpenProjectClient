@@ -13,8 +13,12 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var delegate: ContainerViewControllerDelegate?
     var project: Project?
     var workpackages: [WorkPackage] = []
+    var instanceId: String?
+    var projectId: NSNumber?
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
+    
+    @IBOutlet weak var filterBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var addWPButton: UIBarButtonItem!
     
@@ -22,12 +26,14 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     let defaults = UserDefaults.standard
     
+    let filterLabel = UILabel(frame: CGRect.zero)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Work Packages"
-        
+        setFilterLabelInToolbar()
         setNeedsStatusBarAppearanceUpdate()
         
         //disable filter and add button in case project is not selected
@@ -46,6 +52,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
                 getWorkPackages(projectId, instanceId: instanceId)
+                self.updateFilterLableInToolbar(projectId, instanceId: instanceId)
             }
         } else {
             ///show alert notifying that there is no instance selected. consider showing this alert just once after application start
@@ -114,7 +121,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func setButtons() {
-        
         if let _ = defaults.value(forKey: "ProjectId") as? NSNumber {
             filterButton.isEnabled = true
             addWPButton.isEnabled = true
@@ -134,7 +140,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                 print(issue.description)
             } else {
                 if let _ = responseObject {
-                    self.workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: false) as! [WorkPackage]
+                    self.workpackages = WorkPackage.getWorkPackages()
                     self.tableViewWorkPackages.reloadData()
                 }
             }
@@ -153,5 +159,18 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             }
         }))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func setFilterLabelInToolbar() {
+        filterLabel.backgroundColor = UIColor.clear
+        filterLabel.textAlignment = .left
+        filterLabel.textColor = UIColor.white
+        filterLabel.adjustsFontSizeToFitWidth = true
+        filterBarButtonItem.customView = filterLabel
+    }
+    
+    func updateFilterLableInToolbar(_ projectId: NSNumber, instanceId: String) {
+        filterLabel.text = WPFilter.getFilterOneLineDescription(projectId, instanceId: instanceId)
+        filterLabel.sizeToFit()
     }
 }

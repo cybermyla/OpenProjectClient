@@ -17,6 +17,7 @@
 		E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
+		E24B23411DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24B23401DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift */; };
 		E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24CF4661BDE79F600930E38 /* Main.storyboard */; };
 		E24F6A731D46AD9D00CADC8F /* NewWpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */; };
 		E24F6A771D46C38600CADC8F /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */; };
@@ -84,6 +85,7 @@
 		E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageViewController.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
+		E24B23401DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemSideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		E24CF4671BDE79F600930E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenProjectClient/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWpForm.swift; sourceTree = "<group>"; };
 		E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */,
+				E24B23401DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2FD32401DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift in Sources */,
+				E24B23411DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift in Sources */,
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
 				E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */,
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,

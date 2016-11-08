@@ -55,11 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setAppearance() {
+        
         UINavigationBar.appearance().barTintColor = Colors.darkAzureOP.getUIColor()
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         UIToolbar.appearance().barTintColor = Colors.darkAzureOP.getUIColor()
         UIToolbar.appearance().tintColor = UIColor.white
+ 
         
         UITableView.appearance().backgroundColor = UIColor.clear
         UITableViewCell.appearance().backgroundColor = UIColor.clear
@@ -80,13 +82,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableViewCell.appearance().selectedBackgroundView = darkColorView
         UITableViewCell.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).selectedBackgroundView = clearView
  
-        UIButton.appearance(whenContainedInInstancesOf: [SideMenuViewController.self]).tintColor = UIColor.white
-        UIButton.appearance(whenContainedInInstancesOf: [SettingsViewController.self]).tintColor = UIColor.white
+        //UIButton.appearance(whenContainedInInstancesOf: [SideMenuViewController.self]).tintColor = UIColor.white
+        //UIButton.appearance(whenContainedInInstancesOf: [SettingsViewController.self]).tintColor = UIColor.white
         UIButton.appearance(whenContainedInInstancesOf: [AddEditInstanceVC.self]).tintColor = UIColor.white
         
         UIButton.appearance(whenContainedInInstancesOf: [FilterTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
         
         UIButton.appearance(whenContainedInInstancesOf: [InstanceTableViewCell.self]).tintColor = Colors.darkAzureOP.getUIColor()
+ 
+ 
     }
 
 }

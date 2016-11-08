@@ -33,8 +33,7 @@ public class WPFilter: NSManagedObject {
             }
             
             let filter = "&filters=[\(arrFilters.joined(separator: ","))]"
-            
-            let filterO = "&filters=[\(getFilterString(name: "type", array: types)),\(getFilterString(name: "priority", array: priorities)),\(getFilterString(name: "status", array: statuses))]"
+  
             print("Using filter \(filter)")
             return filter.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         } else {
@@ -85,5 +84,40 @@ public class WPFilter: NSManagedObject {
             list.append("\u{22}\(item)\u{22}")
         }
         return "{\u{22}\(name)\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
+    }
+    
+    static func getFilterOneLineDescription(_ projectId: NSNumber?, instanceId: String?) -> String {
+        
+        if projectId != nil && instanceId != nil {
+            let predicate = NSPredicate(format: "instanceId = %@ AND projectId == %@ AND selected == true", argumentArray: [instanceId!, projectId!])
+            let filter = WPFilter.mr_findFirst(with: predicate) as WPFilter?
+            if filter != nil  {
+                var values: [String] = []
+                if let typeNames = filter?.typeNames as? [String] {
+                    values.append(arrayToString(arr: typeNames))
+                } else { values.append("All") }
+                
+                if let statusNames = filter?.statusNames as? [String] {
+                    values.append(arrayToString(arr: statusNames))
+                } else {values.append("All") }
+                
+                if let priorityNames = filter?.priorityNames as? [String] {
+                    values.append(arrayToString(arr: priorityNames))
+                } else {values.append("All") }
+                return "\(values[0])|\(values[1])|\(values[2])"
+            } else {
+                return ""
+            }
+        } else {
+            return ""
+        }
+    }
+    
+    private static func arrayToString(arr: [String]) -> String {
+        if arr.count > 0 {
+            return arr.joined(separator: ",")
+        } else {
+            return "All"
+        }
     }
 }

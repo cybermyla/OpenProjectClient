@@ -26,6 +26,8 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     
     var edit: Bool = true
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -126,6 +128,7 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
                 if let fetchedInstance = responseObject {
                     print("Version: \(fetchedInstance.coreVersion), InstanceName: \(fetchedInstance.instanceName)")
                     self.delegate?.instanceSaved(fetchedInstance.id!)
+                    self.defaults.set(fetchedInstance.id!, forKey: "InstanceId")
                     self.dismiss(animated: true, completion: nil)
                 }
             }

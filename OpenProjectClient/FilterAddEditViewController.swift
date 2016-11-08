@@ -57,6 +57,7 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        WPFilter.deselectAllFilters(projectId, instanceId: instanceId)
         addEditWPFilter()
         delegate?.filterEditFinished()
         self.dismiss(animated: true, completion: nil)
@@ -80,36 +81,48 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
             filter = WPFilter.mr_createEntity()
         }
         
-        filter?.projectId = Int32(projectId)
-        filter?.instanceId = instanceId
-        filter?.selected = true
+        if !edit {
+            filter?.projectId = Int32(projectId)
+            filter?.instanceId = instanceId
+            filter?.selected = true
+        }
         
         var typeIds: [Int32] = []
         var typeNames: [String] = []
-        let typeRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 0};
-        for row in typeRows! {
-            typeNames.append(types[row[1]].name!)
-            typeIds.append(Int32(types[row[1]].id))
+        let typeRows = sections[0].items
+
+        for row in typeRows {
+            if row.checked {
+                typeNames.append(row.name)
+                typeIds.append(row.id)
+            }
         }
         filter?.types = typeIds as NSObject?
+        filter?.typeNames = typeNames as NSObject?
         
         var statusIds: [Int32] = []
         var statusNames: [String] = []
-        let statusRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 1};
-        for row in statusRows! {
-            statusNames.append(statuses[row[1]].name!)
-            statusIds.append(Int32(statuses[row[1]].id))
+        let statusRows = sections[1].items
+        for row in statusRows {
+            if row.checked {
+                statusNames.append(row.name)
+                statusIds.append(row.id)
+            }
         }
         filter?.statuses = statusIds as NSObject?
+        filter?.statusNames = statusNames as NSObject?
         
         var priorityIds: [Int32] = []
         var priorityNames: [String] = []
-        let priorityRows = self.tableView.indexPathsForSelectedRows?.filter{$0.section == 2};
-        for row in priorityRows! {
-            priorityNames.append(priorities[row[1]].name!)
-            priorityIds.append(Int32(priorities[row[1]].id!))
+        let priorityRows = sections[2].items
+        for row in priorityRows {
+            if row.checked {
+                priorityNames.append(row.name)
+                priorityIds.append(row.id)
+            }
         }
         filter?.priorities = priorityIds as NSObject?
+        filter?.priorityNames = priorityNames as NSObject?
         
         filter?.name = "[\(typeNames.joined(separator: ";"))],[\(statusNames.joined(separator: ";"))],[\(priorityNames.joined(separator: ";"))]"
         

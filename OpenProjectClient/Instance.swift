@@ -55,5 +55,7 @@ class Instance: NSManagedObject {
         
         return instance
     }
-
+    static func getAllInstances() -> [Instance] {
+        return Instance.mr_findAllSorted(by: "instanceName", ascending: true) as! [Instance]
+    }
 }

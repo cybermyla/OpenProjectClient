@@ -90,9 +90,12 @@
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="priorities" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="priorityNames" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="selected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="statuses" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="statusNames" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="typeNames" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="types" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>
@@ -102,6 +105,6 @@
         <element name="Status" positionX="-54" positionY="144" width="128" height="180"/>
         <element name="Type" positionX="-45" positionY="153" width="128" height="210"/>
         <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
-        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="150"/>
+        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
     </elements>
 </model>
