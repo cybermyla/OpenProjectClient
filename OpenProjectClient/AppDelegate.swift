@@ -116,7 +116,8 @@ extension UIStoryboard {
     
     class func leftViewController() -> SideMenuViewController? {
         let sideMenu: SideMenuViewController = (mainStoryboard().instantiateViewController(withIdentifier: "LeftViewController") as? SideMenuViewController)!
-        sideMenu.view.backgroundColor = Colors.lightAzureOP.getUIColor()
+        //sideMenu.view.backgroundColor = Colors.lightAzureOP.getUIColor()
+        sideMenu.view.backgroundColor = UIColor.black
         return sideMenu
     }
     

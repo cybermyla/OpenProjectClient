@@ -72,8 +72,8 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var projectButton: UIButton!
     @IBOutlet weak var projectsView: UIView!
     @IBOutlet weak var projectsTableView: UITableView!
-    
     @IBOutlet weak var projectsViewConHeight: NSLayoutConstraint!
+    @IBOutlet weak var settingsButton: UIButton!
     
     var items: [MenuItem] = [.workPackages, .activities]
     var projects: [Project] = []
@@ -85,6 +85,8 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var instanceSelected = false
     
+    var projectId:NSNumber = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,10 +96,16 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             getProjects(instanceId)
         }
         
-        projectButton.tintColor = UIColor.white
+        if let pId = defaults.value(forKey: "ProjectId") as? NSNumber {
+            projectId = pId
+        }
+        
+        settingsButton.tintColor = UIColor.white
         menuTableView.separatorStyle = .none
         projectsTableView.separatorStyle = .none
         projectsTableView.backgroundColor = Colors.paleOP.getUIColor()
+        
+        menuTableView.tableHeaderView?.backgroundColor = UIColor.darkGray
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,16 +129,18 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             //disable buttons and menus
             projectButton.isEnabled = false
         }
-                
+    
         if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
             //will have to get data from Core data
             let project = Project.mr_findFirst(byAttribute: "id", withValue: projectId)
-            projectButton.setTitle("\(project!.name!)", for: UIControlState())
+            projectButton.setTitle("\(project!.name!) \u{25BE}", for: .normal)
+            projectButton.setTitle("\(project!.name!) \u{25B4}", for: .selected)
         } else {
-            projectButton.setTitle("Select Project", for: UIControlState())
+            projectButton.setTitle("Select Project \u{25BE}", for: .normal)
+            projectButton.setTitle("Select Project \u{25B4}", for: .selected)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -138,7 +148,14 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func resizeProjectsView(_ sender: AnyObject) {
         projectsTableView.reloadData()
+        
         let height:CGFloat = projectsTableViewHeight
+        if (self.projectsViewConHeight.constant == 0) {
+            self.projectButton.isSelected = true
+        } else {
+            self.projectButton.isSelected = false
+        }
+        
         UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions(), animations: {
                 if (self.projectsViewConHeight.constant == 0) {
                     self.projectsViewConHeight.constant = height
@@ -146,12 +163,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.projectsViewConHeight.constant = 0
                 }
                 self.view.layoutIfNeeded()
-            }, completion: nil)
-/*
-        if let indexPath = AppState.sharedInstance.projectIndexPath {
-            self.projectsTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
-        }
-*/
+        }, completion: nil)
     }
     
     @IBAction func buttonSettingsTapped(_ sender: AnyObject) {
@@ -198,9 +210,9 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             if (instanceSelected) {
                 cell?.textLabel?.textColor = UIColor.white
                 cell?.selectionStyle = .none
+                cell?.textLabel?.font = UIFont.systemFont(ofSize: 20)
                 if let menuId = defaults.value(forKey: "MenuId") as? Int {
                     if (item.name() == MenuItem.nameById(menuId)) {
-                        //cell?.backgroundColor = Colors.darkAzureOP.getUIColor()
                         menuTableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                 } else {
@@ -215,10 +227,10 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             return cell!
         case projectsTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell") as UITableViewCell!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell") as! ProjectItemSideMenuTableViewCell!
+            cell?.accessoryType = .none
             let project = projects[(indexPath as NSIndexPath).row]
             cell?.textLabel?.text = project.name
-            cell?.textLabel?.textColor = Colors.darkAzureOP.getUIColor()
             return cell!
         default:
             return UITableViewCell()
@@ -233,8 +245,10 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 break
             case projectsTableView:
                 let p = projects[(indexPath as NSIndexPath).row] as Project
+                projectButton.setTitle(p.name, for: .normal)
                 defaults.set(Int(p.id!), forKey: "ProjectId")
-                getPrioritiesStatusesTypesFromServer() //
+                getPrioritiesStatusesTypesFromServer()
+                projectButton.sendActions(for: .touchUpInside)
                 break
             default:
                 break
@@ -242,36 +256,62 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    //SettingsViewController delegate implementation
-    func settingsHaveChanged() {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch (tableView) {
+        case menuTableView:
+            return 1.0
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch (tableView) {
+        case menuTableView:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 20))
+            headerView.backgroundColor = UIColor.lightGray
         
+            let label = UILabel()
+            label.text = " "
+            headerView.addSubview(label)
+            return headerView
+        default:
+            return nil
+        }
+    }
+    
+    //SettingsViewController delegate implementation
+    func settingsClosed() {
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             getRemoteProjects(instanceId)
-            projects = Project.mr_findAll() as! [Project]
+            self.instanceSelected = true
         }
     }
     
     func getProjects(_ instanceId: String) {
         
-        self.projects = Project.mr_findAll() as! [Project]
+        self.projects = Project.mr_findAllSorted(by: "name", ascending: true) as! [Project]
         
         if projects.count > 0 {
             self.projectsTableView.reloadData()
         }
         else
         {
-            getRemoteProjects(instanceId)
+      //      getRemoteProjects(instanceId)
         }
     }
+ 
     
     func getRemoteProjects(_ instanceId: String) {
         OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:[Project]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
             } else {
-                if let projects = responseObject {
-                    self.projects = projects
+                if let _ = responseObject {
+                    self.projects = Project.mr_findAllSorted(by: "name", ascending: true) as! [Project]
                     self.projectsTableView.reloadData()
+                    self.menuTableView.reloadData()
+                    self.projectButton.isEnabled = true
                 }
             }
         })

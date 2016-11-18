@@ -1,14 +1,14 @@
 //
-//  MenuItemSideMenuTableViewCell.swift
+//  ProjectItemSideMenuTableViewCell.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 08/11/16.
+//  Created by Miloslav Linhart on 17/11/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 
 import UIKit
 
-class MenuItemSideMenuTableViewCell: UITableViewCell {
+class ProjectItemSideMenuTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,10 +17,10 @@ class MenuItemSideMenuTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.accessoryType = .none
+        self.backgroundColor = Colors.lightAzureOP.getUIColor()
         // Configure the view for the selected state
         if (selected) {
-            self.backgroundColor = UIColor.darkGray
+            self.backgroundColor = UIColor.clear
         } else {
             self.backgroundColor = UIColor.clear
         }

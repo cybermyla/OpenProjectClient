@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsViewControllerDelegate {
-    func settingsHaveChanged()
+    func settingsClosed()
 }
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddEditInstanceVCDelegate {
@@ -55,7 +55,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func doneButtonTapped(_ sender: Any) {
-        delegate?.settingsHaveChanged()
+        delegate?.settingsClosed()
         self.dismiss(animated: true, completion: nil)
     }
     

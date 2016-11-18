@@ -30,7 +30,7 @@ class ContainerViewController: UIViewController {
     }
     var leftViewController: SideMenuViewController?
     
-    let centerPanelExpandedOffset: CGFloat = 100
+    let centerPanelExpandedOffset: CGFloat = 180
     
     let defaults = UserDefaults.standard
     
