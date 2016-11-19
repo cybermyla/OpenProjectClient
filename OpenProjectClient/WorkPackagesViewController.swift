@@ -15,6 +15,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var workpackages: [WorkPackage] = []
     var instanceId: String?
     var projectId: NSNumber?
+    let timeElapsedLimit = 180.0
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
     
@@ -28,6 +29,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     let filterLabel = UILabel(frame: CGRect.zero)
     
+    var refreshControl: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +38,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         self.title = "Work Packages"
         setFilterLabelInToolbar()
         setNeedsStatusBarAppearanceUpdate()
+        addRefresh()
         
         //disable filter and add button in case project is not selected
     }
@@ -130,17 +134,50 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
-    func getWorkPackages(_ projectId: NSNumber, instanceId: String) {
-        getWorkPackagesFromServer(projectId, instanceId: instanceId)
+    func getWorkPackages(_ projectId: NSNumber, instanceId: String, refresh: Bool) {
+        
+        var timeElapsed: Double?
+        
+        if let lastUpdate = defaults.value(forKey: "WorkPackageLastUpdate") as? Date {
+            timeElapsed = Date().timeIntervalSince(lastUpdate)
+        }
+        
+        if timeElapsed == nil || timeElapsed! > timeElapsedLimit {
+            getWorkPackagesFromServer(projectId, instanceId: instanceId, refresh: refresh)
+        } else {
+            self.workpackages = WorkPackage.getWorkPackages()
+            self.tableViewWorkPackages.reloadData()
+        }
+        
     }
     
-    func getWorkPackagesFromServer(_ projectId: NSNumber, instanceId: String) {
+    func getWorkPackages(_ projectId: NSNumber, instanceId: String) {
+        getWorkPackages(projectId, instanceId: instanceId, refresh: false)
+    }
+    
+    func getWorkPackagesFromServer(_ projectId: NSNumber, instanceId: String, refresh: Bool) {
+        if refresh {
+            
+        } else {
+            LoadingUIView.show()
+        }
         OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                if refresh {
+                    self.refreshControl?.endRefreshing()
+                } else {
+                    LoadingUIView.hide()
+                }
             } else {
                 if let _ = responseObject {
                     self.workpackages = WorkPackage.getWorkPackages()
+                    if refresh {
+                        self.refreshControl?.endRefreshing()
+                    } else {
+                        LoadingUIView.hide()
+                    }
+                    self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
                     self.tableViewWorkPackages.reloadData()
                 }
             }
@@ -172,5 +209,21 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     func updateFilterLableInToolbar(_ projectId: NSNumber, instanceId: String) {
         filterLabel.text = WPFilter.getFilterOneLineDescription(projectId, instanceId: instanceId)
         filterLabel.sizeToFit()
+    }
+    
+    //tableview refresh functionality
+    func addRefresh() {
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:#selector(refresh), for: UIControlEvents.valueChanged)
+        self.tableViewWorkPackages.addSubview(refreshControl)
+    }
+    
+    func refresh() {
+        if let instanceId = defaults.value(forKey: "InstanceId") as? String {
+            if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
+                defaults.set(nil, forKey: "WorkPackageLastUpdate")
+                getWorkPackages(projectId, instanceId: instanceId, refresh: true)
+            }
+        }
     }
 }

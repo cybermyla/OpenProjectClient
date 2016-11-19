@@ -59,28 +59,6 @@ public class Status: NSManagedObject {
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
-    /*
-    static func getFilterString() -> String {
-        let statuses = Status.mr_findAll(with: NSPredicate(format: "show = true")) as! [Status]
-        var list: [String] = []
-        for status in statuses {
-            list.append("\u{22}\(status.id)\u{22}")
-        }
-        return "{\u{22}status\u{22}: {\u{22}operator\u{22}: \u{22}=\u{22},\u{22}values\u{22}: [\(list.joined(separator: ","))]}}"
-    }
-    
-    static func getAllStatusIds(_ projectId: NSNumber, instanceId: String) -> [Int32] {
-        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
-        
-        let statuses = Status.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Status]
-        var values: [Int32] = []
-        for status in statuses {
-            values.append(status.id)
-        }
-        return values
-    }
- */
-    
     static func getAllStatuses(_ projectId: NSNumber, instanceId: String) -> [Status] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
         return (Status.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Status])

@@ -95,6 +95,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         WPFilter.deselectAllFilters(projectId, instanceId: instanceId)
         WPFilter.selectFilter(filters[indexPath.row])
+        defaults.set(nil, forKey: "WorkPackageLastUpdate")
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -152,6 +153,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //FilterAddEditViewControllerDelegate 
     func filterEditFinished() {
         filters = WPFilter.getFilters(projectId, instanceId: instanceId)
+        defaults.set(nil, forKey: "WorkPackageLastUpdate")
         self.tableView.reloadData()
     }
     

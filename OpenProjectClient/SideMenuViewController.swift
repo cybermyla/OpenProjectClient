@@ -247,6 +247,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 let p = projects[(indexPath as NSIndexPath).row] as Project
                 projectButton.setTitle(p.name, for: .normal)
                 defaults.set(Int(p.id!), forKey: "ProjectId")
+                self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
                 getPrioritiesStatusesTypesFromServer()
                 projectButton.sendActions(for: .touchUpInside)
                 break
@@ -284,6 +285,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     func settingsClosed() {
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             getRemoteProjects(instanceId)
+            self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
             self.instanceSelected = true
         }
     }
@@ -303,26 +305,34 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
  
     
     func getRemoteProjects(_ instanceId: String) {
+        LoadingUIView.show()
         OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:[Project]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                LoadingUIView.hide()
             } else {
                 if let _ = responseObject {
                     self.projects = Project.mr_findAllSorted(by: "name", ascending: true) as! [Project]
                     self.projectsTableView.reloadData()
                     self.menuTableView.reloadData()
                     self.projectButton.isEnabled = true
+                    
                 }
+                LoadingUIView.hide()
             }
+            
         })
     }
     
     func getPrioritiesStatusesTypesFromServer() {
+        LoadingUIView.show()
         OpenProjectAPI.sharedInstance.getPrioritiesStatusesTypes(onCompletion: {(success:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                LoadingUIView.hide()
             } else {
-                    self.delegate?.projectSelected()
+                LoadingUIView.hide()
+                self.delegate?.projectSelected()
             }
         })
     }

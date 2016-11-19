@@ -127,7 +127,7 @@ class OpenProjectAPI {
             
             let filters = WPFilter.getWPFilter(projectId, instanceId: instanceId)
             
-            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1&pageSize=30\(filters)"
+            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1&pageSize=100\(filters)"
             
             Alamofire.request(url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()

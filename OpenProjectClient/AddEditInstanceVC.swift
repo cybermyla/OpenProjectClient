@@ -121,14 +121,17 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     }
     
     func getInstanceDetails() {
+        LoadingUIView.show()
         OpenProjectAPI.sharedInstance.getInstance(currentInstanceAddress!, apikey: currentInstanceApiKey!, onCompletion: {(responseObject:Instance?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                LoadingUIView.hide()
             } else {
                 if let fetchedInstance = responseObject {
                     print("Version: \(fetchedInstance.coreVersion), InstanceName: \(fetchedInstance.instanceName)")
                     self.delegate?.instanceSaved(fetchedInstance.id!)
                     self.defaults.set(fetchedInstance.id!, forKey: "InstanceId")
+                    LoadingUIView.hide()
                     self.dismiss(animated: true, completion: nil)
                 }
             }
