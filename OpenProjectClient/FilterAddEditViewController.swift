@@ -62,6 +62,7 @@ class FilterAddEditViewController: UIViewController, UITableViewDelegate, UITabl
         delegate?.filterEditFinished()
         self.dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func cancelButtonTapped(_ sender: Any) {
         delegate?.filterEditFinished()
         self.dismiss(animated: true, completion: nil)

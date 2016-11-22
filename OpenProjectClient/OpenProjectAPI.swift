@@ -10,30 +10,18 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-/*
-protocol OpenProjectAPIManagerDelegate {
-    func dataDownloadFinished(sender: OpenProjectAPIManager)
-}
- */
-
 class OpenProjectAPI {
-    //var delegate: OpenProjectAPIManagerDelegate?
+
     static let sharedInstance = OpenProjectAPI()
     fileprivate init() {}
     
     typealias RemoteRootResponse = (Instance?, NSError?) -> Void
-    
     typealias RemoteProjectsResponse = ([Project]?, NSError?) -> Void
-    
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
-    
-    typealias RemotePrioritiesResponse = (Bool, NSError?) -> Void
-    
-    typealias RemoteStatusesResponse = ([Status]?, NSError?) -> Void
-    
-    typealias RemoteTypesResponse = ([Type]?, NSError?) -> Void
-    
     typealias RemotePrioritiesStatusesTypesResponse = (Bool, NSError?) -> Void
+    typealias RemoteAssigneesResponse = (Bool, NSError?) -> Void
+    typealias RemoteResponsiblesResponse = (Bool, NSError?) -> Void
+    typealias RemoteWorkPackageCreateFormsResponse = (JSON, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -145,7 +133,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
-                    WorkPackage.buildWorkpackages(projectId, json: json)
+                    WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, json: json)
                     workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
                     onCompletion(workpackages, nil)
                 case .failure(let error):
@@ -156,7 +144,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getPrioritiesStatusesTypes(onCompletion: @escaping RemotePrioritiesStatusesTypesResponse) {
+    func getWorkpackagesCreateForms(onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
         
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
@@ -190,22 +178,48 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("PrioritiesStatusesTypes (wp forms) successfully received - \(json)")
-                    let p = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                    let t = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                    let s = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                    onCompletion(true, nil)
+                    print("WP Create forms successfully received - \(json)")
+
+                    onCompletion(json, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(false, error as NSError?)
                 }
             }
+        } else {
+            onCompletion(false, nil)
         }
     }
     
-    func getPriorities(_ projectId:NSNumber, onCompletion: @escaping RemotePrioritiesResponse) {
+    
+    func getPrioritiesStatusesTypes(onCompletion: @escaping RemotePrioritiesStatusesTypesResponse) {
+        
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
+        
+        getWorkpackagesCreateForms(onCompletion: {(json:JSON, error:NSError?) in
+            if let issue = error {
+                onCompletion(false, issue as NSError?)
+            } else {
+                let p = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let t = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let s = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                onCompletion(true, nil)
+            }
+        })
+    }
+    
+    func getAvailableAssignees(onCompletion: @escaping RemoteAssigneesResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
         
         guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
@@ -216,9 +230,9 @@ class OpenProjectAPI {
             
             let headers = getHeaders(auth: instance.auth!)
             
-            let url = "\(instance.address!)\(instance.prioritiesHref!)"
+            let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_assignees"
             
-            Alamofire.request(url, headers: headers).validate().responseString { response in
+            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -232,20 +246,26 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Priorities successfully received - \(json)")
-   //                 let changed = Priority.buildPriorities(projectId, json: json)
+                    print("Available assignees successfully received - \(json)")
+                    Assignee.buildAssignees(NSNumber(value: projectId), instanceId:instanceId!, json: json, isAssignee: true)
                     onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(false, error as NSError?)
                 }
             }
+        } else {
+            onCompletion(false, nil)
         }
     }
     
-    func getStatuses(_ projectId:NSNumber, onCompletion: @escaping RemoteStatusesResponse) {
+    func getAvailableResponsibles(onCompletion: @escaping RemoteResponsiblesResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
         
         guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
@@ -256,73 +276,32 @@ class OpenProjectAPI {
             
             let headers = getHeaders(auth: instance.auth!)
             
-            let url = "\(instance.address!)\(instance.statusesHref!)"
+            let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_responsibles"
             
-            Alamofire.request(url, headers: headers).validate().responseString { response in
-                var statuses = [Status]()
+            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
-                        onCompletion(statuses, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(statuses, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Statuses successfully received - \(json)")
-                    statuses = Status.mr_findAllSorted(by: "position", ascending: true) as! [Status]
-                    onCompletion(statuses, nil)
+                    print("Available responsibles successfully received - \(json)")
+                    Assignee.buildAssignees(NSNumber(value: projectId), instanceId:instanceId!, json: json, isAssignee: false)
+                    onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
-                    onCompletion(nil, error as NSError?)
+                    onCompletion(false, error as NSError?)
                 }
             }
-        }
-    }
-    
-    func getTypes(_ projectId:NSNumber, onCompletion: @escaping RemoteTypesResponse) {
-        let defaults = UserDefaults.standard
-        let instanceId = defaults.string(forKey: "InstanceId")
-        
-        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
-            return
-        }
-        
-        if instances.count > 0 {
-            let instance = instances[0]
-            
-            let headers = getHeaders(auth: instance.auth!)
-            
-            let url = "\(instance.address!)\(instance.typesHref!)"
-            
-            Alamofire.request(url, headers: headers).validate().responseString { response in
-                var types = [Type]()
-                switch response.result {
-                case .success( _):
-                    guard let responseValue = response.result.value else {
-                        onCompletion(types, nil)
-                        return
-                    }
-                    
-                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(types, nil)
-                        return
-                    }
-                    
-                    let json = JSON(data: dataFromResponse)
-                    print("Statuses successfully received - \(json)")
-  //                  Type.buildTypes(projectId, json: json)
-                    types = Type.mr_findAllSorted(by: "position", ascending: true) as! [Type]
-                    onCompletion(types, nil)
-                case .failure(let error):
-                    print(error)
-                    onCompletion(nil, error as NSError?)
-                }
-            }
+        } else {
+            onCompletion(false, nil)
         }
     }
     

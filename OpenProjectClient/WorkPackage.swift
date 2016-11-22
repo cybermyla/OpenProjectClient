@@ -13,13 +13,17 @@ import SwiftyJSON
 
 class WorkPackage: NSManagedObject {
     
-    class func buildWorkpackages(_ projectId: NSNumber, json: JSON) {
+    class func buildWorkpackages(_ projectId: NSNumber, instanceId: String, json: JSON) {
         guard let array = json["_embedded"]["elements"].array else
         {
             return
         }
         
         WorkPackage.mr_truncateAll()
+        
+        //there is no other way to get all possible statuses directly from API - I will check all items if they contain unknow status and if so, this status will be added to statuses for this particular project and instance
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        var statuses = Status.mr_findAll(with: predicate) as! [Status]
         
         for item in array {
             
@@ -66,6 +70,19 @@ class WorkPackage: NSManagedObject {
             if let d = dictLinks["status"]?.dictionary {
                 wp!.statusTitle = d["title"]?.rawString()
                 wp!.statusHref = d["href"]?.rawString()
+                if !statuses.contains(where: { status in status.name == wp!.statusTitle }) {
+                    let newStatus = Status.mr_createEntity()
+                    newStatus?.instanceId = instanceId
+                    newStatus?.projectId = Int32(projectId)
+                    let arr = wp!.statusHref!.components(separatedBy: "/")
+                    newStatus?.id = Int32(arr.last!)!
+                    newStatus?.name = wp!.statusTitle
+                    newStatus?.isClosed = false
+                    newStatus?.isDefault = false
+                    newStatus?.position = (newStatus?.id)!
+                    NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+                    statuses = Status.mr_findAll(with: predicate) as! [Status]
+                }
             }
             
             if let d = dictLinks["author"]?.dictionary {

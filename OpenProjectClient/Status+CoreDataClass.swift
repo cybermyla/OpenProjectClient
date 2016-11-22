@@ -61,6 +61,6 @@ public class Status: NSManagedObject {
     
     static func getAllStatuses(_ projectId: NSNumber, instanceId: String) -> [Status] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
-        return (Status.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Status])
+        return (Status.mr_findAllSorted(by: "id", ascending: true, with: predicate) as! [Status])
     }
 }

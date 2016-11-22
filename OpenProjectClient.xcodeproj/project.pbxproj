@@ -21,6 +21,8 @@
 		E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24CF4661BDE79F600930E38 /* Main.storyboard */; };
 		E24F6A731D46AD9D00CADC8F /* NewWpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */; };
 		E24F6A771D46C38600CADC8F /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */; };
+		E25550F91DE4ED16000DD362 /* Assignee+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25550F71DE4ED16000DD362 /* Assignee+CoreDataClass.swift */; };
+		E25550FA1DE4ED16000DD362 /* Assignee+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25550F81DE4ED16000DD362 /* Assignee+CoreDataProperties.swift */; };
 		E260173B1BDB646300AF8332 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project.swift */; };
 		E260173F1BDB673A00AF8332 /* WorkPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage.swift */; };
 		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
@@ -91,6 +93,8 @@
 		E24CF4671BDE79F600930E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenProjectClient/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E24F6A721D46AD9D00CADC8F /* NewWpForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWpForm.swift; sourceTree = "<group>"; };
 		E24F6A761D46C38600CADC8F /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E25550F71DE4ED16000DD362 /* Assignee+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignee+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E25550F81DE4ED16000DD362 /* Assignee+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignee+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E260173A1BDB646300AF8332 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		E260173E1BDB673A00AF8332 /* WorkPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackage.swift; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
@@ -232,6 +236,8 @@
 		E260173D1BDB66F800AF8332 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E25550F71DE4ED16000DD362 /* Assignee+CoreDataClass.swift */,
+				E25550F81DE4ED16000DD362 /* Assignee+CoreDataProperties.swift */,
 				E2FD323E1DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift */,
 				E2FD323F1DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift */,
 				E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */,
@@ -626,6 +632,7 @@
 				E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */,
 				E24F6A731D46AD9D00CADC8F /* NewWpForm.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
+				E25550F91DE4ED16000DD362 /* Assignee+CoreDataClass.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance.swift in Sources */,
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
 				E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */,
@@ -636,6 +643,7 @@
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */,
 				E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */,
+				E25550FA1DE4ED16000DD362 /* Assignee+CoreDataProperties.swift in Sources */,
 				E29D4FCC1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift in Sources */,
 				E2D569DB1BE18E5F000BECCC /* Project+CoreDataProperties.swift in Sources */,
 				E2F1AD271DC928E200DC0649 /* FilterTableViewCell.swift in Sources */,

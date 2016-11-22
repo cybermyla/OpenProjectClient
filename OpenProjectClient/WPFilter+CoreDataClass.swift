@@ -15,7 +15,6 @@ public class WPFilter: NSManagedObject {
     static func getWPFilter(_ projectId: NSNumber, instanceId: String) -> String {
 
         let predicate = NSPredicate(format: "instanceId = %@ AND projectId == %@ AND selected == true", argumentArray: [instanceId, projectId])
-        let test = WPFilter.mr_findAll(with: predicate)
         if let wpFilter = WPFilter.mr_findFirst(with: predicate) {
             let types = wpFilter.types as! [Int]
             let priorities = wpFilter.priorities as! [Int]
