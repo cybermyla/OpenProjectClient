@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WPDetailViewController: UIViewController {
+class WorkPackageDetailVC: UIViewController {
     
     @IBOutlet weak var labelSubject: UILabel!
     @IBOutlet weak var textViewDescription: UITextView!

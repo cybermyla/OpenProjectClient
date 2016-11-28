@@ -22,6 +22,7 @@ class OpenProjectAPI {
     typealias RemoteAssigneesResponse = (Bool, NSError?) -> Void
     typealias RemoteResponsiblesResponse = (Bool, NSError?) -> Void
     typealias RemoteWorkPackageCreateFormsResponse = (JSON, NSError?) -> Void
+    typealias RemoteWPCreateFormsResponse = (Bool, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -191,6 +192,23 @@ class OpenProjectAPI {
         }
     }
     
+    func getWorkpackagesCreateFormsPayload(onCompletion: @escaping RemoteWPCreateFormsResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
+        
+        getWorkpackagesCreateForms(onCompletion: {(json:JSON, error:NSError?) in
+            if let issue = error {
+                onCompletion(false, issue as NSError?)
+            } else {
+                WorkPackageForm.buildWorkPackageCreateFormPayload(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                onCompletion(true, nil)
+            }
+        })
+    }
     
     func getPrioritiesStatusesTypes(onCompletion: @escaping RemotePrioritiesStatusesTypesResponse) {
         

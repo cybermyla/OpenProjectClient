@@ -96,6 +96,36 @@
         <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
+    <entity name="WorkPackageForm" representedClassName=".WorkPackageForm" syncable="YES">
+        <attribute name="assignee_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignee_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_raw" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="estimatedTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockVersion" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parent_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentId" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="priority_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remainingTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responsible_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responsible_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="status_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="WPFilter" representedClassName=".WPFilter" syncable="YES">
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -109,6 +139,7 @@
         <attribute name="types" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Assignee" positionX="-45" positionY="144" width="128" height="165"/>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
         <element name="Priority" positionX="-54" positionY="144" width="128" height="195"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
@@ -116,6 +147,6 @@
         <element name="Type" positionX="-45" positionY="153" width="128" height="210"/>
         <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
         <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
-        <element name="Assignee" positionX="-45" positionY="144" width="128" height="165"/>
+        <element name="WorkPackageForm" positionX="-45" positionY="144" width="128" height="465"/>
     </elements>
 </model>

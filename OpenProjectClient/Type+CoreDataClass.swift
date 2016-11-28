@@ -64,4 +64,15 @@ public class Type: NSManagedObject {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
         return (Type.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Type])
     }
+    
+    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String)] {
+        
+        var tuples: [(id: Int, name: String)] = []
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        let types = Type.mr_findAll(with: predicate) as! [Type]
+        for type in types {
+            tuples.append((Int(type.id), type.name!))
+        }
+        return tuples
+    }
 }

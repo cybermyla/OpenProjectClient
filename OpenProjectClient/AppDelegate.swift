@@ -133,12 +133,12 @@ extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "FilterAddEditViewController") as? FilterAddEditViewController
     }
     
-    class func wpEditViewController() -> NewWorkPackageViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "NewWorkPackageViewController") as? NewWorkPackageViewController
+    class func wpEditViewController() -> NewWorkPackageVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "NewWorkPackageVC") as? NewWorkPackageVC
     }
     
-    class func wpDetailViewController() -> WPDetailViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "WPDetailViewController") as? WPDetailViewController
+    class func wpDetailViewController() -> WorkPackageDetailVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "WorkPackageDetailVC") as? WorkPackageDetailVC
     }
     
     class func settingsViewController() -> SettingsViewController? {
@@ -147,6 +147,10 @@ extension UIStoryboard {
     
     class func addEditInstanceVC() -> AddEditInstanceVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "AddEditInstanceVC") as? AddEditInstanceVC
+    }
+    
+    class func EditSubjectVC() -> EditLongTextVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "EditLongTextVC") as? EditLongTextVC
     }
 }
 

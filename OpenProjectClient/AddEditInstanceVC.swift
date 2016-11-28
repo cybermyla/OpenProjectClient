@@ -79,9 +79,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func cancelButtonTapped(_ sender: AnyObject) {
-        if (!edit) {
-
-        }
         self.dismiss(animated: true, completion: nil)
     }
     
