@@ -3,6 +3,7 @@
     <entity name="Assignee" representedClassName=".Assignee" syncable="YES">
         <attribute name="assignee" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -24,6 +25,7 @@
         <attribute name="workPackagesHref" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Priority" representedClassName=".Priority" syncable="YES">
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
@@ -47,7 +49,9 @@
         <attribute name="updated_on" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="Status" representedClassName=".Status" syncable="YES">
+        <attribute name="allowedForNew" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="defaultDoneRatio" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isClosed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -60,6 +64,7 @@
     <entity name="Type" representedClassName=".Type" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -69,6 +74,14 @@
         <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="show" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Version" representedClassName=".Version" syncable="YES">
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WorkPackage" representedClassName=".WorkPackage" syncable="YES">
         <attribute name="assigneeHref" optional="YES" attributeType="String" syncable="YES"/>
@@ -139,14 +152,15 @@
         <attribute name="types" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignee" positionX="-45" positionY="144" width="128" height="165"/>
+        <element name="Assignee" positionX="-45" positionY="144" width="128" height="180"/>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
-        <element name="Priority" positionX="-54" positionY="144" width="128" height="195"/>
+        <element name="Priority" positionX="-54" positionY="144" width="128" height="210"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
-        <element name="Status" positionX="-54" positionY="144" width="128" height="180"/>
-        <element name="Type" positionX="-45" positionY="153" width="128" height="210"/>
+        <element name="Status" positionX="-54" positionY="144" width="128" height="210"/>
+        <element name="Type" positionX="-45" positionY="153" width="128" height="225"/>
         <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
-        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
         <element name="WorkPackageForm" positionX="-45" positionY="144" width="128" height="465"/>
+        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
+        <element name="Version" positionX="-45" positionY="144" width="128" height="135"/>
     </elements>
 </model>

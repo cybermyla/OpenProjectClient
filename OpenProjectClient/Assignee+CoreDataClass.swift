@@ -50,6 +50,10 @@ public class Assignee: NSManagedObject {
                     assignee!.status = status
                 }
                 
+                if let href: String = element["_links"]["self"]["href"].string {
+                    assignee?.href = href
+                }
+                
                 if isAssignee {
                     assignee?.assignee = true
                 }
@@ -61,5 +65,29 @@ public class Assignee: NSManagedObject {
             }
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func getAllAvailableAssigneesIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
+        
+        var tuples: [(id: Int, name: String, href: String)] = []
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND status = %i AND assignee = true", argumentArray: [projectId, instanceId, "active"])
+
+        let assignees = Assignee.mr_findAllSorted(by: "name", ascending: true, with: predicate) as! [Assignee]
+        for assignee in assignees {
+            tuples.append((Int(assignee.id), assignee.name!, assignee.href!))
+        }
+        return tuples
+    }
+    
+    static func getAllAvailableResponsiblesdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
+        
+        var tuples: [(id: Int, name: String, href: String)] = []
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND status = %i AND responsible = true", argumentArray: [projectId, instanceId, "active"])
+        
+        let assignees = Assignee.mr_findAllSorted(by: "name", ascending: true, with: predicate) as! [Assignee]
+        for assignee in assignees {
+            tuples.append((Int(assignee.id), assignee.name!, assignee.href!))
+        }
+        return tuples
     }
 }

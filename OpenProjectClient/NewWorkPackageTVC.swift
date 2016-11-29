@@ -17,6 +17,10 @@ class NewWorkPackageTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        value.font = UIFont.boldSystemFont(ofSize: 16.0)
+        value.textColor = Colors.darkAzureOP.getUIColor()
+        name.textColor = UIColor.darkGray
+        name.font = UIFont.systemFont(ofSize: 12.0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

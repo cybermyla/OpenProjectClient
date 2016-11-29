@@ -177,4 +177,46 @@ public class WorkPackageForm: NSManagedObject {
         wpf.description_raw = str
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
+    
+    static func updateType(title: String, href: String) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.type_title = title
+        wpf.type_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func updatePriority(title: String, href: String) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.priority_title = title
+        wpf.priority_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func updateStatus(title: String, href: String) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.status_title = title
+        wpf.status_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func updateAssignee(title: String?, href: String?) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.assignee_title = title
+        wpf.assignee_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func updateResponsible(title: String?, href: String?) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.responsible_title = title
+        wpf.responsible_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    static func updateVersion(title: String?, href: String?) {
+        let wpf = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        wpf.version_title = title
+        wpf.version_href = href
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
 }

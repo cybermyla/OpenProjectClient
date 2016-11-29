@@ -55,6 +55,10 @@ public class Type: NSManagedObject {
                 if let isMilestone: Bool = element["isMilestone"].bool {
                     type!.isMilestone = isMilestone
                 }
+                
+                if let href: String = element["_links"]["self"]["href"].string {
+                    type!.href = href
+                }
             }
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
@@ -65,13 +69,13 @@ public class Type: NSManagedObject {
         return (Type.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Type])
     }
     
-    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String)] {
+    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
         
-        var tuples: [(id: Int, name: String)] = []
+        var tuples: [(id: Int, name: String, href: String)] = []
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
-        let types = Type.mr_findAll(with: predicate) as! [Type]
+        let types = Type.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Type]
         for type in types {
-            tuples.append((Int(type.id), type.name!))
+            tuples.append((Int(type.id), type.name!, type.href!))
         }
         return tuples
     }

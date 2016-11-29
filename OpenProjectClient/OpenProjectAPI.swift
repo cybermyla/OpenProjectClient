@@ -226,6 +226,7 @@ class OpenProjectAPI {
                 let p = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 let t = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 let s = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let v = Version.buildVersions(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 onCompletion(true, nil)
             }
         })

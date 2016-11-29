@@ -80,6 +80,8 @@ class WorkPackage: NSManagedObject {
                     newStatus?.isClosed = false
                     newStatus?.isDefault = false
                     newStatus?.position = (newStatus?.id)!
+                    newStatus?.href = wp!.statusHref
+                    newStatus?.allowedForNew = false
                     NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
                     statuses = Status.mr_findAll(with: predicate) as! [Status]
                 }

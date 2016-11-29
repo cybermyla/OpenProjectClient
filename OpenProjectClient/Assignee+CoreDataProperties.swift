@@ -2,7 +2,7 @@
 //  Assignee+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 22/11/16.
+//  Created by Miloslav Linhart on 29/11/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 
@@ -16,13 +16,14 @@ extension Assignee {
         return NSFetchRequest<Assignee>(entityName: "Assignee");
     }
 
-    @NSManaged public var status: String?
-    @NSManaged public var id: Int32
+    @NSManaged public var assignee: Bool
     @NSManaged public var email: String?
+    @NSManaged public var id: Int32
+    @NSManaged public var instanceId: String?
     @NSManaged public var name: String?
     @NSManaged public var projectId: Int32
-    @NSManaged public var instanceId: String?
     @NSManaged public var responsible: Bool
-    @NSManaged public var assignee: Bool
+    @NSManaged public var status: String?
+    @NSManaged public var href: String?
 
 }

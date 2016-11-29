@@ -71,6 +71,9 @@ public class Priority: NSManagedObject {
                     }
                     priority!.isActive = isActive as NSNumber?
                 }
+                if let href: String = element["_links"]["self"]["href"].string {
+                    priority!.href = href
+                }
             }
         }
         if changed {
@@ -82,5 +85,16 @@ public class Priority: NSManagedObject {
     static func getAllPriorities(_ projectId: NSNumber, instanceId: String) -> [Priority] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
         return (Priority.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Priority])
+    }
+    
+    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
+        
+        var tuples: [(id: Int, name: String, href: String)] = []
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        let priorities = Priority.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Priority]
+        for priority in priorities {
+            tuples.append((Int(priority.id!), priority.name!, priority.href!))
+        }
+        return tuples
     }
 }

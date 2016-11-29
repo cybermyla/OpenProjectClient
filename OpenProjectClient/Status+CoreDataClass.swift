@@ -54,6 +54,10 @@ public class Status: NSManagedObject {
                 if let defaultDoneRatio: Int = element["defaultDoneRatio"].int {
                     status!.defaultDoneRatio = Int32(defaultDoneRatio)
                 }
+                
+                if let href: String = element["_links"]["self"]["href"].string {
+                    status!.href = href
+                }
             }
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
@@ -62,5 +66,21 @@ public class Status: NSManagedObject {
     static func getAllStatuses(_ projectId: NSNumber, instanceId: String) -> [Status] {
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
         return (Status.mr_findAllSorted(by: "id", ascending: true, with: predicate) as! [Status])
+    }
+    
+    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String, alloweForNew: Bool) -> [(id: Int, name: String, href: String)] {
+        
+        var tuples: [(id: Int, name: String, href: String)] = []
+        let predicate: NSPredicate
+        if alloweForNew {
+            predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND allowedForNew = true", argumentArray: [projectId, instanceId])
+        } else {
+            predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        }
+        let statuses = Status.mr_findAllSorted(by: "position", ascending: true, with: predicate) as! [Status]
+        for status in statuses {
+            tuples.append((Int(status.id), status.name!, status.href!))
+        }
+        return tuples
     }
 }

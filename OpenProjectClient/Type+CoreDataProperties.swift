@@ -2,7 +2,7 @@
 //  Type+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 30/10/16.
+//  Created by Miloslav Linhart on 29/11/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 
@@ -19,6 +19,7 @@ extension Type {
     @NSManaged public var color: String?
     @NSManaged public var createdAt: NSDate?
     @NSManaged public var id: Int32
+    @NSManaged public var instanceId: String?
     @NSManaged public var isDefault: Bool
     @NSManaged public var isMilestone: Bool
     @NSManaged public var name: String?
@@ -26,6 +27,6 @@ extension Type {
     @NSManaged public var projectId: Int32
     @NSManaged public var show: Bool
     @NSManaged public var updatedAt: NSDate?
-    @NSManaged public var instanceId: String?
+    @NSManaged public var href: String?
 
 }

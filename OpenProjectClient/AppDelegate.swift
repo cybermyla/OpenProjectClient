@@ -152,5 +152,11 @@ extension UIStoryboard {
     class func EditSubjectVC() -> EditLongTextVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "EditLongTextVC") as? EditLongTextVC
     }
+    
+    class func EditMultipleChoicesVC() -> EditMultipleChoicesVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "EditMultipleChoicesVC") as? EditMultipleChoicesVC
+    }
+    
+    
 }
 

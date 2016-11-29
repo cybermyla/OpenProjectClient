@@ -9,13 +9,15 @@
 import UIKit
 
 protocol EditLongTextVCDelegate {
-    func editFinished(type: WpAttributes)
+    func longTextEditFinished()
 }
 
 class EditLongTextVC: UIViewController {
 
     var type: WpAttributes?
     var text: String?
+    
+    var delegate: EditLongTextVCDelegate?
     
     @IBOutlet weak var textView: UITextView!
     
@@ -30,6 +32,7 @@ class EditLongTextVC: UIViewController {
         setTitle()
         
         self.textView.text = text
+        self.textView.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,9 +79,11 @@ class EditLongTextVC: UIViewController {
         switch type! {
         case WpAttributes.subject:
             WorkPackageForm.updateSubject(str: textView.text)
+            delegate?.longTextEditFinished()
             break
         case WpAttributes.description:
             WorkPackageForm.updateDescription(str: textView.text)
+            delegate?.longTextEditFinished()
         default:
             break
         }

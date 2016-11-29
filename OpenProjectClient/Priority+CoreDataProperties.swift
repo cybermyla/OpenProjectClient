@@ -2,7 +2,7 @@
 //  Priority+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 30/10/16.
+//  Created by Miloslav Linhart on 29/11/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ extension Priority {
     }
 
     @NSManaged public var id: NSNumber?
+    @NSManaged public var instanceId: String?
     @NSManaged public var isActive: NSNumber?
     @NSManaged public var isDefault: NSNumber?
     @NSManaged public var name: String?
@@ -25,6 +26,6 @@ extension Priority {
     @NSManaged public var required: NSNumber?
     @NSManaged public var show: Bool
     @NSManaged public var writable: NSNumber?
-    @NSManaged public var instanceId: String?
+    @NSManaged public var href: String?
 
 }
