@@ -57,19 +57,19 @@ public class Priority: NSManagedObject {
                 }
                 
                 if let isDefault: Bool = element["isDefault"].bool {
-                    if (newPriority && priority!.isDefault != isDefault as NSNumber?) {
+                    if (newPriority && priority!.isDefault != isDefault) {
                         print("Priority \(priorityId)-\(priority!.name) isDefault \(priority!.isDefault) has changed \(isDefault)")
                         changed = true
                     }
-                    priority!.isDefault = isDefault as NSNumber?
+                    priority!.isDefault = isDefault
                 }
                 
                 if let isActive: Bool = element["isActive"].bool {
-                    if (newPriority && priority!.isActive != isActive as NSNumber?) {
+                    if (newPriority && priority!.isActive != isActive) {
                         print("Priority \(priorityId)-\(priority!.name) isActive \(priority!.isActive) has changed \(isActive)")
                         changed = true
                     }
-                    priority!.isActive = isActive as NSNumber?
+                    priority!.isActive = isActive
                 }
                 if let href: String = element["_links"]["self"]["href"].string {
                     priority!.href = href
@@ -96,5 +96,10 @@ public class Priority: NSManagedObject {
             tuples.append((Int(priority.id!), priority.name!, priority.href!))
         }
         return tuples
+    }
+    
+    static func getDefault(_ projectId: NSNumber, instanceId: String) -> Priority? {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND isDefault = true", argumentArray: [projectId, instanceId])
+        return (Priority.mr_findFirst(with: predicate) as Priority?)
     }
 }

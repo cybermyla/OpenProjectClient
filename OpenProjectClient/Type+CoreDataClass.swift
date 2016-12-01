@@ -79,4 +79,9 @@ public class Type: NSManagedObject {
         }
         return tuples
     }
+    
+    static func getDefault(_ projectId: NSNumber, instanceId: String) -> Type? {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND isDefault = true", argumentArray: [projectId, instanceId])
+        return (Type.mr_findFirst(with: predicate) as Type?)
+    }
 }

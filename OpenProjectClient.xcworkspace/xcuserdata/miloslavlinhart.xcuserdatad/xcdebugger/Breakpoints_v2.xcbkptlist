@@ -4422,11 +4422,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501974882.103919"
+            timestampString = "502202580.728066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4438,11 +4438,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501976341.756917"
+            timestampString = "502239149.035692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
             landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4454,11 +4454,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501975126.493026"
+            timestampString = "502239149.035692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
             landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4470,59 +4470,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501975126.493026"
+            timestampString = "502239149.035692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501975187.170517"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501975921.919662"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
-            timestampString = "501975925.70473"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4534,11 +4486,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502154058.122911"
+            timestampString = "502244002.534538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "getNewForm()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4550,11 +4502,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "defineSections()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4566,11 +4518,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "defineSections()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4582,11 +4534,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502154058.122911"
+            timestampString = "502244002.534538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "longTextEditFinished()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4598,11 +4550,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "defineSections()"
             landmarkType = "7">
             <Locations>
@@ -4646,11 +4598,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "defineSections()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4662,11 +4614,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "defineSections()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4678,27 +4630,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "defineSections()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502243847.202785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
             endingLineNumber = "81"
+            landmarkName = "defineSections()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/NewWorkPackageVC.swift"
+            timestampString = "502243847.202785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "defineSections()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4726,11 +4678,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502244002.534538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4758,11 +4710,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/NewWorkPackageVC.swift"
-            timestampString = "502150132.695"
+            timestampString = "502244002.534538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4876,6 +4828,134 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "buildVersions(_:instanceId:json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/Priority+CoreDataClass.swift"
+            timestampString = "502239684.580855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "getDefault(_:instanceId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
+            timestampString = "502239720.274281"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
+            timestampString = "502239722.54324"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static OpenProjectClient.WorkPackageForm.buildWorkPackageCreateFormPayload (__ObjC.NSNumber, instanceId : Swift.String, json : SwiftyJSON.JSON) -&gt; ()"
+                  moduleName = "OpenProjectClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miloslavlinhart/Documents/Skola/Bakalarka/OpenProjectClient/OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
+                  timestampString = "502239934.189178"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "214"
+                  endingLineNumber = "214"
+                  offsetFromSymbolStart = "95930">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static OpenProjectClient.WorkPackageForm.buildWorkPackageCreateFormPayload (__ObjC.NSNumber, instanceId : Swift.String, json : SwiftyJSON.JSON) -&gt; ()"
+                  moduleName = "OpenProjectClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miloslavlinhart/Documents/Skola/Bakalarka/OpenProjectClient/OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
+                  timestampString = "502239934.191903"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "214"
+                  endingLineNumber = "214"
+                  offsetFromSymbolStart = "96049">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/WorkPackageForm+CoreDataClass.swift"
+            timestampString = "502242705.892761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "buildWorkPackageCreateFormPayload(_:instanceId:json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/NewWorkPackageVC.swift"
+            timestampString = "502243847.202785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "defineSections()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/NewWorkPackageVC.swift"
+            timestampString = "502244002.534538"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
+            landmarkName = "getName(str:required:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

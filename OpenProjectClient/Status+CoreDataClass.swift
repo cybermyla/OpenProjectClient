@@ -83,4 +83,9 @@ public class Status: NSManagedObject {
         }
         return tuples
     }
+    
+    static func getDefault(_ projectId: NSNumber, instanceId: String) -> Status? {
+        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND isDefault = true", argumentArray: [projectId, instanceId])
+        return (Status.mr_findFirst(with: predicate) as Status?)
+    }
 }

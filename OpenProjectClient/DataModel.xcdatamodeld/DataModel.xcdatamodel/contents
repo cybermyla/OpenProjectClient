@@ -28,14 +28,14 @@
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="position" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="required" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="show" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="writable" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Project" representedClassName=".Project" syncable="YES">
         <attribute name="created_on" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -110,34 +110,145 @@
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="WorkPackageForm" representedClassName=".WorkPackageForm" syncable="YES">
+        <attribute name="assignee_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="assignee_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignee_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignee_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="assignee_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignee_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignee_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="category_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="category_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="category_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="createdAt_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="createdAt_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="createdAt_value" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="createdAt_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="description_format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="description_html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="description_raw" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="estimatedTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lockVersion" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="description_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="description_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dueDate_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dueDate_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dueDate_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dueDate_value" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dueDate_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dueDate_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="estimatedTime_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="estimatedTime_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="estimatedTime_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="estimatedTime_value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="estimatedTime_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="estimatedTime_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id_value" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lockVersion_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lockVersion_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockVersion_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lockVersion_value" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lockVersion_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockVersion_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parent_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="parent_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="parent_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="parentId" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parent_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parentId_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parentId_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentId_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parentId_value" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parentId_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentId_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="priority_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priority_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priority_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="project_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="project_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="project_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remainingTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="remainingTime_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="remainingTime_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remainingTime_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="remainingTime_value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remainingTime_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remainingTime_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="responsibe_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="responsible_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="responsible_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responsible_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="responsible_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="responsible_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responsible_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="spentTime_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="spentTime_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spentTime_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="spentTime_value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spentTime_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spentTime_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDate_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDate_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDate_value" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="startDate_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="status_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subject_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subject_maxLength" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subject_minLength" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subject_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subject_value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="type_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updatedAt_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updatedAt_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updatedAt_value" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="updatedAt_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt_writable" optional="YES" attributeType="Boolean" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="version_hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="version_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_required" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="version_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_visibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version_writable" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="WPFilter" representedClassName=".WPFilter" syncable="YES">
         <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
@@ -158,9 +269,9 @@
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
         <element name="Status" positionX="-54" positionY="144" width="128" height="210"/>
         <element name="Type" positionX="-45" positionY="153" width="128" height="225"/>
-        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
-        <element name="WorkPackageForm" positionX="-45" positionY="144" width="128" height="465"/>
-        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
         <element name="Version" positionX="-45" positionY="144" width="128" height="135"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
+        <element name="WorkPackageForm" positionX="-45" positionY="144" width="128" height="2130"/>
+        <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
     </elements>
 </model>
