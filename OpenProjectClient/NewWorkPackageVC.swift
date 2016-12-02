@@ -122,6 +122,19 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         return sections[section].heading
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
+        returnedView.backgroundColor = Colors.lightAzureOP.getUIColor()
+        
+        let label = UILabel(frame: CGRect(x: 10, y: 2, width: view.frame.size.width, height: 25))
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.text = sections[section].heading
+        label.textColor = UIColor.white
+        returnedView.addSubview(label)
+        
+        return returnedView
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewWorkPackageTableViewCell") as! NewWorkPackageTVC!
         let item = sections[indexPath.section].items[indexPath.row]

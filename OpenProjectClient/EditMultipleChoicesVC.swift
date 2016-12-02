@@ -78,7 +78,7 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
         cell?.accessoryType = .none
         cell?.selectionStyle = .none
         cell?.textLabel?.text = item.name
-        if item.name == schemaItem?.value {
+        if item.name == schemaItem?.value || item.id == -1 {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
         }
         return cell!;

@@ -22,7 +22,13 @@ public class WorkPackageFormSchema: NSManagedObject {
                 case WpTypes.string:
                     return self.value_string
                 case WpTypes.date:
-                    return "\(self.value_dateTime)"
+                    if let date = self.value_dateTime as? Date {
+                        let df = DateFormatter()
+                        df.dateStyle = .short
+                        return df.string(from: date)
+                    } else {
+                        return nil
+                    }
                 case WpTypes.dateTime:
                     return "\(self.value_dateTime)"
                 case WpTypes.duration:
