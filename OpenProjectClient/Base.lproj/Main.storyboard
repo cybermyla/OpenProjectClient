@@ -689,8 +689,44 @@
                     <view key="view" contentMode="scaleToFill" id="cdN-Vs-nFR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="gw1-b7-dgF">
+                                <rect key="frame" x="0.0" y="28" width="375" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="Wkt-YP-U26"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="502329783.1178">
+                                    <!--2016-12-02 00:03:03 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="datePickerValueChanged:" destination="gpb-9L-Y1z" eventType="valueChanged" id="se8-v3-2yi"/>
+                                </connections>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJ7-pd-lIG">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="4b3-a1-Tkb"/>
+                                </constraints>
+                                <state key="normal" title="CLEAR"/>
+                                <connections>
+                                    <action selector="buttonClearTapped:" destination="gpb-9L-Y1z" eventType="touchUpInside" id="QPu-Wn-bWG"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gw1-b7-dgF" firstAttribute="top" secondItem="s7F-gk-d2L" secondAttribute="bottom" constant="8" id="B9d-V1-l9W"/>
+                            <constraint firstAttribute="trailing" secondItem="gw1-b7-dgF" secondAttribute="trailing" id="C6r-2x-Xpu"/>
+                            <constraint firstItem="Q3T-EX-eUL" firstAttribute="top" secondItem="nJ7-pd-lIG" secondAttribute="bottom" id="Oh9-2i-Cgd"/>
+                            <constraint firstItem="nJ7-pd-lIG" firstAttribute="leading" secondItem="cdN-Vs-nFR" secondAttribute="leading" id="avW-gq-TpT"/>
+                            <constraint firstItem="gw1-b7-dgF" firstAttribute="leading" secondItem="cdN-Vs-nFR" secondAttribute="leading" id="qFT-yX-TeP"/>
+                            <constraint firstAttribute="trailing" secondItem="nJ7-pd-lIG" secondAttribute="trailing" id="zp8-Ot-vGa"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="buttonClear" destination="nJ7-pd-lIG" id="AOA-rn-nUs"/>
+                        <outlet property="datePicker" destination="gw1-b7-dgF" id="cUL-G5-2Lb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="okX-wb-tWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

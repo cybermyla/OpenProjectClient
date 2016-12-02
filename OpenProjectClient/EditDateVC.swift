@@ -10,10 +10,20 @@ import UIKit
 
 class EditDateVC: UIViewController {
 
+    var schemaItem: WorkPackageFormSchema?
+    
+    @IBOutlet weak var buttonClear: UIButton!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = Colors.paleOP.getUIColor()
+        buttonClear.backgroundColor = Colors.lightAzureOP.getUIColor()
+        buttonClear.tintColor = UIColor.white
+        datePicker.backgroundColor = UIColor.white
+        datePicker.datePickerMode = .date
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +31,17 @@ class EditDateVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var prefersStatusBarHidden : Bool {
+        get {
+            return true
+        }
+    }
+    
+    @IBAction func datePickerValueChanged(_ sender: Any) {
+    }
+    
+    @IBAction func buttonClearTapped(_ sender: Any) {
+    }
 
     /*
     // MARK: - Navigation

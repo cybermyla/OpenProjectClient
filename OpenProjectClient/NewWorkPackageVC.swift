@@ -150,7 +150,9 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 self.show(vc!, sender: self)
                 break
             case WpTypes.date:
-                
+                let vc = UIStoryboard.EditDateVC()
+                vc?.schemaItem = selectedItem.value
+                self.show(vc!, sender: self)
                 break
             case WpTypes.complex:
                 let vc = UIStoryboard.EditMultipleChoicesVC()
