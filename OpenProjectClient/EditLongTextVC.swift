@@ -14,8 +14,7 @@ protocol EditLongTextVCDelegate {
 
 class EditLongTextVC: UIViewController {
 
-    var type: WpAttributes?
-    var text: String?
+    var schemaItem: WorkPackageFormSchema?
     
     var delegate: EditLongTextVCDelegate?
     
@@ -31,7 +30,7 @@ class EditLongTextVC: UIViewController {
         setBackButton()
         setTitle()
         
-        self.textView.text = text
+        self.textView.text = schemaItem?.value
         self.textView.becomeFirstResponder()
     }
 
@@ -57,16 +56,18 @@ class EditLongTextVC: UIViewController {
     */
     
     func setTitle() {
-        switch type! {
-        case WpAttributes.subject:
+        /*
+        switch (self.schemaItem?.type)! {
+        case "subject":
             self.title = "Subject"
             break
-        case WpAttributes.description:
+        case "description":
             self.title = "Description"
             break
         default:
             break
         }
+         */
     }
     
     func setBackButton() {
@@ -76,18 +77,40 @@ class EditLongTextVC: UIViewController {
     }
     
     func back(sender: UIBarButtonItem) {
-        switch type! {
-        case WpAttributes.subject:
-            WorkPackageForm.updateSubject(str: textView.text)
-            delegate?.longTextEditFinished()
-            break
-        case WpAttributes.description:
-            WorkPackageForm.updateDescription(str: textView.text)
-            delegate?.longTextEditFinished()
-        default:
-            break
+        var ok = true
+        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let minLength = schemaItem?.minLength{
+            if minLength > 0 && text.characters.count < Int(minLength) {
+                ok = false
+                showNoIncorrectLengthAlert()
+            }
         }
-        _ = navigationController?.popViewController(animated: true)
+        if let maxLength = schemaItem?.maxLength {
+            if maxLength > 0 && text.characters.count > Int(maxLength) {
+                ok = false
+                showNoIncorrectLengthAlert()
+            }
+        }
+        if ok {
+            schemaItem?.value = text
+            WorkPackageFormSchema.updateValue(schemaItem: schemaItem!)
+            delegate?.longTextEditFinished()
+            _ = navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func showNoIncorrectLengthAlert() {
+        let alertController = UIAlertController(title: "ERROR", message: "\((self.schemaItem?.name!)!) length has to be between \((self.schemaItem?.minLength)!) and \((self.schemaItem?.maxLength)!)", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch (action.style) {
+            case .default:
+                //self.dismiss(animated: true, completion: nil)
+                break
+            default:
+                break
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
     }
 
 }

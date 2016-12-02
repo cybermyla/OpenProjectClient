@@ -157,6 +157,9 @@ extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "EditMultipleChoicesVC") as? EditMultipleChoicesVC
     }
     
+    class func EditDateVC() -> EditDateVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "EditDateVC") as? EditDateVC
+    }
     
 }
 

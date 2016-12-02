@@ -18,8 +18,7 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
     
     var values: [(id: Int, name: String, href: String)] = []
     var delegate: EditMultipleChoicesVCDelegate?
-    var type: WpAttributes?
-    var selectedTitle: String = ""
+    var schemaItem: WorkPackageFormSchema?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +29,13 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.tableFooterView = UIView()
         
         self.view.backgroundColor = Colors.paleOP.getUIColor()
+        
+        //add an empty row in case attribute is optional
+        if let required = schemaItem?.required {
+            if !required {
+                values.insert((Int(-1), "-", "empty"), at: 0)
+            }
+        }
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -72,7 +78,7 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
         cell?.accessoryType = .none
         cell?.selectionStyle = .none
         cell?.textLabel?.text = item.name
-        if item.name == selectedTitle {
+        if item.name == schemaItem?.value {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
         }
         return cell!;
@@ -81,45 +87,13 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //update newWorkPackage
         let v = values[indexPath.row]
-        switch type! {
-        case WpAttributes.type:
-            WorkPackageForm.updateType(title: v.name, href: v.href)
-            delegate?.multipleChoicesEditFinished()
-            break
-        case WpAttributes.status:
-            WorkPackageForm.updateStatus(title: v.name, href: v.href)
-            delegate?.multipleChoicesEditFinished()
-            break
-        case WpAttributes.priority:
-            WorkPackageForm.updatePriority(title: v.name, href: v.href)
-            delegate?.multipleChoicesEditFinished()
-            break
-        case WpAttributes.assignee:
-            if v.id != -1 {
-                WorkPackageForm.updateAssignee(title: v.name, href: v.href)
-            } else {
-                WorkPackageForm.updateAssignee(title: nil, href: nil)
-            }
-            delegate?.multipleChoicesEditFinished()
-            break
-        case WpAttributes.responsible:
-            if v.id != -1 {
-                WorkPackageForm.updateResponsible(title: v.name, href: v.href)
-            } else {
-                WorkPackageForm.updateResponsible(title: nil, href: nil)
-            }
-            delegate?.multipleChoicesEditFinished()
-            break
-        case WpAttributes.version:
-            if v.id != -1 {
-                WorkPackageForm.updateVersion(title: v.name, href: v.href)
-            } else {
-                WorkPackageForm.updateVersion(title: nil, href: nil)
-            }
-            delegate?.multipleChoicesEditFinished()
-            break
-        default:
-            break
+        if v.id != -1 {
+            schemaItem?.value = "\((v.name));\((v.href))"
+        } else {
+            schemaItem?.value_href = nil
+            schemaItem?.value_title = nil
         }
+        WorkPackageFormSchema.updateValue(schemaItem: schemaItem!)
+        delegate?.multipleChoicesEditFinished()
     }
 }

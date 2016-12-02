@@ -23,13 +23,15 @@
 		E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project+CoreDataClass.swift */; };
 		E260173F1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift */; };
 		E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */; };
+		E26EE1751DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1731DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift */; };
+		E26EE1761DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */; };
+		E26EE1781DF0F07F003E8A8B /* EditDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */; };
 		E271D6541DECEFA400805611 /* EditMultipleChoicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E271D6531DECEFA400805611 /* EditMultipleChoicesVC.swift */; };
 		E271D6561DECEFCB00805611 /* EditMultipleChoicesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */; };
 		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
 		E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E287CC851DC7E87800743229 /* FilterViewController.swift */; };
 		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */; };
-		E2933EFC1DEF89910024BCAF /* WorkPackageForm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2933EFB1DEF89910024BCAF /* WorkPackageForm+CoreDataProperties.swift */; };
 		E2933EFE1DEF90C50024BCAF /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */; };
 		E296AB441DEE25F0002477CA /* Type+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296AB421DEE25F0002477CA /* Type+CoreDataProperties.swift */; };
 		E296AB461DEE2CE9002477CA /* Status+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296AB451DEE2CE9002477CA /* Status+CoreDataProperties.swift */; };
@@ -39,10 +41,9 @@
 		E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */; };
 		E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */; };
 		E29B33E81BBDC56700A3D6B1 /* WorkPackagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */; };
-		E29C5C1B1DEB1AEE00D247C5 /* WpAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C1A1DEB1AEE00D247C5 /* WpAttributes.swift */; };
+		E29C5C1B1DEB1AEE00D247C5 /* WpTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C1A1DEB1AEE00D247C5 /* WpTypes.swift */; };
 		E29C5C1D1DEB44F600D247C5 /* NewWorkPackageTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C1C1DEB44F600D247C5 /* NewWorkPackageTVC.swift */; };
 		E29C5C201DEB54DB00D247C5 /* EditLongTextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C1F1DEB54DB00D247C5 /* EditLongTextVC.swift */; };
-		E29C5C231DEB7A4C00D247C5 /* WorkPackageForm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C211DEB7A4C00D247C5 /* WorkPackageForm+CoreDataClass.swift */; };
 		E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D4FC61DC3E48600EB3BB6 /* Status+CoreDataClass.swift */; };
 		E29D4FCC1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */; };
 		E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */; };
@@ -54,6 +55,8 @@
 		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
 		E2CD5A7F1BBDC013009A3C33 /* OpenProjectClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A7E1BBDC013009A3C33 /* OpenProjectClientTests.swift */; };
 		E2CD5A8A1BBDC013009A3C33 /* OpenProjectClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A891BBDC013009A3C33 /* OpenProjectClientUITests.swift */; };
+		E2D2FC2D1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2FC2B1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift */; };
+		E2D2FC2E1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2FC2C1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift */; };
 		E2D569DB1BE18E5F000BECCC /* Project+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */; };
 		E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */; };
 		E2F1AD271DC928E200DC0649 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1AD261DC928E200DC0649 /* FilterTableViewCell.swift */; };
@@ -103,13 +106,15 @@
 		E260173A1BDB646300AF8332 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E260173E1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPDetailViewController.swift; sourceTree = "<group>"; };
+		E26EE1731DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StringObjectValue+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StringObjectValue+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDateVC.swift; sourceTree = "<group>"; };
 		E271D6531DECEFA400805611 /* EditMultipleChoicesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMultipleChoicesVC.swift; sourceTree = "<group>"; };
 		E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMultipleChoicesTVC.swift; sourceTree = "<group>"; };
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
 		E287CC851DC7E87800743229 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E2933EFB1DEF89910024BCAF /* WorkPackageForm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageForm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E296AB421DEE25F0002477CA /* Type+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E296AB451DEE2CE9002477CA /* Status+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -119,10 +124,9 @@
 		E29B33E31BBDC39200A3D6B1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		E29B33E51BBDC4AC00A3D6B1 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E29B33E71BBDC56700A3D6B1 /* WorkPackagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesViewController.swift; sourceTree = "<group>"; };
-		E29C5C1A1DEB1AEE00D247C5 /* WpAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WpAttributes.swift; sourceTree = "<group>"; };
+		E29C5C1A1DEB1AEE00D247C5 /* WpTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WpTypes.swift; sourceTree = "<group>"; };
 		E29C5C1C1DEB44F600D247C5 /* NewWorkPackageTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageTVC.swift; sourceTree = "<group>"; };
 		E29C5C1F1DEB54DB00D247C5 /* EditLongTextVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLongTextVC.swift; sourceTree = "<group>"; };
-		E29C5C211DEB7A4C00D247C5 /* WorkPackageForm+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageForm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E29D4FC61DC3E48600EB3BB6 /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 		E2CD5A851BBDC013009A3C33 /* OpenProjectClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenProjectClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A891BBDC013009A3C33 /* OpenProjectClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenProjectClientUITests.swift; sourceTree = "<group>"; };
 		E2CD5A8B1BBDC013009A3C33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2D2FC2B1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageFormSchema+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E2D2FC2C1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageFormSchema+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2EDEE371BD43CF600E0EFBC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E2F1AD261DC928E200DC0649 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -252,8 +258,8 @@
 		E260173D1BDB66F800AF8332 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2D2FC2F1DF055C8007B6109 /* WorkPackageFormSchema */,
 				E29C5C251DEB844800D247C5 /* ClassProperties */,
-				E29C5C211DEB7A4C00D247C5 /* WorkPackageForm+CoreDataClass.swift */,
 				E296AB4D1DEE3D7F002477CA /* Version+CoreDataClass.swift */,
 				E25550F71DE4ED16000DD362 /* Assignee+CoreDataClass.swift */,
 				E2FD323E1DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift */,
@@ -272,7 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				E20391F61BDC259300071846 /* Colors.swift */,
-				E29C5C1A1DEB1AEE00D247C5 /* WpAttributes.swift */,
+				E29C5C1A1DEB1AEE00D247C5 /* WpTypes.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 				E29C5C1F1DEB54DB00D247C5 /* EditLongTextVC.swift */,
 				E271D6531DECEFA400805611 /* EditMultipleChoicesVC.swift */,
 				E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */,
+				E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */,
 			);
 			name = NewEditWorkPackage;
 			sourceTree = "<group>";
@@ -312,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */,
-				E2933EFB1DEF89910024BCAF /* WorkPackageForm+CoreDataProperties.swift */,
 				E296AB531DEE40C1002477CA /* Version+CoreDataProperties.swift */,
 				E296AB471DEE3469002477CA /* Assignee+CoreDataProperties.swift */,
 				E296AB451DEE2CE9002477CA /* Status+CoreDataProperties.swift */,
@@ -393,6 +399,17 @@
 				E2CD5A8B1BBDC013009A3C33 /* Info.plist */,
 			);
 			path = OpenProjectClientUITests;
+			sourceTree = "<group>";
+		};
+		E2D2FC2F1DF055C8007B6109 /* WorkPackageFormSchema */ = {
+			isa = PBXGroup;
+			children = (
+				E26EE1731DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift */,
+				E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */,
+				E2D2FC2B1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift */,
+				E2D2FC2C1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift */,
+			);
+			name = WorkPackageFormSchema;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -664,25 +681,26 @@
 				E2FD32401DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift in Sources */,
 				E296AB441DEE25F0002477CA /* Type+CoreDataProperties.swift in Sources */,
 				E296AB481DEE3469002477CA /* Assignee+CoreDataProperties.swift in Sources */,
-				E29C5C1B1DEB1AEE00D247C5 /* WpAttributes.swift in Sources */,
+				E29C5C1B1DEB1AEE00D247C5 /* WpTypes.swift in Sources */,
 				E24B23411DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift in Sources */,
+				E26EE1751DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift in Sources */,
 				E29B33E61BBDC4AC00A3D6B1 /* SideMenuViewController.swift in Sources */,
 				E260173F1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift in Sources */,
+				E26EE1781DF0F07F003E8A8B /* EditDateVC.swift in Sources */,
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,
 				E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */,
 				E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */,
 				E296AB461DEE2CE9002477CA /* Status+CoreDataProperties.swift in Sources */,
 				E271D6541DECEFA400805611 /* EditMultipleChoicesVC.swift in Sources */,
+				E2D2FC2D1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift in Sources */,
 				E29C5C1D1DEB44F600D247C5 /* NewWorkPackageTVC.swift in Sources */,
 				E29B33E41BBDC39200A3D6B1 /* ContainerViewController.swift in Sources */,
 				E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */,
-				E29C5C231DEB7A4C00D247C5 /* WorkPackageForm+CoreDataClass.swift in Sources */,
 				E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */,
 				E25550F91DE4ED16000DD362 /* Assignee+CoreDataClass.swift in Sources */,
 				E296AB541DEE40C1002477CA /* Version+CoreDataProperties.swift in Sources */,
 				E20391F51BDC05AB00071846 /* Instance+CoreDataClass.swift in Sources */,
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
-				E2933EFC1DEF89910024BCAF /* WorkPackageForm+CoreDataProperties.swift in Sources */,
 				E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */,
 				E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */,
@@ -700,9 +718,11 @@
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
+				E2D2FC2E1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift in Sources */,
 				E29C5C201DEB54DB00D247C5 /* EditLongTextVC.swift in Sources */,
 				E2B25D631DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift in Sources */,
 				E2933EFE1DEF90C50024BCAF /* Priority+CoreDataProperties.swift in Sources */,
+				E26EE1761DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift in Sources */,
 				E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */,
 				E271D6561DECEFCB00805611 /* EditMultipleChoicesTVC.swift in Sources */,
 				E2EDEE381BD43CF600E0EFBC /* SettingsViewController.swift in Sources */,

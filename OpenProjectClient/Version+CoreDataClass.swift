@@ -52,7 +52,7 @@ public class Version: NSManagedObject {
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
 
-    static func getAllVersionsIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
+    static func getAllIdNameTuples(_ projectId: NSNumber, instanceId: String) -> [(id: Int, name: String, href: String)] {
         
         var tuples: [(id: Int, name: String, href: String)] = []
         let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i AND status = %i", argumentArray: [projectId, instanceId, "open"])

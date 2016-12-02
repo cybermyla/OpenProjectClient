@@ -16,7 +16,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     
     var workpackage: WorkPackage?
-    var workpackageForm: WorkPackageForm?
+    var workpackageFormSchemaItems: [WorkPackageFormSchema]?
     
     private var sections: [Section] = []
     
@@ -75,96 +75,23 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     //always testing if name exists - not all have to be defined
     private func defineSections() {
         sections = []
-        var items1 = [SectionItem]()
-        if let name = workpackageForm?.subject_name {
-            if let subject = workpackageForm?.subject_value {
-                items1.append(SectionItem(name: getName(str: name, required: workpackageForm?.subject_required), value: subject, type: WpAttributes.subject))
-            } else {
-                items1.append(SectionItem(name: getName(str: name, required: workpackageForm?.subject_required), value: "-", type: WpAttributes.subject))
-            }
-        }
-        if let name = workpackageForm?.description_name {
-            if let description = workpackageForm?.description_raw {
-                items1.append(SectionItem(name: getName(str: name, required: workpackageForm?.description_required), value: description, type: WpAttributes.description))
-            } else {
-                items1.append(SectionItem(name: getName(str: name, required: workpackageForm?.description_required), value: "", type: WpAttributes.description))
-            }
-        }
-        sections.append(Section(heading: "", items: items1))
+        let sectItems1 = WorkPackageFormSchema.getItemsBySection(section: 0)
+        sections.append(Section(heading: "", items: getSectionItems(items: sectItems1)))
         
-        var items2 = [SectionItem]()
-        if let name = workpackageForm?.type_name {
-            if let type = workpackageForm?.type_title {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.type_required), value: type, type: WpAttributes.type))
-            } else {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.type_required), value: "- no type -", type: WpAttributes.type))
-            }
-        }
-        if let name = workpackageForm?.status_name {
-            if let status = workpackageForm?.status_title {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.status_required), value: status, type: WpAttributes.status))
-            } else {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.status_required), value: "- no status -", type: WpAttributes.status))
-            }
-        }
-        if let sname = workpackageForm?.startDate_name {
-            if let dname = workpackageForm?.dueDate_name {
-                if let startDate = workpackageForm?.startDate_value {
-                    items2.append(SectionItem(name: getName(str: ("\(sname) - \(dname)"), required: workpackageForm?.startDate_required), value: dateToString(date: startDate), type: WpAttributes.date))
-                } else {
-                    items2.append(SectionItem(name: getName(str: ("\(sname) - \(dname)"), required: workpackageForm?.startDate_required), value: "- -", type: WpAttributes.date))
-                }
-            }
-        }
-        if let name = workpackageForm?.priority_name {
-            if let priority = workpackageForm?.priority_title {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.priority_required), value: priority, type: WpAttributes.priority))
-            } else {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.priority_required), value: "- no priority -", type: WpAttributes.priority))
-            }
-        }
-        if let name = workpackageForm?.version_name {
-            if let version = workpackageForm?.version_title {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.version_required), value: version, type: WpAttributes.version))
-            } else {
-                items2.append(SectionItem(name: getName(str: name, required: workpackageForm?.version_required), value: "- no version -", type: WpAttributes.version))
-            }
-        }
-        sections.append(Section(heading: "Details", items: items2))
+        let sectItems2 = WorkPackageFormSchema.getItemsBySection(section: 1)
+        sections.append(Section(heading: "Details", items: getSectionItems(items: sectItems2)))
         
-        var items3 = [SectionItem]()
-        if let name = workpackageForm?.assignee_name {
-            if let assignee = workpackageForm?.assignee_title {
-                items3.append(SectionItem(name: getName(str: name, required: workpackageForm?.assignee_required), value: assignee, type: WpAttributes.assignee))
-            } else {
-                items3.append(SectionItem(name: getName(str: name, required: workpackageForm?.assignee_required), value: "- no assignee -", type: WpAttributes.assignee))
-            }
-        }
-        if let name = workpackageForm?.responsible_name {
-            if let responsible = workpackageForm?.responsible_title {
-                items3.append(SectionItem(name: getName(str: name, required: workpackageForm?.responsibe_required), value: responsible, type: WpAttributes.responsible))
-            } else {
-                items3.append(SectionItem(name: getName(str: name, required: workpackageForm?.responsibe_required), value: "- no responsible -", type: WpAttributes.responsible))
-            }
-        }
-        sections.append(Section(heading: "People", items: items3))
+        let sectItems3 = WorkPackageFormSchema.getItemsBySection(section: 2)
+        sections.append(Section(heading: "People", items: getSectionItems(items: sectItems3)))
         
-        var items4 = [SectionItem]()
-        if let name = workpackageForm?.estimatedTime_name {
-            if let estimated = workpackageForm?.estimatedTime_value {
-                items4.append(SectionItem(name: getName(str: name, required: workpackageForm?.estimatedTime_required), value: estimated, type: WpAttributes.estimatedTime))
-            } else {
-                items4.append(SectionItem(name: getName(str: name, required: workpackageForm?.estimatedTime_required), value: "-", type: WpAttributes.estimatedTime))
-            }
+        let sectItems4 = WorkPackageFormSchema.getItemsBySection(section: 3)
+        sections.append(Section(heading: "Estimates & Time", items: getSectionItems(items: sectItems4)))
+        
+        let sectItems5 = WorkPackageFormSchema.getItemsBySection(section: 4)
+        let section5 = Section(heading: "Custom", items: getSectionItems(items: sectItems5))
+        if section5.items.count > 0 {
+            sections.append(section5)
         }
-        if let name = workpackageForm?.remainingTime_name {
-            if let remaining = workpackageForm?.remainingTime_value {
-                items4.append(SectionItem(name: getName(str: name, required: (workpackageForm?.remainingTime_required)!), value: remaining, type: WpAttributes.remainingHours))
-            } else {
-                items4.append(SectionItem(name: getName(str: name, required: workpackageForm?.remainingTime_required), value: "-", type: WpAttributes.remainingHours))
-            }
-        }
-        sections.append(Section(heading: "Estimates & Time", items: items4))
     }
     
     
@@ -178,7 +105,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
  
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        WorkPackageForm.mr_truncateAll()
+        WorkPackageFormSchema.mr_truncateAll()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -201,107 +128,63 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         cell?.accessoryType = .disclosureIndicator
         cell?.selectionStyle = .none
         cell?.name.attributedText = item.name
-        cell?.value.text = item.value
+        cell?.value.text = item.value.value
         return cell!;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = sections[indexPath.section].items[indexPath.row]
-        switch selectedItem.type {
-        case WpAttributes.subject:
-            let vc = UIStoryboard.EditSubjectVC()
-            if let subject = workpackageForm?.subject_value {
-                vc?.text = subject
+        if let type = WpTypes(rawValue: Int(selectedItem.value.type)) {
+            switch type {
+            case WpTypes.string, WpTypes.formattable:
+                let vc = UIStoryboard.EditSubjectVC()
+                vc?.schemaItem = selectedItem.value
+                vc?.delegate = self
+                self.show(vc!, sender: self)
+                break
+            case WpTypes.stringObject:
+                let vc = UIStoryboard.EditMultipleChoicesVC()
+                vc?.schemaItem = selectedItem.value
+                vc?.values = StringObjectValue.getAllIdNameTuples(schemaItemName: selectedItem.value.schemaItemName!)
+                vc?.delegate = self
+                self.show(vc!, sender: self)
+                break
+            case WpTypes.date:
+                
+                break
+            case WpTypes.complex:
+                let vc = UIStoryboard.EditMultipleChoicesVC()
+                
+                switch selectedItem.value.schemaItemName! {
+                case "type":
+                    vc?.values = Type.getAllIdNameTuples(projectId, instanceId: instanceId)
+                break
+                case "priority":
+                    vc?.values = Priority.getAllIdNameTuples(projectId, instanceId: instanceId)
+                break
+                case "version":
+                    vc?.values = Version.getAllIdNameTuples(projectId, instanceId: instanceId)
+                break
+                case "status":
+                    vc?.values = Status.getAllIdNameTuples(projectId, instanceId: instanceId, alloweForNew: true)
+                break
+                case "assignee":
+                    vc?.values = Assignee.getAllAvailableAssigneesIdNameTuples(projectId, instanceId: instanceId)
+                break
+                case "responsible":
+                    vc?.values = Assignee.getAllAvailableResponsiblesdNameTuples(projectId, instanceId: instanceId)
+                break
+                default:
+                    vc?.values = [(id: Int, name: String, href: String)]()
+                break
+                }
+                vc?.schemaItem = selectedItem.value
+                vc?.delegate = self
+                self.show(vc!, sender: self)
+                break
+            default:
+                break
             }
-            vc?.type = WpAttributes.subject
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.description:
-            let vc = UIStoryboard.EditSubjectVC()
-            if let desc = workpackageForm?.description_raw {
-                vc?.text = desc
-            }
-            vc?.type = WpAttributes.description
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.type:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            vc?.values = Type.getAllIdNameTuples(projectId, instanceId: instanceId)
-            vc?.type = WpAttributes.type
-            if let title = workpackageForm?.type_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.status:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            vc?.values = Status.getAllIdNameTuples(projectId, instanceId: instanceId, alloweForNew: true)
-            vc?.type = WpAttributes.status
-            if let title = workpackageForm?.status_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.progress:
-            break
-        case WpAttributes.date:
-            break
-        case WpAttributes.priority:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            vc?.values = Priority.getAllIdNameTuples(projectId, instanceId: instanceId)
-            vc?.type = WpAttributes.priority
-            if let title = workpackageForm?.priority_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.version:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            var values = Version.getAllVersionsIdNameTuples(projectId, instanceId: instanceId)
-            values.append((id: -1, name: "- no version -", href: "-"))
-            vc?.values = values
-            vc?.type = WpAttributes.version
-            if let title = workpackageForm?.version_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.assignee:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            var values = Assignee.getAllAvailableAssigneesIdNameTuples(projectId, instanceId: instanceId)
-            values.append((id: -1, name: "- no assignee -", href: "-"))
-            vc?.values = values
-            vc?.type = WpAttributes.assignee
-            if let title = workpackageForm?.assignee_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.responsible:
-            let vc = UIStoryboard.EditMultipleChoicesVC()
-            var values = Assignee.getAllAvailableResponsiblesdNameTuples(projectId, instanceId: instanceId)
-            values.append((id: -1, name: "- no responsible -", href: "-"))
-            vc?.values = values
-            vc?.type = WpAttributes.responsible
-            if let title = workpackageForm?.responsible_title {
-                vc?.selectedTitle = title
-            }
-            vc?.delegate = self
-            self.show(vc!, sender: self)
-            break
-        case WpAttributes.estimatedTime:
-            break
-        case WpAttributes.remainingHours:
-            break
-        default:
-            break
         }
     }
     
@@ -317,8 +200,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     private struct SectionItem {
         var name: NSMutableAttributedString
-        var value: String
-        var type: WpAttributes
+        var value: WorkPackageFormSchema
     }
 
     func getAvailableAssignees() {
@@ -353,7 +235,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 print(issue.description)
                 LoadingUIView.hide()
             } else {
-                self.workpackageForm = WorkPackageForm.mr_findFirst() as WorkPackageForm
+                self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
                 self.defineSections()
                 self.tableView.reloadData()
                 LoadingUIView.hide()
@@ -362,7 +244,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func updateForm() {
-        self.workpackageForm = WorkPackageForm.mr_findFirst() as WorkPackageForm
+        self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
         self.defineSections()
         self.tableView.reloadData()
     }
@@ -397,6 +279,16 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
         return combination
+    }
+    
+    private func getSectionItems(items: [WorkPackageFormSchema]) -> [SectionItem] {
+        var results = [SectionItem]()
+        for item in items {
+            let name = getName(str: item.name, required: item.required)
+            let secItem = SectionItem(name: name, value: item)
+            results.append(secItem)
+        }
+        return results
     }
 }
 

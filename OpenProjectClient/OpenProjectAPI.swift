@@ -204,7 +204,8 @@ class OpenProjectAPI {
             if let issue = error {
                 onCompletion(false, issue as NSError?)
             } else {
-                WorkPackageForm.buildWorkPackageCreateFormPayload(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                //WorkPackageForm.buildWorkPackageCreateFormPayload(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                WorkPackageFormSchema.buildWorkPackageForms(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 onCompletion(true, nil)
             }
         })
@@ -223,10 +224,10 @@ class OpenProjectAPI {
             if let issue = error {
                 onCompletion(false, issue as NSError?)
             } else {
-                let p = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                let t = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                let s = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
-                let v = Version.buildVersions(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let _ = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let _ = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let _ = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                let _ = Version.buildVersions(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 onCompletion(true, nil)
             }
         })
