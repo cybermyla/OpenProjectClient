@@ -8,13 +8,22 @@
 
 import UIKit
 
+protocol EditDateVCDelegate {
+    func dateEditFinished()
+}
+
 class EditDateVC: UIViewController {
 
     var schemaItem: WorkPackageFormSchema?
     
+    @IBOutlet weak var labelDate: UILabel!
+    
     @IBOutlet weak var buttonClear: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
+    var selectedDate:Date?
     
+    var delegate: EditDateVCDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +33,32 @@ class EditDateVC: UIViewController {
         buttonClear.tintColor = UIColor.white
         datePicker.backgroundColor = UIColor.white
         datePicker.datePickerMode = .date
+    
+        labelDate.textAlignment = .center
+        labelDate.font = UIFont.boldSystemFont(ofSize: 44)
+        labelDate.textColor = Colors.darkAzureOP.getUIColor()
+        
+        labelDate.text = "NOT SET"
+        
+        selectedDate = Date()
+        
+        if let date = selectedDate {
+            datePicker.setDate(date, animated: false)
+            labelDate.text = setDateLabel(date: date)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let date = selectedDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            schemaItem?.value = formatter.string(from: date)
+        } else {
+            schemaItem?.value = nil
+        }
+        
+        WorkPackageFormSchema.updateValue(schemaItem: schemaItem!)
+        delegate?.dateEditFinished()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,9 +73,15 @@ class EditDateVC: UIViewController {
     }
     
     @IBAction func datePickerValueChanged(_ sender: Any) {
+        selectedDate = datePicker.date
+        if let date = selectedDate {
+            labelDate.text = setDateLabel(date: date)
+        }
     }
     
     @IBAction func buttonClearTapped(_ sender: Any) {
+        selectedDate = nil
+        labelDate.text = "NOT SET"
     }
 
     /*
@@ -53,4 +94,9 @@ class EditDateVC: UIViewController {
     }
     */
 
+    func setDateLabel(date: Date) -> String {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        return df.string(from: date)
+    }
 }

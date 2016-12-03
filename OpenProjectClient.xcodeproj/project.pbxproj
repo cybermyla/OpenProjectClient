@@ -30,6 +30,7 @@
 		E271D6561DECEFCB00805611 /* EditMultipleChoicesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */; };
 		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
 		E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E287CC851DC7E87800743229 /* FilterViewController.swift */; };
+		E28D506C1DF378F400723A80 /* EditHoursVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D506B1DF378F400723A80 /* EditHoursVC.swift */; };
 		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */; };
 		E2933EFE1DEF90C50024BCAF /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */; };
@@ -113,6 +114,7 @@
 		E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMultipleChoicesTVC.swift; sourceTree = "<group>"; };
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
 		E287CC851DC7E87800743229 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		E28D506B1DF378F400723A80 /* EditHoursVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditHoursVC.swift; sourceTree = "<group>"; };
 		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				E271D6531DECEFA400805611 /* EditMultipleChoicesVC.swift */,
 				E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */,
 				E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */,
+				E28D506B1DF378F400723A80 /* EditHoursVC.swift */,
 			);
 			name = NewEditWorkPackage;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 			files = (
 				E2FD32401DC7FB7000AA0749 /* WPFilter+CoreDataClass.swift in Sources */,
 				E296AB441DEE25F0002477CA /* Type+CoreDataProperties.swift in Sources */,
+				E28D506C1DF378F400723A80 /* EditHoursVC.swift in Sources */,
 				E296AB481DEE3469002477CA /* Assignee+CoreDataProperties.swift in Sources */,
 				E29C5C1B1DEB1AEE00D247C5 /* WpTypes.swift in Sources */,
 				E24B23411DD2829D00AF288A /* MenuItemSideMenuTableViewCell.swift in Sources */,

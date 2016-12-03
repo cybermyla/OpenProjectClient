@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, EditLongTextVCDelegate, EditMultipleChoicesVCDelegate {
+class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, EditLongTextVCDelegate, EditMultipleChoicesVCDelegate, EditDateVCDelegate, EditHoursVCDelegate {
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -126,7 +126,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
         returnedView.backgroundColor = Colors.lightAzureOP.getUIColor()
         
-        let label = UILabel(frame: CGRect(x: 10, y: 2, width: view.frame.size.width, height: 25))
+        let label = UILabel(frame: CGRect(x: 10, y: 0, width: view.frame.size.width, height: 25))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = sections[section].heading
         label.textColor = UIColor.white
@@ -165,6 +165,13 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             case WpTypes.date:
                 let vc = UIStoryboard.EditDateVC()
                 vc?.schemaItem = selectedItem.value
+                vc?.delegate = self
+                self.show(vc!, sender: self)
+                break
+            case WpTypes.duration:
+                let vc = UIStoryboard.EditHoursVC()
+                vc?.schemaItem = selectedItem.value
+                vc?.delegate = self
                 self.show(vc!, sender: self)
                 break
             case WpTypes.complex:
@@ -275,6 +282,14 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func multipleChoicesEditFinished() {
+        updateForm()
+    }
+    
+    func dateEditFinished() {
+        updateForm()
+    }
+    
+    func hoursEditFinished() {
         updateForm()
     }
     

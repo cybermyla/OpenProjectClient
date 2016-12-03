@@ -24,7 +24,7 @@ public class WorkPackageFormSchema: NSManagedObject {
                 case WpTypes.date:
                     if let date = self.value_dateTime as? Date {
                         let df = DateFormatter()
-                        df.dateStyle = .short
+                        df.dateStyle = .medium
                         return df.string(from: date)
                     } else {
                         return nil
@@ -32,7 +32,14 @@ public class WorkPackageFormSchema: NSManagedObject {
                 case WpTypes.dateTime:
                     return "\(self.value_dateTime)"
                 case WpTypes.duration:
-                    return "not implemented"
+                    switch self.value_int {
+                    case -1:
+                        return ""
+                    case 1:
+                        return "1 hour"
+                    default:
+                        return "\(self.value_int) hours"
+                    }
                 case WpTypes.integer:
                     return "\(self.value_int)"
                 case WpTypes.complex:
@@ -55,15 +62,26 @@ public class WorkPackageFormSchema: NSManagedObject {
                     self.value_string = newValue
                     break
                 case WpTypes.date:
-                    //self.value_dateTime = newValue
+                    if let strValue = newValue {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        self.value_dateTime = formatter.date(from: strValue) as NSDate?
+                    } else {
+                        self.value_dateTime = nil
+                    }
                     break
                 case WpTypes.dateTime:
                     //self.value_dateTime = newValue
                     break
                 case WpTypes.duration:
+                    if let value = newValue {
+                        self.value_int = Int32(value)!
+                    }
                     break
                 case WpTypes.integer:
-                    //self.value_int = Int(newValue!)
+                    if let value = newValue {
+                        self.value_int = Int32(value)!
+                    }
                     break
                 case WpTypes.complex, WpTypes.stringObject:
                     if let arr = newValue?.components(separatedBy: ";") {
@@ -232,6 +250,11 @@ public class WorkPackageFormSchema: NSManagedObject {
             case WpTypes.complex, WpTypes.stringObject:
                 item.value_href = schemaItem.value_href
                 item.value_title = schemaItem.value_title
+            case WpTypes.date:
+                item.value_dateTime = schemaItem.value_dateTime
+                break
+            case WpTypes.duration:
+                item.value_int = schemaItem.value_int
             default:
                 item.value = schemaItem.value
                 break

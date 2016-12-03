@@ -48,13 +48,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
             edit = false
             self.title = "New Instance"
         }   
-        /*
-        textFieldAddress.text = "http://10.0.0.43"
-        textFieldApiKey.text = "7b0d7c5e7c0fa1089d2426c69b2c8013052a43e7"
-
-          */
-        textFieldAddress.text = "https://community.openproject.com"
-        textFieldApiKey.text = "9cfa5e3eea8f3537c50d30c2a0f6bb14a40f0217"
  
     }
     
