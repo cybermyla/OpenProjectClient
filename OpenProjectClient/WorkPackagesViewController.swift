@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewWorkPackageVCDelegate {
     
     var delegate: ContainerViewControllerDelegate?
     var project: Project?
@@ -225,5 +225,9 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                 getWorkPackages(projectId, instanceId: instanceId, refresh: true)
             }
         }
+    }
+    
+    func workpackageCreationUpdateFinished() {
+        refresh()
     }
 }

@@ -23,6 +23,7 @@ class OpenProjectAPI {
     typealias RemoteResponsiblesResponse = (Bool, NSError?) -> Void
     typealias RemoteWorkPackageCreateFormsResponse = (JSON, NSError?) -> Void
     typealias RemoteWPCreateFormsResponse = (Bool, NSError?) -> Void
+    typealias RemoteWPCreateFormsValidationResponse = (JSON, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -144,9 +145,9 @@ class OpenProjectAPI {
             }
         }
     }
-    
-    func getWorkpackagesCreateForms(onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
-        
+
+    func getWorkpackagesForms(wpId: Int?, payload: String?, onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
+
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -163,8 +164,34 @@ class OpenProjectAPI {
             
             let headers = getHeaders(auth: instance.auth!)
             
-            let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/work_packages/form"
+            var url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/work_packages/form"
+            if let workPackageId = wpId {
+                url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
+            }
             
+            if payload != nil {
+                Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                    switch response.result {
+                    case .success( _):
+                        guard let responseValue = response.result.value else {
+                            onCompletion(false, nil)
+                            return
+                        }
+                        
+                        guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                            onCompletion(false, nil)
+                            return
+                        }
+                        
+                        let json = JSON(data: dataFromResponse)
+                        print("Validate form response successfully received")
+                        onCompletion(json, nil)
+                    case .failure(let error):
+                        print(error)
+                        onCompletion(false, error as NSError?)
+                    }
+                }
+            } else {
             Alamofire.request(url, method:.post, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
@@ -186,6 +213,71 @@ class OpenProjectAPI {
                     print(error)
                     onCompletion(false, error as NSError?)
                 }
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func verifyWorkpackageFormPayload(wpId: Int?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+        
+        getWorkpackagesForms(wpId: nil, payload: payload, onCompletion: {(json:JSON, error:NSError?) in
+            if let issue = error {
+                onCompletion(false, issue as NSError?)
+            } else {
+                onCompletion(json, nil)
+            }
+        })
+    }
+    
+    func createOrUpdateWorkpackage(wpId: Int?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            var url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/work_packages"
+            var method: HTTPMethod = .post
+            var operationName = "Create"
+            
+            if let workPackageId = wpId {
+                url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)"
+                method = .patch
+                operationName = "Update"
+            }
+            
+            Alamofire.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                        
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                        
+                    let json = JSON(data: dataFromResponse)
+                    print("\(operationName) WP response successfully received")
+                    onCompletion(json, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
             }
         } else {
             onCompletion(false, nil)
@@ -200,11 +292,28 @@ class OpenProjectAPI {
             return
         }
         
-        getWorkpackagesCreateForms(onCompletion: {(json:JSON, error:NSError?) in
+        getWorkpackagesForms(wpId: nil, payload: nil, onCompletion: {(json:JSON, error:NSError?) in
             if let issue = error {
                 onCompletion(false, issue as NSError?)
             } else {
-                //WorkPackageForm.buildWorkPackageCreateFormPayload(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                WorkPackageFormSchema.buildWorkPackageForms(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                onCompletion(true, nil)
+            }
+        })
+    }
+    
+    func getWorkpackagesUpdateFormsPayload(wpId: Int, onCompletion: @escaping RemoteWPCreateFormsResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let projectId = Int(defaults.string(forKey: "ProjectId")!) else {
+            return
+        }
+        
+        getWorkpackagesForms(wpId: wpId, payload: nil, onCompletion: {(json:JSON, error:NSError?) in
+            if let issue = error {
+                onCompletion(false, issue as NSError?)
+            } else {
                 WorkPackageFormSchema.buildWorkPackageForms(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 onCompletion(true, nil)
             }
@@ -220,7 +329,7 @@ class OpenProjectAPI {
             return
         }
         
-        getWorkpackagesCreateForms(onCompletion: {(json:JSON, error:NSError?) in
+        getWorkpackagesForms(wpId: nil, payload: nil, onCompletion: {(json:JSON, error:NSError?) in
             if let issue = error {
                 onCompletion(false, issue as NSError?)
             } else {
@@ -337,4 +446,27 @@ class OpenProjectAPI {
         let loginData: Data = loginString.data(using: String.Encoding.utf8.rawValue)!
         return "Basic \(loginData.base64EncodedString(options: NSData.Base64EncodingOptions.lineLength64Characters))"
     }
+    
+    private func paramsFromJSON(json: String) -> [String : AnyObject]?
+    {
+        let objectData: NSData = (json.data(using: String.Encoding.utf8))! as NSData
+        var jsonDict: [ String : AnyObject]!
+        do {
+            jsonDict = try JSONSerialization.jsonObject(with: objectData as Data, options: .mutableContainers) as! [ String : AnyObject]
+            return jsonDict
+        } catch {
+            print("JSON serialization failed:  \(error)")
+            return nil
+        }
+    }
+}
+
+extension String: ParameterEncoding {
+    
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        var request = try urlRequest.asURLRequest()
+        request.httpBody = data(using: .utf8, allowLossyConversion: false)
+        return request
+    }
+    
 }

@@ -111,11 +111,11 @@ public class WorkPackageFormSchema: NSManagedObject {
                     if let value = self.value_str_raw {
                         raw = "\"\(value)\""
                     }
-                    var html = ""
+                    var html: String = ""
                     if let value = self.value_str_html {
                         html = "\"\(value)\""
                     }
-                    return "\"\(self.schemaItemName!)\": {\"raw\": \(raw), \"format\": \"textile\", \"html\": \(html)}"
+                    return "\"\(self.schemaItemName!)\": { \"raw\": \(raw), \"format\": \"textile\", \"html\": \(html) }"
                 case WpTypes.string:
                     if let value = self.value_string {
                         return "\"\(self.schemaItemName!)\": \"\(value)\""
@@ -126,7 +126,7 @@ public class WorkPackageFormSchema: NSManagedObject {
                     if let value = self.value_dateTime {
                         let df = DateFormatter()
                         df.dateFormat = "yyyy-MM-dd"
-                        return "\"\(self.schemaItemName!)\": \(df.string(from: value as Date))"
+                        return "\"\(self.schemaItemName!)\": \"\(df.string(from: value as Date))\""
                     } else {
                         return "\"\(self.schemaItemName!)\": null"
                     }
@@ -134,7 +134,7 @@ public class WorkPackageFormSchema: NSManagedObject {
                     if let value = self.value_dateTime {
                         let df = DateFormatter()
                         df.dateFormat = "yyyy-MM-dd"
-                        return "\"\(self.schemaItemName!)\": \(df.string(from: value as Date))"
+                        return "\"\(self.schemaItemName!)\": \"\(df.string(from: value as Date))\""
                     } else {
                         return "\"\(self.schemaItemName!)\": null"
                     }
@@ -152,20 +152,19 @@ public class WorkPackageFormSchema: NSManagedObject {
                         case "parentId", "id":
                             return "\"\(self.schemaItemName!)\": null"
                         default:
-                            break
+                            return "\"\(self.schemaItemName!)\": null"
                         }
                     }
-                
-                        return "\"\(self.schemaItemName!)\": \(self.value_int)"
+                    return "\"\(self.schemaItemName!)\": \(self.value_int)"
                 case WpTypes.complex, WpTypes.stringObject:
                     if let href = self.value_href {
-                        return "\"\(self.schemaItemName!)\": {\"title\": \"\(self.value_title!)\", \"href\": \"\(href)\"}"
+                        return "\"\(self.schemaItemName!)\": { \"title\": \"\(self.value_title!)\", \"href\": \"\(href)\" }"
                     } else {
-                        return "\"\(self.schemaItemName!)\": {\"href\": null}"
+                        return "\"\(self.schemaItemName!)\": { \"href\": null }"
                     }
                 }
             }
-            return "bla"
+            return ""
         }
     }
     class func buildWorkPackageForms(_ projectId: NSNumber, instanceId: String, json: JSON) {
@@ -208,7 +207,12 @@ public class WorkPackageFormSchema: NSManagedObject {
                         if let html = arrPayload?[key]?["html"].string {
                             schema?.value_str_html = html
                         }
-                    break
+                        break
+                    case WpTypes.integer:
+                        if let keyValue = arrPayload?[key]?.int {
+                            schema?.value = "\(keyValue)"
+                        }
+                        break
                     default:
                     if let keyValue = arrPayload?[key]?.string {
                         schema?.value = keyValue
@@ -337,34 +341,29 @@ public class WorkPackageFormSchema: NSManagedObject {
     static func getPayload() -> String {
         let items = WorkPackageFormSchema.mr_findAll() as! [WorkPackageFormSchema]
         var complexItems = [String]()
-        var simpleItems = [String]()
-        var formattable = [String]()
+        var otherItems = [String]()
+        
         for itm in items {
-            if let x = itm.name {
+            if itm.name != nil {
                     let type = WpTypes(rawValue: Int(itm.type))
                     switch type! {
                     case WpTypes.complex, WpTypes.stringObject:
                         complexItems.append(itm.valuePayload)
                         break
-                    case WpTypes.formattable:
-                        formattable.append(itm.valuePayload)
-                        break
                     default:
-                        simpleItems.append(itm.valuePayload)
+                        otherItems.append(itm.valuePayload)
                         break
                     }
             }
         }
-        var result = "{"
-
-        result.append(simpleItems.joined(separator: ","))
-        
-        result.append(", \"_links\": { \(complexItems.joined(separator: ",")) }")
-        
-        result.append(", \(formattable.joined(separator: ",")) ")
-        
-        result.append("}")
-        print(result)
-        return result
+        var result = [String]()
+        result.append(otherItems.joined(separator: ","))
+        result.append("\"_links\": {\(complexItems.joined(separator: ","))}")
+        return "{\(result.joined(separator: ","))}"
+    }
+    
+    static func getValidatedPayload(json: JSON) -> String {
+        let dicPayload = json["_embedded"].dictionary
+        return (dicPayload?["payload"]?.rawString())!
     }
 }

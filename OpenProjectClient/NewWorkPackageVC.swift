@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+protocol NewWorkPackageVCDelegate {
+    func workpackageCreationUpdateFinished()
+}
 
 class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, EditLongTextVCDelegate, EditMultipleChoicesVCDelegate, EditDateVCDelegate, EditHoursVCDelegate {
     
@@ -24,20 +29,23 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var instanceId: String = ""
     var projectId: NSNumber = -1
     
+    var delegate: NewWorkPackageVCDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        getAvailableAssignees()
         // Do any additional setup after loading the view.
         if let _ = workpackage {
+            getEditForm()
             self.navigationItem.title = "Edit Work Package"
             nextButton.titleLabel?.text = "UPDATE"
         } else {
+            getNewForm()
             self.navigationItem.title = "New Work Package"
             nextButton.titleLabel?.text = "CREATE"
         }
-        getAvailableAssignees()
         
-        getNewForm()
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -112,7 +120,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        WorkPackageFormSchema.getPayload()
+        validateFormAndCreateNewWorkpackage()
     }
     
     
@@ -286,6 +294,21 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         })
     }
     
+    func getEditForm() {
+        LoadingUIView.show()
+        OpenProjectAPI.sharedInstance.getWorkpackagesUpdateFormsPayload(wpId: workpackage!.id as! Int ,onCompletion: {(responseObject:Bool, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+                LoadingUIView.hide()
+            } else {
+                self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
+                self.defineSections()
+                self.tableView.reloadData()
+                LoadingUIView.hide()
+            }
+        })
+    }
+    
     func updateForm() {
         self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
         self.defineSections()
@@ -342,7 +365,69 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         return results
     }
     
+    private func showAlert(title: String, str: String) {
+        let alert = UIAlertController(title: title, message: str, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    private func validateFormAndCreateNewWorkpackage() {
+        let payload = WorkPackageFormSchema.getPayload()
+        LoadingUIView.show()
+        OpenProjectAPI.sharedInstance.verifyWorkpackageFormPayload(wpId: workpackage?.id as Int?, payload: payload, onCompletion: {(responseObject:JSON, error:NSError?) in
+            if let issue = error {
+                print("Payload verification request failed")
+                print(issue.description)
+                LoadingUIView.hide()
+            } else {
+                print("Payload verification response received")
+                print(responseObject)
+                LoadingUIView.hide()
+                let errors = WPValidationError.getValidationErrors(json: responseObject)
+                if errors.count > 0 {
+                    LoadingUIView.hide()
+                    print("Form is not valid")
+                    var errorText = [String]()
+                    for error in errors {
+                        errorText.append(error.message!)
+                    }
+                    self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
+                } else {
+                    print("Form is valid")
+                    
+                    //create new workpackage
+                    //WorkPackageFormSchema.buildWorkPackageForms(self.projectId, instanceId: self.instanceId, json: responseObject)
+                    let finalPayload = WorkPackageFormSchema.getValidatedPayload(json: responseObject)
+                    print(finalPayload)
+                    
+                    OpenProjectAPI.sharedInstance.createOrUpdateWorkpackage(wpId: self.workpackage?.id as Int?, payload: finalPayload, onCompletion: {(submitionResponseObject:JSON, error:NSError?) in
+                        if let issue = error {
+                            print("New Workpackage request failed")
+                            print(issue.description)
+                            LoadingUIView.hide()
+                        } else {
+                            LoadingUIView.hide()
+                            print(submitionResponseObject)
+                            let errors = WPValidationError.getSubmitionErrors(json: submitionResponseObject)
+                            if errors.count > 0 {
+                                LoadingUIView.hide()
+                                print("New Workpackage has not been created")
+                                var errorText = [String]()
+                                for error in errors {
+                                    errorText.append(error.message!)
+                                }
+                                self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
+                            } else {
+                                print(submitionResponseObject)
+                                self.delegate?.workpackageCreationUpdateFinished()
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
 }
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkPackageDetailVC: UIViewController {
+class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var labelSubject: UILabel!
     @IBOutlet weak var textViewDescription: UITextView!
@@ -114,6 +114,10 @@ class WorkPackageDetailVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+    }
+    
+    func workpackageCreationUpdateFinished() {
+        
     }
 }
 /*
