@@ -41,14 +41,19 @@ public class WorkPackageFormSchema: NSManagedObject {
                         return "\(self.value_int) hours"
                     }
                 case WpTypes.integer:
-                    return "\(self.value_int)"
+                    switch self.value_int {
+                    case -1:
+                        return "0"
+                    default:
+                        return "\(self.value_int)"
+                    }
                 case WpTypes.complex:
                     return self.value_title
                 case WpTypes.stringObject:
                     return self.value_title
                 }
             }
-            return "something problem"
+            return "problem"
         }
     
         
@@ -97,6 +102,72 @@ public class WorkPackageFormSchema: NSManagedObject {
         }
     }
     
+    var valuePayload: String {
+        get {
+            if let type = WpTypes(rawValue: Int(self.type)) {
+                switch type {
+                case WpTypes.formattable:
+                    var raw = "null"
+                    if let value = self.value_str_raw {
+                        raw = "\"\(value)\""
+                    }
+                    var html = ""
+                    if let value = self.value_str_html {
+                        html = "\"\(value)\""
+                    }
+                    return "\"\(self.schemaItemName!)\": {\"raw\": \(raw), \"format\": \"textile\", \"html\": \(html)}"
+                case WpTypes.string:
+                    if let value = self.value_string {
+                        return "\"\(self.schemaItemName!)\": \"\(value)\""
+                    } else {
+                        return "\"\(self.schemaItemName!)\": null"
+                    }
+                case WpTypes.date:
+                    if let value = self.value_dateTime {
+                        let df = DateFormatter()
+                        df.dateFormat = "yyyy-MM-dd"
+                        return "\"\(self.schemaItemName!)\": \(df.string(from: value as Date))"
+                    } else {
+                        return "\"\(self.schemaItemName!)\": null"
+                    }
+                case WpTypes.dateTime:
+                    if let value = self.value_dateTime {
+                        let df = DateFormatter()
+                        df.dateFormat = "yyyy-MM-dd"
+                        return "\"\(self.schemaItemName!)\": \(df.string(from: value as Date))"
+                    } else {
+                        return "\"\(self.schemaItemName!)\": null"
+                    }
+                case WpTypes.duration:
+                    if self.value_int >= 0 {
+                        return "\"\(self.schemaItemName!)\": \(self.value_int)"
+                    } else {
+                        return "\"\(self.schemaItemName!)\": null"
+                    }
+
+                case WpTypes.integer:
+                    let value = self.value_int
+                    if value == -1 {
+                        switch self.schemaItemName! {
+                        case "parentId", "id":
+                            return "\"\(self.schemaItemName!)\": null"
+                        default:
+                            break
+                        }
+                    }
+                
+                        return "\"\(self.schemaItemName!)\": \(self.value_int)"
+                case WpTypes.complex, WpTypes.stringObject:
+                    if let href = self.value_href {
+                        return "\"\(self.schemaItemName!)\": {\"title\": \"\(self.value_title!)\", \"href\": \"\(href)\"}"
+                    } else {
+                        return "\"\(self.schemaItemName!)\": {\"href\": null}"
+                    }
+                }
+            }
+            return "bla"
+        }
+    }
     class func buildWorkPackageForms(_ projectId: NSNumber, instanceId: String, json: JSON) {
         let arrPayload = json["_embedded"]["payload"].dictionary
         let dicSchemaElements = json["_embedded"]["schema"].dictionary
@@ -192,7 +263,7 @@ public class WorkPackageFormSchema: NSManagedObject {
         switch itemName {
         case "subject", "description":
             return 0
-        case "type", "status", "priority", "startDate", "dueDate", "version", "category":
+        case "type", "status", "priority", "startDate", "dueDate", "version", "category", "percentageDone":
             return 1
         case "assignee", "responsible":
             return 2
@@ -207,7 +278,7 @@ public class WorkPackageFormSchema: NSManagedObject {
     
     private static func getPosition(itemName: String) -> Int32? {
         let arr = ["subject", "description", "type", "status",
-                   "priority", "category", "startDate", "dueDate", "version",
+                   "priority", "category", "percentageDone", "startDate", "dueDate", "version",
                    "assignee", "responsible", "estimatedTime", "remainingTime", "spentTime"]
         if let index = arr.index(of: itemName) {
             return Int32(index)
@@ -253,7 +324,7 @@ public class WorkPackageFormSchema: NSManagedObject {
             case WpTypes.date:
                 item.value_dateTime = schemaItem.value_dateTime
                 break
-            case WpTypes.duration:
+            case WpTypes.duration, WpTypes.integer:
                 item.value_int = schemaItem.value_int
             default:
                 item.value = schemaItem.value
@@ -261,5 +332,39 @@ public class WorkPackageFormSchema: NSManagedObject {
             }
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
+    }
+    
+    static func getPayload() -> String {
+        let items = WorkPackageFormSchema.mr_findAll() as! [WorkPackageFormSchema]
+        var complexItems = [String]()
+        var simpleItems = [String]()
+        var formattable = [String]()
+        for itm in items {
+            if let x = itm.name {
+                    let type = WpTypes(rawValue: Int(itm.type))
+                    switch type! {
+                    case WpTypes.complex, WpTypes.stringObject:
+                        complexItems.append(itm.valuePayload)
+                        break
+                    case WpTypes.formattable:
+                        formattable.append(itm.valuePayload)
+                        break
+                    default:
+                        simpleItems.append(itm.valuePayload)
+                        break
+                    }
+            }
+        }
+        var result = "{"
+
+        result.append(simpleItems.joined(separator: ","))
+        
+        result.append(", \"_links\": { \(complexItems.joined(separator: ",")) }")
+        
+        result.append(", \(formattable.joined(separator: ",")) ")
+        
+        result.append("}")
+        print(result)
+        return result
     }
 }

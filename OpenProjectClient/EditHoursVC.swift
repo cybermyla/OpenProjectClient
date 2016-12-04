@@ -22,9 +22,11 @@ class EditHoursVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     var schemaItem: WorkPackageFormSchema?
     
-    let intValues = [Int](-1...500)
+    var intValues:[Int] = []
     
     var selectedValue: Int?
+    
+    var unit: String = ""
     
     var delegate: EditHoursVCDelegate?
     
@@ -36,6 +38,8 @@ class EditHoursVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         labelHours.textAlignment = .center
         labelHours.font = UIFont.boldSystemFont(ofSize: 44)
         labelHours.textColor = Colors.darkAzureOP.getUIColor()
+        
+        self.title = schemaItem?.name
         
         if let value = schemaItem?.value_int {
             selectedValue = Int(value)
@@ -49,7 +53,9 @@ class EditHoursVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         if let value = selectedValue {
             if let index = intValues.index(of: value) {
                 hoursPickerView.selectRow(index, inComponent: 0, animated: false)
-                labelHours.text = (schemaItem?.value?.characters.count)! > 0 ? schemaItem?.value : "NOT SET"
+                labelHours.text = (schemaItem?.value?.characters.count)! >= 0 ? schemaItem?.value : "NOT SET"
+            } else {
+                labelHours.text = "0 \(unit)"
             }
         }
     }
@@ -91,11 +97,8 @@ class EditHoursVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         case -1:
             labelHours.text = "NOT SET"
             break
-        case 1:
-            labelHours.text = "1 hour"
-            break
         default:
-            labelHours.text = "\(intValues[row]) hours"
+            labelHours.text = "\(intValues[row]) \(unit)"
             break
         }
     }
@@ -108,10 +111,8 @@ class EditHoursVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         switch intValues[row] {
         case -1:
             return "NOT SET"
-        case 1:
-            return "1 hour"
         default:
-            return "\(intValues[row]) hours"
+            return "\(intValues[row]) \(unit)"
         }
     }
 

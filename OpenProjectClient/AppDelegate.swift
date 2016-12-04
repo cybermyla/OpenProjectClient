@@ -164,6 +164,5 @@ extension UIStoryboard {
     class func EditHoursVC() -> EditHoursVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "EditHoursVC") as? EditHoursVC
     }
-    
 }
 

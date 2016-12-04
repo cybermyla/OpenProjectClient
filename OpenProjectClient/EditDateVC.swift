@@ -40,6 +40,8 @@ class EditDateVC: UIViewController {
         
         labelDate.text = "NOT SET"
         
+        self.title = schemaItem?.name
+        
         selectedDate = Date()
         
         if let date = selectedDate {

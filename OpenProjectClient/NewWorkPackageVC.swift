@@ -30,8 +30,10 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         // Do any additional setup after loading the view.
         if let _ = workpackage {
             self.navigationItem.title = "Edit Work Package"
+            nextButton.titleLabel?.text = "UPDATE"
         } else {
             self.navigationItem.title = "New Work Package"
+            nextButton.titleLabel?.text = "CREATE"
         }
         getAvailableAssignees()
         
@@ -109,6 +111,11 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        WorkPackageFormSchema.getPayload()
+    }
+    
+    
     //UITableViewDataSource + UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -168,9 +175,23 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 vc?.delegate = self
                 self.show(vc!, sender: self)
                 break
-            case WpTypes.duration:
+            case WpTypes.duration, WpTypes.integer:
                 let vc = UIStoryboard.EditHoursVC()
                 vc?.schemaItem = selectedItem.value
+                switch selectedItem.value.schemaItemName! {
+                case "percentageDone":
+                    vc?.intValues = [Int](0...100)
+                    vc?.unit = "%"
+                    break
+                case "remainingTime", "estimatedTime":
+                    vc?.intValues = [Int](0...500)
+                    vc?.unit = "h"
+                    break
+                default:
+                    vc?.intValues = [Int](0...500)
+                    vc?.unit = ""
+                    break
+                }
                 vc?.delegate = self
                 self.show(vc!, sender: self)
                 break
@@ -320,6 +341,8 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         return results
     }
+    
+    
 }
 
 

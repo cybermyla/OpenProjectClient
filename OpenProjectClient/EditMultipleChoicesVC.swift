@@ -30,6 +30,8 @@ class EditMultipleChoicesVC: UIViewController, UITableViewDelegate, UITableViewD
         
         self.view.backgroundColor = Colors.paleOP.getUIColor()
         
+        self.title = schemaItem?.name
+        
         //add an empty row in case attribute is optional
         if let required = schemaItem?.required {
             if !required {

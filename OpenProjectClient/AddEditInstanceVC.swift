@@ -47,8 +47,15 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
             //CREATE
             edit = false
             self.title = "New Instance"
-        }   
+        }
  
+        textFieldAddress.text = "http://10.0.0.40"
+        textFieldApiKey.text = "93d133676d35473f14f9335f6f0323533e5a2537"
+        
+        /*
+         textFieldAddress.text = "https://community.openproject.com"
+         textFieldApiKey.text = "9cfa5e3eea8f3537c50d30c2a0f6bb14a40f0217"
+         */
     }
     
     override func viewWillAppear(_ animated: Bool) {
