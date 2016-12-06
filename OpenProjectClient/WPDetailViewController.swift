@@ -22,6 +22,10 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     var workpackage: WorkPackage?
     
+    let defaults = UserDefaults.standard
+    var instanceId: String?
+    var projectId: NSNumber?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,7 +52,7 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             labelSubject.lineBreakMode = .byWordWrapping
             labelSubject.numberOfLines = 0
             
-            typeNrStatus.text = "\(wp.typeTitle!) #\(wp.id!) - \(wp.statusTitle!) (\(wp.priorityTitle!))"
+            typeNrStatus.text = "\(wp.typeTitle!) #\(wp.id) - \(wp.statusTitle!) (\(wp.priorityTitle!))"
             typeNrStatus.font = UIFont.boldSystemFont(ofSize: 18)
             
             if let description = wp.descriptionRaw {
@@ -60,11 +64,11 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             } else {
                 textViewDescription.text = ""
             }
-            
-            labelUpdated.text = "Last update on \(wp.updatedAt!.shortDate)"
+
+            labelUpdated.text = "Last update on \(Tools.dateToFormatedString(date: (wp.updatedAt! as Date), style: .medium))"
             labelUpdated.font = UIFont.italicSystemFont(ofSize: 14)
             
-            labelCreated.text = "Created by \(wp.authorTitle!) on \(wp.createdAt!.shortDate)"
+            labelCreated.text = "Created by \(wp.authorTitle!) on \(Tools.dateToFormatedString(date: (wp.createdAt! as Date), style: .medium))"
             labelCreated.font = UIFont.italicSystemFont(ofSize: 14)
             
             if let assignee = wp.assigneeTitle as String! {
@@ -92,8 +96,12 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             labelDate.text = "Date: \(startDate) - \(endDate)"
             labelDate.font = UIFont.systemFont(ofSize: 14)
             
+            if wp.estimatedTime != nil {
+                lableEstimate.text = "Estimated time: \(wp.estimatedTime)"
+            } else {
+                lableEstimate.text = "Estimated time: -"
+            }
             lableEstimate.font = UIFont.systemFont(ofSize: 14)
-            
         }
     }
 
@@ -116,27 +124,15 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
         // Pass the selected object to the new view controller.
     }
     
-    func workpackageCreationUpdateFinished() {
-        
-    }
-}
-/*
-extension NSData {
-    var attributedString: NSAttributedString? {
-        do {
-            return try NSAttributedString(data: self, options:[NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding], documentAttributes: nil)
-        } catch let error as NSError {
-            print(error.localizedDescription)
+    func workpackageCreationUpdateFinished(workPackageId: Int32) {
+        if let instanceId = defaults.value(forKey: "InstanceId") as? String {
+            if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
+                workpackage = WorkPackage.getWorkPackage(id: workPackageId, projectId: projectId, instanceId: instanceId)
+                fillWP()
+            }
         }
-        return nil
     }
 }
-extension String {
-    var utf8Data: NSData? {
-        return dataUsingEncoding(NSUTF8StringEncoding)
-    }
-}
-*/
 
 extension DateFormatter {
     convenience init(dateFormat: String) {

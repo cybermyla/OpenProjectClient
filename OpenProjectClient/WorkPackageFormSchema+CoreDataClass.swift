@@ -23,9 +23,7 @@ public class WorkPackageFormSchema: NSManagedObject {
                     return self.value_string
                 case WpTypes.date:
                     if let date = self.value_dateTime as? Date {
-                        let df = DateFormatter()
-                        df.dateStyle = .medium
-                        return df.string(from: date)
+                        return Tools.dateToFormatedString(date: date, style: .medium)
                     } else {
                         return nil
                     }
@@ -80,7 +78,13 @@ public class WorkPackageFormSchema: NSManagedObject {
                     break
                 case WpTypes.duration:
                     if let value = newValue {
-                        self.value_int = Int32(value)!
+                        if let firstCharacter = value.characters.first {
+                            if firstCharacter == "P" {
+                                self.value_int = durationToInt(duration: value)
+                            } else {
+                                self.value_int = Int32(value)!
+                            }
+                        }
                     }
                     break
                 case WpTypes.integer:
@@ -140,7 +144,7 @@ public class WorkPackageFormSchema: NSManagedObject {
                     }
                 case WpTypes.duration:
                     if self.value_int >= 0 {
-                        return "\"\(self.schemaItemName!)\": \(self.value_int)"
+                        return "\"\(self.schemaItemName!)\": \"\(intToDuration(int: self.value_int))\""
                     } else {
                         return "\"\(self.schemaItemName!)\": null"
                     }
@@ -365,5 +369,48 @@ public class WorkPackageFormSchema: NSManagedObject {
     static func getValidatedPayload(json: JSON) -> String {
         let dicPayload = json["_embedded"].dictionary
         return (dicPayload?["payload"]?.rawString())!
+    }
+    
+    func durationToInt(duration: String) -> Int32 {
+        var days: Int32 = 0
+        var hours: Int32 = 0
+        if duration.contains("D") && duration.contains("H") {
+            let arr = matches(for: "[0-9]+", in: duration)
+            days = Int32(arr[0])!
+            hours = Int32(arr[1])!
+        } else if duration.contains("D") && !duration.contains("H") {
+            let arr = matches(for: "[0-9]+", in: duration)
+            days = Int32(arr[0])!
+        } else {
+            let arr = matches(for: "[0-9]+", in: duration)
+            hours = Int32(arr[0])!
+        }
+        hours += (days * 24)
+        return hours
+    }
+    
+    func intToDuration(int: Int32) -> String {
+        let modulo = int % 24
+        let division = int / 24
+        if modulo == 0 && division != 0 {
+            return "P\(division)D"
+        } else if modulo != 0 && division != 0 {
+            return "P\(division)DT\(modulo)H"
+        } else {
+            return "PT\(modulo)H"
+        }
+    }
+    
+    func matches(for regex: String, in text: String) -> [String] {
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let nsString = text as NSString
+            let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
+            return results.map { nsString.substring(with: $0.range)}
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 
 protocol NewWorkPackageVCDelegate {
-    func workpackageCreationUpdateFinished()
+    func workpackageCreationUpdateFinished(workPackageId: Int32)
 }
 
 class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, EditLongTextVCDelegate, EditMultipleChoicesVCDelegate, EditDateVCDelegate, EditHoursVCDelegate {
@@ -296,7 +296,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func getEditForm() {
         LoadingUIView.show()
-        OpenProjectAPI.sharedInstance.getWorkpackagesUpdateFormsPayload(wpId: workpackage!.id as! Int ,onCompletion: {(responseObject:Bool, error:NSError?) in
+        OpenProjectAPI.sharedInstance.getWorkpackagesUpdateFormsPayload(wpId: workpackage!.id,onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
                 LoadingUIView.hide()
@@ -314,11 +314,11 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.defineSections()
         self.tableView.reloadData()
     }
-    
+ /*
     func dateToString(date: NSDate) -> String {
         return "Some date"
     }
-    
+ */   
     
     //edit delegates implementation
     func longTextEditFinished() {
@@ -374,10 +374,9 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     private func validateFormAndCreateNewWorkpackage() {
         let payload = WorkPackageFormSchema.getPayload()
         LoadingUIView.show()
-        OpenProjectAPI.sharedInstance.verifyWorkpackageFormPayload(wpId: workpackage?.id as Int?, payload: payload, onCompletion: {(responseObject:JSON, error:NSError?) in
+        OpenProjectAPI.sharedInstance.verifyWorkpackageFormPayload(wpId: workpackage?.id, payload: payload, onCompletion: {(responseObject:JSON, error:NSError?) in
             if let issue = error {
-                print("Payload verification request failed")
-                print(issue.description)
+                print("FATAL - Payload verification request failed")
                 LoadingUIView.hide()
             } else {
                 print("Payload verification response received")
@@ -400,7 +399,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     let finalPayload = WorkPackageFormSchema.getValidatedPayload(json: responseObject)
                     print(finalPayload)
                     
-                    OpenProjectAPI.sharedInstance.createOrUpdateWorkpackage(wpId: self.workpackage?.id as Int?, payload: finalPayload, onCompletion: {(submitionResponseObject:JSON, error:NSError?) in
+                    OpenProjectAPI.sharedInstance.createOrUpdateWorkpackage(wpId: self.workpackage?.id, payload: finalPayload, onCompletion: {(submitionResponseObject:JSON, error:NSError?) in
                         if let issue = error {
                             print("New Workpackage request failed")
                             print(issue.description)
@@ -419,7 +418,8 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                                 self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
                             } else {
                                 print(submitionResponseObject)
-                                self.delegate?.workpackageCreationUpdateFinished()
+                                let id = self.parseUpdatedWorkPackage(json: submitionResponseObject)
+                                self.delegate?.workpackageCreationUpdateFinished(workPackageId: id)
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }
@@ -427,6 +427,10 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 }
             }
         })
+    }
+    
+    private func parseUpdatedWorkPackage(json: JSON) -> Int32 {
+        return WorkPackage.buildWorkPackage(projectId: projectId, instanceId: instanceId, item: json)
     }
 }
 

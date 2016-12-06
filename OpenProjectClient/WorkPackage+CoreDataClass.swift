@@ -19,119 +19,152 @@ class WorkPackage: NSManagedObject {
             return
         }
         
-        WorkPackage.mr_truncateAll()
+        //WorkPackage.mr_truncateAll()
         
         //there is no other way to get all possible statuses directly from API - I will check all items if they contain unknow status and if so, this status will be added to statuses for this particular project and instance
-        let predicate = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
-        var statuses = Status.mr_findAll(with: predicate) as! [Status]
         
         for item in array {
+            let _ = buildWorkPackage(projectId: projectId, instanceId: instanceId, item: item)
+        }
+    }
+    
+    class func buildWorkPackage(projectId: NSNumber, instanceId: String, item: JSON) -> Int32 {
+        var wp: WorkPackage?
+        
+        let predicateStatuses = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
+        var statuses = Status.mr_findAll(with: predicateStatuses) as! [Status]
+        if let dic = item.dictionary {
             
-            var wp: WorkPackage?
+            if let id = dic["id"]?.int {
+                let predicateWp = NSPredicate(format: "id = %i AND projectId = %i AND instanceId = %i", argumentArray: [id, projectId, instanceId])
+                let wps = WorkPackage.mr_findAll(with: predicateWp) as! [WorkPackage]
             
-            if let dic = item.dictionary {
-
-                let id = dic["id"]?.intValue
-                let predicate = NSPredicate(format: "id = %i AND projectId = %i", argumentArray: [id!, projectId.intValue])
-                let wps = WorkPackage.mr_findAll(with: predicate) as! [WorkPackage]
-                
                 if wps.count > 0 {
                     wp = wps[0]
                 } else {
                     wp = WorkPackage.mr_createEntity() as WorkPackage
-                    wp!.id = NSNumber(value: id!)
-                    wp!.projectId = projectId
+                
+                    wp!.id = Int32(id)
+                    wp!.projectId = Int32(projectId)
+                    wp!.instanceId = instanceId
                 }
             }
-            
-            wp!.subject = item["subject"].stringValue
-            wp!.parentId = item["parentId"].intValue as NSNumber?
-            wp!.storyPoints = item["storyPoints"].intValue as NSNumber?
-            wp!.lockVersion = item["lockVersion"].intValue as NSNumber?
-            wp!.createdAt = stringToNSDate(item["createdAt"].stringValue)
-            wp!.startDate = stringToNSDate(item["startDate"].stringValue)
-            wp!.updatedAt = stringToNSDate(item["updatedAt"].stringValue)
-            wp!.dueDate = stringToNSDate(item["dueDate"].stringValue)
-
-            guard let dictLinks = item["_links"].dictionary else {
-                continue
-            }
-            
-            if let d = dictLinks["type"]?.dictionary {
-                wp!.typeTitle = d["title"]?.rawString()
-                wp!.typeHref = d["href"]?.rawString()
-            }
-            
-            if let d = dictLinks["priority"]?.dictionary {
-                wp!.priorityTitle = d["title"]?.rawString()
-                wp!.priorityHref = d["href"]?.rawString()
-            }
-            
-            if let d = dictLinks["status"]?.dictionary {
-                wp!.statusTitle = d["title"]?.rawString()
-                wp!.statusHref = d["href"]?.rawString()
-                if !statuses.contains(where: { status in status.name == wp!.statusTitle }) {
-                    let newStatus = Status.mr_createEntity()
-                    newStatus?.instanceId = instanceId
-                    newStatus?.projectId = Int32(projectId)
-                    let arr = wp!.statusHref!.components(separatedBy: "/")
-                    newStatus?.id = Int32(arr.last!)!
-                    newStatus?.name = wp!.statusTitle
-                    newStatus?.isClosed = false
-                    newStatus?.isDefault = false
-                    newStatus?.position = (newStatus?.id)!
-                    newStatus?.href = wp!.statusHref
-                    newStatus?.allowedForNew = false
-                    NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-                    statuses = Status.mr_findAll(with: predicate) as! [Status]
-                }
-            }
-            
-            if let d = dictLinks["author"]?.dictionary {
-                wp!.authorTitle = d["title"]?.rawString()
-                wp!.authorHref = d["href"]?.rawString()
-            }
-            
-            if let d = dictLinks["assignee"]?.dictionary {
-                if d.count == 2 {
-                    wp!.assigneeTitle = d["title"]?.rawString()
-                    wp!.assigneeHref = d["href"]?.rawString()
-                }
-            }
-            
-            if let d = dictLinks["responsible"]?.dictionary {
-                if d.count == 2 {
-                    wp!.responsibleTitle = d["title"]?.rawString()
-                    wp!.responsibleHref = d["href"]?.rawString()
-                }
-            }
-            
-            guard let dictDescription = item["description"].dictionary else {
-                continue
-            }
-            if let raw = dictDescription["raw"]?.rawString() {
-                if raw != "null" {
-                    wp!.descriptionRaw = raw
-                }
-            }
-            wp!.descriptionHtml = dictDescription["html"]?.rawString()
         }
         
+        guard let dictLinks = item["_links"].dictionary else {
+            return -1
+        }
+        
+        wp!.subject = item["subject"].stringValue
+        if let value = item["parentId"].int {
+            wp!.parentId = Int32(value)
+        }
+        if let value = item["storyPoints"].int {
+            wp!.storyPoints = Int32(value)
+        }
+        if let value = item["lockVersion"].int {
+            wp!.lockVersion = Int32(value)
+        }
+        
+        if let value = item["remainingTime"].int {
+            wp!.remainingHours = Int32(value)
+        }
+        if let value = item["estimatedTime"].int {
+            wp!.estimatedTime = Int32(value)
+        }
+        if let value = item["spentTime"].int {
+            wp!.spentTime = Int32(value)
+        }
+        
+        wp!.createdAt = stringToNSDate(item["createdAt"].stringValue)
+        wp!.startDate = stringToNSDate(item["startDate"].stringValue)
+        wp!.updatedAt = stringToNSDate(item["updatedAt"].stringValue)
+        wp!.dueDate = stringToNSDate(item["dueDate"].stringValue)
+        
+        if let d = dictLinks["type"]?.dictionary {
+            wp!.typeTitle = d["title"]?.rawString()
+            wp!.typeHref = d["href"]?.rawString()
+        }
+        
+        if let d = dictLinks["priority"]?.dictionary {
+            wp!.priorityTitle = d["title"]?.rawString()
+            wp!.priorityHref = d["href"]?.rawString()
+        }
+        
+        if let d = dictLinks["status"]?.dictionary {
+            wp!.statusTitle = d["title"]?.rawString()
+            wp!.statusHref = d["href"]?.rawString()
+            if !statuses.contains(where: { status in status.name == wp!.statusTitle }) {
+                let newStatus = Status.mr_createEntity()
+                newStatus?.instanceId = instanceId
+                newStatus?.projectId = Int32(projectId)
+                let arr = wp!.statusHref!.components(separatedBy: "/")
+                newStatus?.id = Int32(arr.last!)!
+                newStatus?.name = wp!.statusTitle
+                newStatus?.isClosed = false
+                newStatus?.isDefault = false
+                newStatus?.position = (newStatus?.id)!
+                newStatus?.href = wp!.statusHref
+                newStatus?.allowedForNew = false
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+                statuses = Status.mr_findAll(with: predicateStatuses) as! [Status]
+            }
+        }
+        
+        if let d = dictLinks["author"]?.dictionary {
+            wp!.authorTitle = d["title"]?.rawString()
+            wp!.authorHref = d["href"]?.rawString()
+        }
+        
+        if let d = dictLinks["assignee"]?.dictionary {
+            if d.count == 2 {
+                wp!.assigneeTitle = d["title"]?.rawString()
+                wp!.assigneeHref = d["href"]?.rawString()
+            }
+        }
+        
+        if let d = dictLinks["responsible"]?.dictionary {
+            if d.count == 2 {
+                wp!.responsibleTitle = d["title"]?.rawString()
+                wp!.responsibleHref = d["href"]?.rawString()
+            }
+        }
+        
+        guard let dictDescription = item["description"].dictionary else {
+            return -1
+        }
+        if let raw = dictDescription["raw"]?.rawString() {
+            if raw != "null" {
+                wp!.descriptionRaw = raw
+            }
+        }
+        wp!.descriptionHtml = dictDescription["html"]?.rawString()
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        return wp!.id
     }
     
-    class func stringToNSDate(_ str: String) -> Date? {
+    class func stringToNSDate(_ str: String) -> NSDate? {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        if (str.contains("T")) {
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        } else {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+        }
         
         guard let date = dateFormatter.date(from: str) else {
             return nil
         }
-        return date
+        return date as NSDate?
     }
     
-    static func getWorkPackages() -> [WorkPackage] {
-        return (WorkPackage.mr_findAllSorted(by: "id", ascending: false) as! [WorkPackage])
+    static func getWorkPackages(projectId: NSNumber, instanceId: String) -> [WorkPackage] {
+        let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId.intValue])
+        return WorkPackage.mr_findAllSorted(by: "id", ascending: false, with: predicate) as! [WorkPackage]
+    }
+    
+    static func getWorkPackage(id: Int32, projectId: NSNumber, instanceId: String) -> WorkPackage? {
+        let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i AND id = %i", argumentArray: [instanceId, projectId.intValue, id])
+        return WorkPackage.mr_findFirst(with: predicate) as WorkPackage?
     }
 }

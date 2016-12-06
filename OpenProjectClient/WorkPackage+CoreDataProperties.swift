@@ -2,41 +2,47 @@
 //  WorkPackage+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 27/06/16.
+//  Created by Miloslav Linhart on 06/12/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
-//
-//  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
-//  to delete and recreate this implementation file for your updated model.
 //
 
 import Foundation
 import CoreData
 
+
 extension WorkPackage {
 
-    @NSManaged var subject: String?
-    @NSManaged var id: NSNumber?
-    @NSManaged var typeTitle: String?
-    @NSManaged var typeHref: String?
-    @NSManaged var priorityTitle: String?
-    @NSManaged var priorityHref: String?
-    @NSManaged var statusTitle: String?
-    @NSManaged var statusHref: String?
-    @NSManaged var authorTitle: String?
-    @NSManaged var authorHref: String?
-    @NSManaged var parentId: NSNumber?
-    @NSManaged var createdAt: Date?
-    @NSManaged var startDate: Date?
-    @NSManaged var updatedAt: Date?
-    @NSManaged var dueDate: Date?
-    @NSManaged var descriptionRaw: String?
-    @NSManaged var storyPoints: NSNumber?
-    @NSManaged var lockVersion: NSNumber?
-    @NSManaged var descriptionHtml: String?
-    @NSManaged var assigneeTitle: String?
-    @NSManaged var assigneeHref: String?
-    @NSManaged var responsibleTitle: String?
-    @NSManaged var responsibleHref: String?
-    @NSManaged var projectId: NSNumber?
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<WorkPackage> {
+        return NSFetchRequest<WorkPackage>(entityName: "WorkPackage");
+    }
+
+    @NSManaged public var assigneeHref: String?
+    @NSManaged public var assigneeTitle: String?
+    @NSManaged public var authorHref: String?
+    @NSManaged public var authorTitle: String?
+    @NSManaged public var createdAt: NSDate?
+    @NSManaged public var descriptionHtml: String?
+    @NSManaged public var descriptionRaw: String?
+    @NSManaged public var dueDate: NSDate?
+    @NSManaged public var id: Int32
+    @NSManaged public var lockVersion: Int32
+    @NSManaged public var parentId: Int32
+    @NSManaged public var priorityHref: String?
+    @NSManaged public var priorityTitle: String?
+    @NSManaged public var projectId: Int32
+    @NSManaged public var responsibleHref: String?
+    @NSManaged public var responsibleTitle: String?
+    @NSManaged public var startDate: NSDate?
+    @NSManaged public var statusHref: String?
+    @NSManaged public var statusTitle: String?
+    @NSManaged public var storyPoints: Int32
+    @NSManaged public var subject: String?
+    @NSManaged public var typeHref: String?
+    @NSManaged public var typeTitle: String?
+    @NSManaged public var updatedAt: NSDate?
+    @NSManaged public var instanceId: String?
+    @NSManaged public var estimatedTime: Int32
+    @NSManaged public var remainingHours: Int32
+    @NSManaged public var spentTime: Int32
 
 }

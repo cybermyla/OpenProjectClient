@@ -136,7 +136,8 @@ class OpenProjectAPI {
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
                     WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, json: json)
-                    workpackages = WorkPackage.mr_findAll() as! [WorkPackage]
+                    let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])
+                    workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: true, with: predicate) as! [WorkPackage]
                     onCompletion(workpackages, nil)
                 case .failure(let error):
                     print(error)
@@ -146,7 +147,7 @@ class OpenProjectAPI {
         }
     }
 
-    func getWorkpackagesForms(wpId: Int?, payload: String?, onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
+    func getWorkpackagesForms(wpId: Int32?, payload: String?, onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
 
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
@@ -168,7 +169,7 @@ class OpenProjectAPI {
             if let workPackageId = wpId {
                 url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
             }
-            
+
             if payload != nil {
                 Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                     switch response.result {
@@ -188,6 +189,8 @@ class OpenProjectAPI {
                         onCompletion(json, nil)
                     case .failure(let error):
                         print(error)
+                        print("\(url)")
+                        print("\(payload!)")
                         onCompletion(false, error as NSError?)
                     }
                 }
@@ -211,6 +214,7 @@ class OpenProjectAPI {
                     onCompletion(json, nil)
                 case .failure(let error):
                     print(error)
+                    print("\(url)")
                     onCompletion(false, error as NSError?)
                 }
                 }
@@ -220,7 +224,7 @@ class OpenProjectAPI {
         }
     }
     
-    func verifyWorkpackageFormPayload(wpId: Int?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+    func verifyWorkpackageFormPayload(wpId: Int32?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
         
         getWorkpackagesForms(wpId: nil, payload: payload, onCompletion: {(json:JSON, error:NSError?) in
             if let issue = error {
@@ -231,7 +235,7 @@ class OpenProjectAPI {
         })
     }
     
-    func createOrUpdateWorkpackage(wpId: Int?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+    func createOrUpdateWorkpackage(wpId: Int32?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -302,7 +306,7 @@ class OpenProjectAPI {
         })
     }
     
-    func getWorkpackagesUpdateFormsPayload(wpId: Int, onCompletion: @escaping RemoteWPCreateFormsResponse) {
+    func getWorkpackagesUpdateFormsPayload(wpId: Int32, onCompletion: @escaping RemoteWPCreateFormsResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -460,7 +464,7 @@ class OpenProjectAPI {
         }
     }
 }
-
+/*
 extension String: ParameterEncoding {
     
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
@@ -470,3 +474,4 @@ extension String: ParameterEncoding {
     }
     
 }
+ */

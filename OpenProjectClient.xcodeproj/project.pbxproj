@@ -14,6 +14,8 @@
 		E20391F51BDC05AB00071846 /* Instance+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F41BDC05AB00071846 /* Instance+CoreDataClass.swift */; };
 		E20391F71BDC259300071846 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20391F61BDC259300071846 /* Colors.swift */; };
 		E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */; };
+		E207C0EA1DF63B6E00CA32A3 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E207C0E91DF63B6E00CA32A3 /* Tools.swift */; };
+		E207C0EC1DF63E0A00CA32A3 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E207C0EB1DF63E0A00CA32A3 /* WorkPackage+CoreDataProperties.swift */; };
 		E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */; };
 		E229FA441BD848DD0095010D /* NewWorkPackageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E229FA431BD848DD0095010D /* NewWorkPackageVC.swift */; };
 		E23B0CB11BD585050052172F /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B0CB01BD585050052172F /* ActivitiesViewController.swift */; };
@@ -48,7 +50,6 @@
 		E29C5C201DEB54DB00D247C5 /* EditLongTextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29C5C1F1DEB54DB00D247C5 /* EditLongTextVC.swift */; };
 		E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D4FC61DC3E48600EB3BB6 /* Status+CoreDataClass.swift */; };
 		E29D4FCC1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */; };
-		E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */; };
 		E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */; };
 		E2B25D631DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B25D621DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift */; };
 		E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */; };
@@ -99,6 +100,8 @@
 		E20391F61BDC259300071846 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenProjectClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instance+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E207C0E91DF63B6E00CA32A3 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		E207C0EB1DF63E0A00CA32A3 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E223CD0E1D10B2150066FB66 /* OpenProjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenProjectAPI.swift; sourceTree = "<group>"; };
 		E229FA431BD848DD0095010D /* NewWorkPackageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWorkPackageVC.swift; sourceTree = "<group>"; };
 		E23B0CB01BD585050052172F /* ActivitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
@@ -133,7 +136,6 @@
 		E29C5C1F1DEB54DB00D247C5 /* EditLongTextVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLongTextVC.swift; sourceTree = "<group>"; };
 		E29D4FC61DC3E48600EB3BB6 /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E29D4FCA1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesTableViewCell.swift; sourceTree = "<group>"; };
 		E2B25D621DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectItemSideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingUIView.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 		E29C5C251DEB844800D247C5 /* ClassProperties */ = {
 			isa = PBXGroup;
 			children = (
+				E207C0EB1DF63E0A00CA32A3 /* WorkPackage+CoreDataProperties.swift */,
 				E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */,
 				E296AB531DEE40C1002477CA /* Version+CoreDataProperties.swift */,
 				E296AB471DEE3469002477CA /* Assignee+CoreDataProperties.swift */,
@@ -330,7 +333,6 @@
 				E296AB421DEE25F0002477CA /* Type+CoreDataProperties.swift */,
 				E2FD323F1DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift */,
 				E2D569DA1BE18E5F000BECCC /* Project+CoreDataProperties.swift */,
-				E2AA26AB1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift */,
 				E2075C581BDF610C005CE246 /* Instance+CoreDataProperties.swift */,
 			);
 			name = ClassProperties;
@@ -340,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */,
+				E207C0E91DF63B6E00CA32A3 /* Tools.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -695,7 +698,6 @@
 				E260173F1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift in Sources */,
 				E26EE1781DF0F07F003E8A8B /* EditDateVC.swift in Sources */,
 				E20391F71BDC259300071846 /* Colors.swift in Sources */,
-				E2AA26AC1D2039FF00AA8FE7 /* WorkPackage+CoreDataProperties.swift in Sources */,
 				E223CD0F1D10B2150066FB66 /* OpenProjectAPI.swift in Sources */,
 				E296AB461DEE2CE9002477CA /* Status+CoreDataProperties.swift in Sources */,
 				E271D6541DECEFA400805611 /* EditMultipleChoicesVC.swift in Sources */,
@@ -714,6 +716,7 @@
 				E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */,
 				E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
+				E207C0EC1DF63E0A00CA32A3 /* WorkPackage+CoreDataProperties.swift in Sources */,
 				E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */,
 				E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */,
 				E29D4FCC1DC3E95A00EB3BB6 /* Type+CoreDataClass.swift in Sources */,
@@ -723,6 +726,7 @@
 				E296AB4F1DEE3D7F002477CA /* Version+CoreDataClass.swift in Sources */,
 				E229FA441BD848DD0095010D /* NewWorkPackageVC.swift in Sources */,
 				E2FD32411DC7FB7000AA0749 /* WPFilter+CoreDataProperties.swift in Sources */,
+				E207C0EA1DF63B6E00CA32A3 /* Tools.swift in Sources */,
 				E26017471BDBE2B500AF8332 /* WPDetailViewController.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,

@@ -13,8 +13,11 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var delegate: ContainerViewControllerDelegate?
     var project: Project?
     var workpackages: [WorkPackage] = []
+    
+    let defaults = UserDefaults.standard
     var instanceId: String?
     var projectId: NSNumber?
+    
     let timeElapsedLimit = 180.0
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
@@ -25,7 +28,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var filterButton: UIBarButtonItem!
     
-    let defaults = UserDefaults.standard
+    
     
     let filterLabel = UILabel(frame: CGRect.zero)
     
@@ -145,7 +148,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         if timeElapsed == nil || timeElapsed! > timeElapsedLimit {
             getWorkPackagesFromServer(projectId, instanceId: instanceId, refresh: refresh)
         } else {
-            self.workpackages = WorkPackage.getWorkPackages()
+            self.workpackages = WorkPackage.getWorkPackages(projectId: projectId, instanceId: instanceId)
             self.tableViewWorkPackages.reloadData()
         }
         
@@ -171,7 +174,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                 }
             } else {
                 if let _ = responseObject {
-                    self.workpackages = WorkPackage.getWorkPackages()
+                    self.workpackages = WorkPackage.getWorkPackages(projectId: projectId, instanceId: instanceId)
                     if refresh {
                         self.refreshControl?.endRefreshing()
                     } else {
@@ -227,7 +230,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
-    func workpackageCreationUpdateFinished() {
+    func workpackageCreationUpdateFinished(workPackageId: Int32) {
         refresh()
     }
 }

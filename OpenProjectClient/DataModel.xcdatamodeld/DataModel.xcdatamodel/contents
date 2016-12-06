@@ -98,18 +98,22 @@
         <attribute name="descriptionHtml" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="descriptionRaw" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="lockVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="parentId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="estimatedTime" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="instanceId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockVersion" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="parentId" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priorityHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="priorityTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="remainingHours" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="responsibleHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="responsibleTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spentTime" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="statusHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="statusTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="storyPoints" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="storyPoints" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
@@ -156,7 +160,7 @@
         <element name="StringObjectValue" positionX="-36" positionY="153" width="128" height="105"/>
         <element name="Type" positionX="-45" positionY="153" width="128" height="225"/>
         <element name="Version" positionX="-45" positionY="144" width="128" height="135"/>
-        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="405"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="465"/>
         <element name="WorkPackageFormSchema" positionX="-45" positionY="144" width="128" height="315"/>
         <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
     </elements>
