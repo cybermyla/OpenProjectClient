@@ -12,13 +12,29 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var labelSubject: UILabel!
     @IBOutlet weak var textViewDescription: UITextView!
-    @IBOutlet weak var typeNrStatus: UILabel!
-    @IBOutlet weak var labelUpdated: UILabel!
-    @IBOutlet weak var labelCreated: UILabel!
-    @IBOutlet weak var labelAssginee: UILabel!
-    @IBOutlet weak var labelResponsible: UILabel!
-    @IBOutlet weak var lableEstimate: UILabel!
+
+    @IBOutlet weak var labelTypeUpdateAuthor: UILabel!
+    
+    @IBOutlet weak var labelTypeStatusPriority: UILabel!
+    
     @IBOutlet weak var labelDate: UILabel!
+    
+    @IBOutlet weak var labelProgress: UILabel!
+    
+    @IBOutlet weak var pvProgress: UIProgressView!
+    
+    @IBOutlet weak var labelVersion: UILabel!
+    
+    @IBOutlet weak var labelCategory: UILabel!
+    
+    @IBOutlet weak var labelResponsible: UILabel!
+    
+    @IBOutlet weak var labelAssignee: UILabel!
+    
+    @IBOutlet weak var labelEstimatedRemaining: UILabel!
+    
+    @IBOutlet weak var labelSpent: UILabel!
+    
     
     var workpackage: WorkPackage?
     
@@ -47,13 +63,17 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     func fillWP() {
         if let wp = workpackage {
-            labelSubject.font = UIFont.boldSystemFont(ofSize: 22)
+            labelSubject.font = UIFont.boldSystemFont(ofSize: 18)
+            labelSubject.textColor = Colors.darkAzureOP.getUIColor()
             labelSubject.text = wp.subject!
             labelSubject.lineBreakMode = .byWordWrapping
             labelSubject.numberOfLines = 0
             
-            typeNrStatus.text = "\(wp.typeTitle!) #\(wp.id) - \(wp.statusTitle!) (\(wp.priorityTitle!))"
-            typeNrStatus.font = UIFont.boldSystemFont(ofSize: 18)
+            let date = Tools.dateToFormatedString(date: wp.updatedAt! as Date, dateStyle: .short, timeStyle: .short)
+            labelTypeUpdateAuthor.text = "\(wp.typeTitle!) #\(wp.id): Created by \(wp.authorTitle!).\nLast updated on \(date)"
+            labelTypeUpdateAuthor.font = UIFont.systemFont(ofSize: 12)
+            labelTypeUpdateAuthor.lineBreakMode = .byWordWrapping
+            labelTypeUpdateAuthor.numberOfLines = 2
             
             if let description = wp.descriptionRaw {
                 if description != "null" {
@@ -64,26 +84,21 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             } else {
                 textViewDescription.text = ""
             }
+            
 
-            labelUpdated.text = "Last update on \(Tools.dateToFormatedString(date: (wp.updatedAt! as Date), style: .medium))"
-            labelUpdated.font = UIFont.italicSystemFont(ofSize: 14)
-            
-            labelCreated.text = "Created by \(wp.authorTitle!) on \(Tools.dateToFormatedString(date: (wp.createdAt! as Date), style: .medium))"
-            labelCreated.font = UIFont.italicSystemFont(ofSize: 14)
-            
-            if let assignee = wp.assigneeTitle as String! {
-                labelAssginee.text = "Assignee: \(assignee)"
-            } else {
-                labelAssginee.text = "Assignee: -"
+            let finaAttributedString = NSMutableAttributedString()
+            if let value = wp.typeTitle {
+                finaAttributedString.append(Tools.createFormatedLabel("Type", str: value))
             }
-            labelAssginee.font = UIFont.systemFont(ofSize: 14)
-            
-            if let responsible = wp.responsibleTitle as String! {
-                labelResponsible.text = "Responsible: \(responsible)"
-            } else {
-                labelResponsible.text = "Responsible: -"
+            if let value = wp.priorityTitle {
+                finaAttributedString.append(Tools.createFormatedLabel("Priority", str: value))
             }
-            labelResponsible.font = UIFont.systemFont(ofSize: 14)
+            if let value = wp.statusTitle {
+                finaAttributedString.append(Tools.createFormatedLabel("Status", str: value))
+            }
+            
+            labelTypeStatusPriority.attributedText = finaAttributedString
+            labelTypeStatusPriority.font = UIFont.systemFont(ofSize: 14)
             
             var startDate = "No start date"
             var endDate = "No end date"
@@ -93,15 +108,56 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             if let dtEndDate = wp.dueDate as Date! {
                 endDate = dtEndDate.shortDate
             }
-            labelDate.text = "Date: \(startDate) - \(endDate)"
+            let dateAndProgressAttributedString = NSMutableAttributedString()
+            dateAndProgressAttributedString.append(Tools.createFormatedLabel("Date", str: "\(startDate) - \(endDate)"))
+            dateAndProgressAttributedString.append(Tools.createFormatedLabel("Progress", str: "\(wp.percentageDone) %"))
+            labelDate.attributedText = dateAndProgressAttributedString
             labelDate.font = UIFont.systemFont(ofSize: 14)
-            
-            if wp.estimatedTime != nil {
-                lableEstimate.text = "Estimated time: \(wp.estimatedTime)"
+    
+            if let value = wp.versionTitle {
+                labelVersion.attributedText = Tools.createFormatedLabel("Version", str: value)
             } else {
-                lableEstimate.text = "Estimated time: -"
+                labelVersion.attributedText = Tools.createFormatedLabel("Version", str: "-")
             }
-            lableEstimate.font = UIFont.systemFont(ofSize: 14)
+            labelVersion.font = UIFont.systemFont(ofSize: 14)
+            
+            if let value = wp.categoryTitle {
+                labelCategory.attributedText = Tools.createFormatedLabel("Category", str: value)
+            } else {
+                labelCategory.attributedText = Tools.createFormatedLabel("Category", str: "-")
+            }
+            labelCategory.font = UIFont.systemFont(ofSize: 14)
+            
+            if let assignee = wp.assigneeTitle as String! {
+                labelAssignee.attributedText = Tools.createFormatedLabel("Assignee", str: assignee)
+            } else {
+                labelAssignee.attributedText = Tools.createFormatedLabel("Assignee", str: "-")
+            }
+            labelAssignee.font = UIFont.systemFont(ofSize: 14)
+            
+            if let responsible = wp.responsibleTitle as String! {
+                labelResponsible.attributedText = Tools.createFormatedLabel("Responsible", str: responsible)
+            } else {
+                labelResponsible.attributedText = Tools.createFormatedLabel("Responsible", str: "-")
+            }
+            labelResponsible.font = UIFont.systemFont(ofSize: 14)
+            
+            let timeAttributedString = NSMutableAttributedString()
+            if wp.estimatedTime > -1 {
+                timeAttributedString.append(Tools.createFormatedLabel("Estimated Time", str: "\(wp.estimatedTime)h "))
+            } else {
+                timeAttributedString.append(Tools.createFormatedLabel("Estimated Time", str: "-"))
+            }
+            if wp.remainingHours > -1 {
+                timeAttributedString.append(Tools.createFormatedLabel("Remaining Hours", str: "\(wp.remainingHours)h"))
+            } else {
+                timeAttributedString.append(Tools.createFormatedLabel("Remaining Hours", str: "-"))
+            }
+            labelEstimatedRemaining.attributedText = timeAttributedString
+            labelEstimatedRemaining.font = UIFont.systemFont(ofSize: 14)
+            
+            labelSpent.attributedText = Tools.createFormatedLabel("Spent", str: "not implemented")
+            labelSpent.font = UIFont.systemFont(ofSize: 14)
         }
     }
 

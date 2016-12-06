@@ -154,6 +154,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func filterEditFinished() {
         filters = WPFilter.getFilters(projectId, instanceId: instanceId)
         defaults.set(nil, forKey: "WorkPackageLastUpdate")
+        
         self.tableView.reloadData()
     }
     
@@ -169,41 +170,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func getLabels(str: String) -> [NSAttributedString] {
         let arr = str.components(separatedBy: ",")
         
-        let typeString = createParametersLabel("Types", str: arr[0])
-        let statusString = createParametersLabel("Statuses", str: arr[1])
-        let priorityString = createParametersLabel("Priorities", str: arr[2])
+        let typeString = Tools.createParametersLabel("Types", str: arr[0])
+        let statusString = Tools.createParametersLabel("Statuses", str: arr[1])
+        let priorityString = Tools.createParametersLabel("Priorities", str: arr[2])
         return [typeString,statusString,priorityString]
     }
     
-    func createParametersLabel(_ name: String, str: String) -> NSAttributedString {
-        let strRange = str.index(after: str.startIndex)..<str.index(before: str.endIndex)
-        let substr = str.substring(with: strRange)
-        if substr.characters.count > 0 {
-            let arr = substr.components(separatedBy: ";")
-            let string = "\(name): \(arr.joined(separator: ", "))"
-            let nonBoldRange = NSRange(location: name.characters.count + 1, length: string.characters.count - name.characters.count - 1)
-            let attString = attributedString(from: string, nonBoldRange: nonBoldRange)
-            return attString
-        } else {
-            let string = "\(name): All"
-            let nonBoldRange = NSRange(location: name.characters.count + 1, length: string.characters.count - name.characters.count - 1)
-            return attributedString(from: string, nonBoldRange: nonBoldRange)
-        }
-    }
     
-    func attributedString(from string: String, nonBoldRange: NSRange?) -> NSAttributedString {
-        let fontSize = UIFont.systemFontSize
-        let attrs = [
-            NSFontAttributeName: UIFont.boldSystemFont(ofSize: fontSize),
-            NSForegroundColorAttributeName: Colors.darkAzureOP.getUIColor()
-        ]
-        let nonBoldAttribute = [
-            NSFontAttributeName: UIFont.italicSystemFont(ofSize: fontSize),
-            ]
-        let attrStr = NSMutableAttributedString(string: string, attributes: attrs)
-        if let range = nonBoldRange {
-            attrStr.setAttributes(nonBoldAttribute, range: range)
-        }
-        return attrStr
-    }
 }

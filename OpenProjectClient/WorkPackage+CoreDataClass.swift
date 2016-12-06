@@ -19,7 +19,7 @@ class WorkPackage: NSManagedObject {
             return
         }
         
-        //WorkPackage.mr_truncateAll()
+        WorkPackage.mr_truncateAll()
         
         //there is no other way to get all possible statuses directly from API - I will check all items if they contain unknow status and if so, this status will be added to statuses for this particular project and instance
         
@@ -62,18 +62,19 @@ class WorkPackage: NSManagedObject {
         if let value = item["storyPoints"].int {
             wp!.storyPoints = Int32(value)
         }
-        if let value = item["lockVersion"].int {
-            wp!.lockVersion = Int32(value)
+        if let value = item["remainingTime"].string {
+            wp!.remainingHours = Tools.durationToInt(duration: value)
+        }
+        if let value = item["estimatedTime"].string {
+            wp!.estimatedTime = Tools.durationToInt(duration: value)
         }
         
-        if let value = item["remainingTime"].int {
-            wp!.remainingHours = Int32(value)
-        }
-        if let value = item["estimatedTime"].int {
-            wp!.estimatedTime = Int32(value)
-        }
         if let value = item["spentTime"].int {
             wp!.spentTime = Int32(value)
+        }
+        
+        if let value = item["percentageDone"].int {
+            wp!.percentageDone = Int32(value)
         }
         
         wp!.createdAt = stringToNSDate(item["createdAt"].stringValue)
@@ -83,12 +84,10 @@ class WorkPackage: NSManagedObject {
         
         if let d = dictLinks["type"]?.dictionary {
             wp!.typeTitle = d["title"]?.rawString()
-            wp!.typeHref = d["href"]?.rawString()
         }
         
         if let d = dictLinks["priority"]?.dictionary {
             wp!.priorityTitle = d["title"]?.rawString()
-            wp!.priorityHref = d["href"]?.rawString()
         }
         
         if let d = dictLinks["status"]?.dictionary {
@@ -113,20 +112,29 @@ class WorkPackage: NSManagedObject {
         
         if let d = dictLinks["author"]?.dictionary {
             wp!.authorTitle = d["title"]?.rawString()
-            wp!.authorHref = d["href"]?.rawString()
         }
         
         if let d = dictLinks["assignee"]?.dictionary {
             if d.count == 2 {
                 wp!.assigneeTitle = d["title"]?.rawString()
-                wp!.assigneeHref = d["href"]?.rawString()
+            }
+        }
+        
+        if let d = dictLinks["version"]?.dictionary {
+            if d.count == 2 {
+                wp!.versionTitle = d["title"]?.rawString()
+            }
+        }
+        
+        if let d = dictLinks["category"]?.dictionary {
+            if d.count == 2 {
+                wp!.categoryTitle = d["title"]?.rawString()
             }
         }
         
         if let d = dictLinks["responsible"]?.dictionary {
             if d.count == 2 {
                 wp!.responsibleTitle = d["title"]?.rawString()
-                wp!.responsibleHref = d["href"]?.rawString()
             }
         }
         
