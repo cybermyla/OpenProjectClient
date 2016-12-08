@@ -24,6 +24,8 @@ class OpenProjectAPI {
     typealias RemoteWorkPackageCreateFormsResponse = (JSON, NSError?) -> Void
     typealias RemoteWPCreateFormsResponse = (Bool, NSError?) -> Void
     typealias RemoteWPCreateFormsValidationResponse = (JSON, NSError?) -> Void
+    typealias RemoteActivitiesListResponse = (Bool, NSError?) -> Void
+    typealias RemoteUserResponse = (Bool, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -169,7 +171,7 @@ class OpenProjectAPI {
             if let workPackageId = wpId {
                 url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
             }
-
+            
             if payload != nil {
                 Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                     switch response.result {
@@ -438,6 +440,94 @@ class OpenProjectAPI {
         }
     }
     
+    func getActivities(href: String, onCompletion: @escaping RemoteActivitiesListResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(href)"
+            print("Sending activities request to \(url)")
+            
+            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Activities successfully received - \(json)")
+                    WorkPackageActivity.buildWPActivities(json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+
+    }
+    
+    func getUser(href: String, onCompletion: @escaping RemoteUserResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(href)"
+            print("Sending user request to \(url)")
+            
+            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("User successfully received - \(json)")
+                    OpUser.buildOpUser(json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+        
+    }
+    
     fileprivate func getHeaders(auth: String) -> [String : String] {
         return [
             "Authorization": "\(auth)",
@@ -464,7 +554,7 @@ class OpenProjectAPI {
         }
     }
 }
-/*
+
 extension String: ParameterEncoding {
     
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
@@ -474,4 +564,3 @@ extension String: ParameterEncoding {
     }
     
 }
- */

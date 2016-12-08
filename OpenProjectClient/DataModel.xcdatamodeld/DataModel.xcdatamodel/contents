@@ -24,6 +24,12 @@
         <attribute name="typesHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="workPackagesHref" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="OpUser" representedClassName=".OpUser" syncable="YES">
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Priority" representedClassName=".Priority" syncable="YES">
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -90,6 +96,8 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WorkPackage" representedClassName=".WorkPackage" syncable="YES">
+        <attribute name="activitiesHref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addCommentHref" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assigneeTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authorTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="categoryTitle" optional="YES" attributeType="String" syncable="YES"/>
@@ -115,6 +123,14 @@
         <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="versionTitle" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="WorkPackageActivity" representedClassName=".WorkPackageActivity" syncable="YES">
+        <attribute name="comment_html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="details" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="user_href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WorkPackageFormSchema" representedClassName=".WorkPackageFormSchema" syncable="YES">
         <attribute name="hasDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -157,8 +173,10 @@
         <element name="StringObjectValue" positionX="-36" positionY="153" width="128" height="105"/>
         <element name="Type" positionX="-45" positionY="153" width="128" height="225"/>
         <element name="Version" positionX="-45" positionY="144" width="128" height="135"/>
-        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="420"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="450"/>
+        <element name="WorkPackageActivity" positionX="-45" positionY="144" width="128" height="135"/>
         <element name="WorkPackageFormSchema" positionX="-45" positionY="144" width="128" height="315"/>
         <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
+        <element name="OpUser" positionX="-45" positionY="144" width="128" height="105"/>
     </elements>
 </model>

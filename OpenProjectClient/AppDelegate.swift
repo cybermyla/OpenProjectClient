@@ -164,5 +164,9 @@ extension UIStoryboard {
     class func EditHoursVC() -> EditHoursVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "EditHoursVC") as? EditHoursVC
     }
+    
+    class func WorkPackageActivityVC() -> WorkPackageActivityVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "WorkPackageActivityVC") as? WorkPackageActivityVC
+    }
 }
 

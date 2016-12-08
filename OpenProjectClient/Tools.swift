@@ -70,6 +70,21 @@ class Tools {
         }
     }
     
+    static func stringToNSDate(_ str: String) -> NSDate? {
+        
+        let dateFormatter = DateFormatter()
+        if (str.contains("T")) {
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        } else {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+        }
+        
+        guard let date = dateFormatter.date(from: str) else {
+            return nil
+        }
+        return date as NSDate?
+    }
+    
     ///PRIVATE FUNCTIONS
     private static func attributedString(from string: String, nonBoldRange: NSRange?) -> NSAttributedString {
         let fontSize = UIFont.systemFontSize

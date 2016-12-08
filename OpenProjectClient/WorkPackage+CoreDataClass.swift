@@ -77,10 +77,10 @@ class WorkPackage: NSManagedObject {
             wp!.percentageDone = Int32(value)
         }
         
-        wp!.createdAt = stringToNSDate(item["createdAt"].stringValue)
-        wp!.startDate = stringToNSDate(item["startDate"].stringValue)
-        wp!.updatedAt = stringToNSDate(item["updatedAt"].stringValue)
-        wp!.dueDate = stringToNSDate(item["dueDate"].stringValue)
+        wp!.createdAt = Tools.stringToNSDate(item["createdAt"].stringValue)
+        wp!.startDate = Tools.stringToNSDate(item["startDate"].stringValue)
+        wp!.updatedAt = Tools.stringToNSDate(item["updatedAt"].stringValue)
+        wp!.dueDate = Tools.stringToNSDate(item["dueDate"].stringValue)
         
         if let d = dictLinks["type"]?.dictionary {
             wp!.typeTitle = d["title"]?.rawString()
@@ -132,6 +132,14 @@ class WorkPackage: NSManagedObject {
             }
         }
         
+        if let value = dictLinks["activities"]?["href"].string {
+            wp!.activitiesHref = value
+        }
+        
+        if let value = dictLinks["addComment"]?["href"].string {
+            wp!.addCommentHref = value
+        }
+        
         if let d = dictLinks["responsible"]?.dictionary {
             if d.count == 2 {
                 wp!.responsibleTitle = d["title"]?.rawString()
@@ -149,21 +157,6 @@ class WorkPackage: NSManagedObject {
         wp!.descriptionHtml = dictDescription["html"]?.rawString()
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         return wp!.id
-    }
-    
-    class func stringToNSDate(_ str: String) -> NSDate? {
-        
-        let dateFormatter = DateFormatter()
-        if (str.contains("T")) {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        } else {
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-        }
-        
-        guard let date = dateFormatter.date(from: str) else {
-            return nil
-        }
-        return date as NSDate?
     }
     
     static func getWorkPackages(projectId: NSNumber, instanceId: String) -> [WorkPackage] {

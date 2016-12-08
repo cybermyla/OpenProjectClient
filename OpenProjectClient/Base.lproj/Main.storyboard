@@ -681,6 +681,41 @@
             </objects>
             <point key="canvasLocation" x="2493.5999999999999" y="393.55322338830587"/>
         </scene>
+        <!--Work Package ActivityVC-->
+        <scene sceneID="DXl-uu-LOC">
+            <objects>
+                <viewController storyboardIdentifier="WorkPackageActivityVC" id="dG1-07-egH" customClass="WorkPackageActivityVC" customModule="OpenProjectClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kyN-aD-Wg2"/>
+                        <viewControllerLayoutGuide type="bottom" id="4KF-Nz-Hdq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dKs-60-Scm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r45-So-3FZ">
+                                <rect key="frame" x="16" y="64" width="343" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="r45-So-3FZ" firstAttribute="leading" secondItem="dKs-60-Scm" secondAttribute="leadingMargin" id="1B7-RI-VeX"/>
+                            <constraint firstItem="r45-So-3FZ" firstAttribute="top" secondItem="kyN-aD-Wg2" secondAttribute="bottom" id="9G4-ca-9Nd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="r45-So-3FZ" secondAttribute="trailing" id="dhx-O9-PiL"/>
+                            <constraint firstItem="4KF-Nz-Hdq" firstAttribute="top" secondItem="r45-So-3FZ" secondAttribute="bottom" id="xwv-oq-e7T"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textViewActivities" destination="r45-So-3FZ" id="QT1-pY-Ahi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hjP-BZ-KmX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1585" y="1119"/>
+        </scene>
         <!--Edit DateVC-->
         <scene sceneID="2ox-0w-bgL">
             <objects>
@@ -983,7 +1018,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGY-9m-yBX">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Item" id="17n-oH-pPF"/>
+                                    <barButtonItem title="Activity" id="jd0-QV-h61">
+                                        <connections>
+                                            <segue destination="dG1-07-egH" kind="show" identifier="ShowActivities" id="IFN-LE-4xl"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

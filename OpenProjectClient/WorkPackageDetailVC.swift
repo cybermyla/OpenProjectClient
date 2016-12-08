@@ -75,9 +75,9 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             labelTypeUpdateAuthor.lineBreakMode = .byWordWrapping
             labelTypeUpdateAuthor.numberOfLines = 2
             
-            if let description = wp.descriptionRaw {
+            if let description = wp.descriptionHtml {
                 if description != "null" {
-                    textViewDescription.text = description
+                    textViewDescription.attributedText = "<html style=\"font-family:HelveticaNeue;font-size:14px;\">\(description)</html>".data(using: .utf8)?.attributedString
                 } else {
                     textViewDescription.text = ""
                 }
@@ -178,6 +178,14 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+        case "ShowActivities":
+            let vc = segue.destination as! WorkPackageActivityVC
+            vc.workPackage = self.workpackage
+            break
+        default:
+            break
+        }
     }
     
     func workpackageCreationUpdateFinished(workPackageId: Int32) {

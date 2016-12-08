@@ -355,7 +355,8 @@ public class WorkPackageFormSchema: NSManagedObject {
                         complexItems.append(itm.valuePayload)
                         break
                     default:
-                        otherItems.append(itm.valuePayload)
+                        let value = itm.valuePayload.replacingOccurrences(of: "\n", with: "\\n")
+                        otherItems.append(value)
                         break
                     }
             }
