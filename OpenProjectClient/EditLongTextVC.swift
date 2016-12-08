@@ -31,6 +31,7 @@ class EditLongTextVC: UIViewController {
         self.title = self.schemaItem?.name
         
         self.textView.text = schemaItem?.value
+        self.textView.autocorrectionType = .no
         self.textView.becomeFirstResponder()
     }
     

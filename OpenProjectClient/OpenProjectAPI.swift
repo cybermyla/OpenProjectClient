@@ -26,6 +26,7 @@ class OpenProjectAPI {
     typealias RemoteWPCreateFormsValidationResponse = (JSON, NSError?) -> Void
     typealias RemoteActivitiesListResponse = (Bool, NSError?) -> Void
     typealias RemoteUserResponse = (Bool, NSError?) -> Void
+    typealias RemoteJSONResponse = (JSON, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -525,7 +526,48 @@ class OpenProjectAPI {
         } else {
             onCompletion(false, nil)
         }
+    }
+    
+    func sendActivityComment(payload: String, workPackageId: Int32, onCompletion: @escaping RemoteJSONResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
         
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/activities"
+            print("Sending new activity comment to \(url)")
+            
+            Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Add comment response successfully received - \(json)")
+                    onCompletion(json, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
     }
     
     fileprivate func getHeaders(auth: String) -> [String : String] {

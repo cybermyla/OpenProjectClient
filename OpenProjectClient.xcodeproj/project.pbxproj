@@ -21,6 +21,7 @@
 		E243D96F1DF9FDAB007FF3F0 /* OpUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E243D96D1DF9FDAB007FF3F0 /* OpUser+CoreDataClass.swift */; };
 		E243D9701DF9FDAB007FF3F0 /* OpUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E243D96E1DF9FDAB007FF3F0 /* OpUser+CoreDataProperties.swift */; };
 		E243D9731DFA0EFB007FF3F0 /* DevSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E243D9721DFA0EFB007FF3F0 /* DevSettings.swift */; };
+		E243D9761DFA1387007FF3F0 /* AddWorkpackageActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E243D9751DFA1387007FF3F0 /* AddWorkpackageActivityVC.swift */; };
 		E2466C8C1DF884E900C95F5D /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2466C8B1DF884E900C95F5D /* WorkPackage+CoreDataProperties.swift */; };
 		E2466C8F1DF88A3900C95F5D /* WorkPackageActivity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2466C8D1DF88A3900C95F5D /* WorkPackageActivity+CoreDataClass.swift */; };
 		E2466C901DF88A3900C95F5D /* WorkPackageActivity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2466C8E1DF88A3900C95F5D /* WorkPackageActivity+CoreDataProperties.swift */; };
@@ -113,6 +114,7 @@
 		E243D96D1DF9FDAB007FF3F0 /* OpUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E243D96E1DF9FDAB007FF3F0 /* OpUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OpUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E243D9721DFA0EFB007FF3F0 /* DevSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevSettings.swift; sourceTree = "<group>"; };
+		E243D9751DFA1387007FF3F0 /* AddWorkpackageActivityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWorkpackageActivityVC.swift; sourceTree = "<group>"; };
 		E2466C8B1DF884E900C95F5D /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2466C8D1DF88A3900C95F5D /* WorkPackageActivity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageActivity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2466C8E1DF88A3900C95F5D /* WorkPackageActivity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackageActivity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -244,6 +246,15 @@
 			name = OpUser;
 			sourceTree = "<group>";
 		};
+		E243D9741DFA1355007FF3F0 /* WorkPackageActivities */ = {
+			isa = PBXGroup;
+			children = (
+				E2EDA6E41DF7861A00BF8275 /* WorkPackageActivityVC.swift */,
+				E243D9751DFA1387007FF3F0 /* AddWorkpackageActivityVC.swift */,
+			);
+			name = WorkPackageActivities;
+			sourceTree = "<group>";
+		};
 		E2466C911DF88A4200C95F5D /* WorkPackageActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +285,7 @@
 		E26017381BDB5D0000AF8332 /* WorkPackages */ = {
 			isa = PBXGroup;
 			children = (
+				E243D9741DFA1355007FF3F0 /* WorkPackageActivities */,
 				E2EDA6E31DF785E300BF8275 /* WorkPackageList */,
 				E2EDA6E21DF785CD00BF8275 /* WorkPackageDetail */,
 				E287CC841DC7E79C00743229 /* Filters */,
@@ -457,7 +469,6 @@
 			isa = PBXGroup;
 			children = (
 				E26017461BDBE2B500AF8332 /* WorkPackageDetailVC.swift */,
-				E2EDA6E41DF7861A00BF8275 /* WorkPackageActivityVC.swift */,
 			);
 			name = WorkPackageDetail;
 			sourceTree = "<group>";
@@ -786,6 +797,7 @@
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
 				E2D2FC2E1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift in Sources */,
+				E243D9761DFA1387007FF3F0 /* AddWorkpackageActivityVC.swift in Sources */,
 				E29C5C201DEB54DB00D247C5 /* EditLongTextVC.swift in Sources */,
 				E2B25D631DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift in Sources */,
 				E2933EFE1DEF90C50024BCAF /* Priority+CoreDataProperties.swift in Sources */,

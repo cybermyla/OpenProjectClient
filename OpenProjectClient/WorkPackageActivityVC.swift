@@ -8,9 +8,11 @@
 
 import UIKit
 
-class WorkPackageActivityVC: UIViewController {
+class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
 
     @IBOutlet weak var textViewActivities: UITextView!
+    
+    @IBOutlet weak var buttonAddActivity: UIButton!
     
     var workPackage: WorkPackage?
     var activities: [WorkPackageActivity]?
@@ -25,6 +27,8 @@ class WorkPackageActivityVC: UIViewController {
         
         textViewActivities.isEditable = false
         textViewActivities.isScrollEnabled = true
+        buttonAddActivity.backgroundColor = Colors.darkAzureOP.getUIColor()
+        buttonAddActivity.tintColor = UIColor.white
         loadActivities()
     }
 
@@ -38,11 +42,16 @@ class WorkPackageActivityVC: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowAddComment" {
+            let vc = segue.destination as! AddWorkpackageActivityVC
+            vc.delegate = self
+            vc.workPackage = self.workPackage
+        }
     }
-    */
     
     
     func loadActivities() {
@@ -141,6 +150,12 @@ class WorkPackageActivityVC: UIViewController {
         
         result.append(("</html>".data(using: .utf8)?.attributedString)!)
         return result
+    }
+    
+    func commentSubmitted() {
+        self.userHrefsIndex = 0
+        self.userHrefs = []
+        self.loadActivities()
     }
 }
 
