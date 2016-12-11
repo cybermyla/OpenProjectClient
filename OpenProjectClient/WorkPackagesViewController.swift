@@ -42,6 +42,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
 
         // Do any additional setup after loading the view.
         self.title = "Work Packages"
+        self.view.backgroundColor = Colors.paleOP.getUIColor()
         setFilterLabelInToolbar()
         setNeedsStatusBarAppearanceUpdate()
         addRefresh()

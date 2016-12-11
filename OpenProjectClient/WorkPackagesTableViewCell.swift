@@ -20,6 +20,7 @@ class WorkPackagesTableViewCell: UITableViewCell {
         labelSubject.textColor = Colors.darkAzureOP.getUIColor()
         labelDescription.textColor = UIColor.darkGray
         labelDescription.font = UIFont.systemFont(ofSize: 13.0)
+        self.backgroundColor = UIColor.white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

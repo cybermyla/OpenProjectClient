@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -14,21 +15,22 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
     
     var watchers: [OpUser] = []
     var workPackage: WorkPackage?
-    var watcherHrefs: [String] = []
-    var watcherHrefsIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.automaticallyAdjustsScrollViewInsets = false
+        self.view.backgroundColor = Colors.paleOP.getUIColor()
         //don't show empty rows
         self.tableView.tableFooterView = UIView()
+        self.title = "Watchers"
         tableView.delegate = self
         tableView.dataSource = self
-        if let wHref = workPackage?.watchHref {
-            watcherHrefs = wHrefs
-            getUserDetail()
+        if let wp = workPackage {
+            if let watchHref = wp.watchHref {
+                getWatchers(href: watchHref)
+            }
         }
     }
 
@@ -54,7 +56,7 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
         if watchers.count == 0 {
             numOfSections = 0
             let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
-            noDataLabel.text = "No watchers are assigned"
+            noDataLabel.text = "This workpackage has no watchers"
             noDataLabel.textColor = Colors.darkAzureOP.getUIColor()
             noDataLabel.textAlignment = NSTextAlignment.center
             self.tableView.separatorStyle = .none
@@ -80,30 +82,18 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //My methods
-    func getUserDetail() {
-        if watcherHrefs.count > 0 {
-            let href = watcherHrefs[self.watcherHrefsIndex]
-            OpenProjectAPI.sharedInstance.getUser(href: href, onCompletion: {(responseObject:Bool, error:NSError?) in
-                if let issue = error {
-                    print(issue.description)
-                    LoadingUIView.hide()
-                } else {
-                    self.watcherHrefsIndex = self.watcherHrefsIndex + 1
-                    if self.watcherHrefsIndex < self.watcherHrefs.count {
-                        self.getUserDetail()
-                    } else {
-                        self.watchers = OpUser.mr_findAllSorted(by: "name", ascending: true) as! [OpUser]
-                        self.tableView.reloadData()
-                        LoadingUIView.hide()
-                    }
-                }
-            })
-        } else {
-            print("user hrefs count is 0")
-        }
-    }
-    
-    func getWatchers() {
-        
+    func getWatchers(href: String) {
+        LoadingUIView.show()
+        OpenProjectAPI.sharedInstance.getWatchers(href: href, onCompletion: {(responseObject: JSON, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+                LoadingUIView.hide()
+            } else {
+                OpUser.buildOpUsers(json: responseObject)
+                self.watchers = OpUser.mr_findAllSorted(by: "name", ascending: true) as! [OpUser]
+                LoadingUIView.hide()
+                self.tableView.reloadData()
+            }
+        })
     }
 }

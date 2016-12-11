@@ -35,6 +35,9 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var labelSpent: UILabel!
     
+    @IBOutlet weak var constraintDescriptionHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var constraintSpentBottomMargin: NSLayoutConstraint!
     
     var workpackage: WorkPackage?
     
@@ -46,6 +49,8 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = UIColor.white
+        self.title = "Detail"
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,16 +81,26 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             labelTypeUpdateAuthor.numberOfLines = 2
             
             if let description = wp.descriptionHtml {
-                if description != "null" {
-                    textViewDescription.attributedText = "<html style=\"font-family:HelveticaNeue;font-size:14px;\">\(description)</html>".data(using: .utf8)?.attributedString
+                var text:NSAttributedString?
+                if description.characters.count > 0 {
+                    text = ("<html style=\"font-family:HelveticaNeue;font-size:14px;\">\(description)</html>".data(using: .utf8)?.attributedString)
                 } else {
-                    textViewDescription.text = ""
+                    text = "<html style=\"font-family:HelveticaNeue;font-size:14px;\"><i>No description</i></html>".data(using: .utf8)?.attributedString
                 }
-            } else {
-                textViewDescription.text = ""
+                
+                let size = CGSize(width: self.view.frame.width - 10, height: CGFloat.greatestFiniteMagnitude)
+                let rect = text?.boundingRect(with: size, options: .usesLineFragmentOrigin, context: nil)
+                if let height = rect?.size.height {
+                    if height <= constraintDescriptionHeight.constant {
+                        let finalHeight = height < 20 ? 25 : height //if it is just one row, it would show just half of the row, so setting minimum 25
+                        let difference = constraintDescriptionHeight.constant - finalHeight
+                        constraintDescriptionHeight.constant = finalHeight
+                        constraintSpentBottomMargin.constant += difference
+                    }
+                }
+                textViewDescription.attributedText = text
             }
             
-
             let finaAttributedString = NSMutableAttributedString()
             if let value = wp.typeTitle {
                 finaAttributedString.append(Tools.createFormatedLabel("Type", str: value))

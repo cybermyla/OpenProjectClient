@@ -18,15 +18,8 @@ class OpenProjectAPI {
     typealias RemoteRootResponse = (Instance?, NSError?) -> Void
     typealias RemoteProjectsResponse = ([Project]?, NSError?) -> Void
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
-    typealias RemotePrioritiesStatusesTypesResponse = (Bool, NSError?) -> Void
-    typealias RemoteAssigneesResponse = (Bool, NSError?) -> Void
-    typealias RemoteResponsiblesResponse = (Bool, NSError?) -> Void
-    typealias RemoteWorkPackageCreateFormsResponse = (JSON, NSError?) -> Void
-    typealias RemoteWPCreateFormsResponse = (Bool, NSError?) -> Void
-    typealias RemoteWPCreateFormsValidationResponse = (JSON, NSError?) -> Void
-    typealias RemoteActivitiesListResponse = (Bool, NSError?) -> Void
-    typealias RemoteUserResponse = (Bool, NSError?) -> Void
     typealias RemoteJSONResponse = (JSON, NSError?) -> Void
+    typealias RemoteBoolResponse = (Bool, NSError?) -> Void
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -150,7 +143,7 @@ class OpenProjectAPI {
         }
     }
 
-    func getWorkpackagesForms(wpId: Int32?, payload: String?, onCompletion: @escaping RemoteWorkPackageCreateFormsResponse) {
+    func getWorkpackagesForms(wpId: Int32?, payload: String?, onCompletion: @escaping RemoteJSONResponse) {
 
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
@@ -227,7 +220,7 @@ class OpenProjectAPI {
         }
     }
     
-    func verifyWorkpackageFormPayload(wpId: Int32?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+    func verifyWorkpackageFormPayload(wpId: Int32?, payload: String, onCompletion: @escaping RemoteJSONResponse) {
         
         getWorkpackagesForms(wpId: nil, payload: payload, onCompletion: {(json:JSON, error:NSError?) in
             if let issue = error {
@@ -238,7 +231,7 @@ class OpenProjectAPI {
         })
     }
     
-    func createOrUpdateWorkpackage(wpId: Int32?, payload: String, onCompletion: @escaping RemoteWPCreateFormsValidationResponse) {
+    func createOrUpdateWorkpackage(wpId: Int32?, payload: String, onCompletion: @escaping RemoteJSONResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -291,7 +284,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getWorkpackagesCreateFormsPayload(onCompletion: @escaping RemoteWPCreateFormsResponse) {
+    func getWorkpackagesCreateFormsPayload(onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -309,7 +302,7 @@ class OpenProjectAPI {
         })
     }
     
-    func getWorkpackagesUpdateFormsPayload(wpId: Int32, onCompletion: @escaping RemoteWPCreateFormsResponse) {
+    func getWorkpackagesUpdateFormsPayload(wpId: Int32, onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -327,7 +320,7 @@ class OpenProjectAPI {
         })
     }
     
-    func getPrioritiesStatusesTypes(onCompletion: @escaping RemotePrioritiesStatusesTypesResponse) {
+    func getPrioritiesStatusesTypes(onCompletion: @escaping RemoteBoolResponse) {
         
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
@@ -349,7 +342,7 @@ class OpenProjectAPI {
         })
     }
     
-    func getAvailableAssignees(onCompletion: @escaping RemoteAssigneesResponse) {
+    func getAvailableAssignees(onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -395,7 +388,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getAvailableResponsibles(onCompletion: @escaping RemoteResponsiblesResponse) {
+    func getAvailableResponsibles(onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -441,7 +434,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getActivities(href: String, onCompletion: @escaping RemoteActivitiesListResponse) {
+    func getActivities(href: String, onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -485,7 +478,7 @@ class OpenProjectAPI {
 
     }
     
-    func getUser(href: String, onCompletion: @escaping RemoteUserResponse) {
+    func getUser(href: String, onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -528,7 +521,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getWatchers(href: String, onCompletion: @escaping RemoteUserResponse) {
+    func getWatchers(href: String, onCompletion: @escaping RemoteJSONResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -559,8 +552,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Watchers successfully received - \(json)")
-                    OpUser.buildWatchers(json: json)
-                    onCompletion(true, nil)
+                    onCompletion(json, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(false, error as NSError?)

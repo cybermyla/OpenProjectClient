@@ -142,7 +142,7 @@ class WorkPackage: NSManagedObject {
             wp!.addCommentHref = value
         }
         
-        if let value = dictLinks["watch"]?["href"].string {
+        if let value = dictLinks["watchers"]?["href"].string {
             wp!.watchHref = value
         }
         

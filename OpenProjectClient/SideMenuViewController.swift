@@ -17,7 +17,7 @@ protocol SideMenuViewControllerDelegate {
 
 enum MenuItem: Int {
     case workPackages
-    case activities
+    //case activities
     
     func viewController() -> UIViewController {
         switch (self) {
@@ -25,23 +25,24 @@ enum MenuItem: Int {
             let vc = UIStoryboard.workPackagesViewController()
             return vc!
             }()
-        case .activities: return {
-            let vc = UIStoryboard.activitiesViewController()
-            return vc!
-            }()        }
+      //  case .activities: return {
+      //      let vc = UIStoryboard.activitiesViewController()
+      //      return vc!
+      //      }()        
+        }
     }
     
     func name() -> String {
         switch (self) {
         case .workPackages: return "WorkPackages"
-        case .activities: return "Activities"
+        //case .activities: return "Activities"
         }
     }
     
     func id() -> Int {
         switch (self) {
         case .workPackages: return 0
-        case .activities: return 1
+        //case .activities: return 1
         //default: return -1
         }
     }
@@ -49,7 +50,7 @@ enum MenuItem: Int {
     static func menuItemById(_ id: Int) -> MenuItem {
         switch (id) {
         case 0: return .workPackages
-        case 1: return .activities
+        //case 1: return .activities
         default: return .workPackages
         }
     }
@@ -57,7 +58,7 @@ enum MenuItem: Int {
     static func nameById(_ itemId: Int) -> String {
         switch (itemId) {
             case 0: return "WorkPackages"
-            case 1: return "Activities"
+          //  case 1: return "Activities"
             default: return "Unknown"
         }
     }
@@ -75,7 +76,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var projectsViewConHeight: NSLayoutConstraint!
     @IBOutlet weak var settingsButton: UIButton!
     
-    var items: [MenuItem] = [.workPackages, .activities]
+    var items: [MenuItem] = [.workPackages]
     var projects: [Project] = []
     
     var projectsTableViewHeight:CGFloat = 0

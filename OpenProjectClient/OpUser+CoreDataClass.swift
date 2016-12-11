@@ -29,4 +29,13 @@ public class OpUser: NSManagedObject {
         }
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
+    
+    class func buildOpUsers(json: JSON) {
+        OpUser.mr_truncateAll()
+        if let users = json["_embedded"]["elements"].array {
+            for user in users {
+                buildOpUser(json: user)
+            }
+        }
+    }
 }

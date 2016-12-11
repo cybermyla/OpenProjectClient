@@ -376,7 +376,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         LoadingUIView.show()
         OpenProjectAPI.sharedInstance.verifyWorkpackageFormPayload(wpId: workpackage?.id, payload: payload, onCompletion: {(responseObject:JSON, error:NSError?) in
             if let issue = error {
-                print("FATAL - Payload verification request failed")
+                print("FATAL - Payload verification request failed\n\(issue)")
                 LoadingUIView.hide()
             } else {
                 print("Payload verification response received")
@@ -395,7 +395,6 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     print("Form is valid")
                     
                     //create new workpackage
-                    //WorkPackageFormSchema.buildWorkPackageForms(self.projectId, instanceId: self.instanceId, json: responseObject)
                     let finalPayload = WorkPackageFormSchema.getValidatedPayload(json: responseObject)
                     print(finalPayload)
                     

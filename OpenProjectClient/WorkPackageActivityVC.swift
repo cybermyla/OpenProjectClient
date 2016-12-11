@@ -24,6 +24,7 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
 
         // Do any additional setup after loading the view.
         self.automaticallyAdjustsScrollViewInsets = false
+        self.view.backgroundColor = Colors.paleOP.getUIColor()
         
         textViewActivities.isEditable = false
         textViewActivities.isScrollEnabled = true
