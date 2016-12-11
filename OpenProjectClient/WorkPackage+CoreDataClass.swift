@@ -13,13 +13,15 @@ import SwiftyJSON
 
 class WorkPackage: NSManagedObject {
     
-    class func buildWorkpackages(_ projectId: NSNumber, instanceId: String, json: JSON) {
+    class func buildWorkpackages(_ projectId: NSNumber, instanceId: String, truncate: Bool, json: JSON) {
         guard let array = json["_embedded"]["elements"].array else
         {
             return
         }
         
-        WorkPackage.mr_truncateAll()
+        if truncate {
+            WorkPackage.mr_truncateAll()
+        }
         
         //there is no other way to get all possible statuses directly from API - I will check all items if they contain unknow status and if so, this status will be added to statuses for this particular project and instance
         
@@ -138,6 +140,10 @@ class WorkPackage: NSManagedObject {
         
         if let value = dictLinks["addComment"]?["href"].string {
             wp!.addCommentHref = value
+        }
+        
+        if let value = dictLinks["watch"]?["href"].string {
+            wp!.watchHref = value
         }
         
         if let d = dictLinks["responsible"]?.dictionary {

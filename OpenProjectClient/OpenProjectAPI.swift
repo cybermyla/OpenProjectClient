@@ -108,7 +108,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getWorkPackagesByProjectId(_ projectId: NSNumber, instanceId: String, onCompletion: @escaping RemoteWorkpackagesResponse) {
+    func getWorkPackagesByProjectId(_ projectId: NSNumber, offset: Int, pageSize: Int, truncate: Bool, instanceId: String, onCompletion: @escaping RemoteWorkpackagesResponse) {
         guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
         }
@@ -120,7 +120,7 @@ class OpenProjectAPI {
             
             let filters = WPFilter.getWPFilter(projectId, instanceId: instanceId)
             
-            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=1&pageSize=100\(filters)"
+            let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=\(offset)&pageSize=\(pageSize)\(filters)"
             
             Alamofire.request(url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()
@@ -138,7 +138,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
-                    WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, json: json)
+                    WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, truncate: truncate, json: json)
                     let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])
                     workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: true, with: predicate) as! [WorkPackage]
                     onCompletion(workpackages, nil)
@@ -517,6 +517,49 @@ class OpenProjectAPI {
                     let json = JSON(data: dataFromResponse)
                     print("User successfully received - \(json)")
                     OpUser.buildOpUser(json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func getWatchers(href: String, onCompletion: @escaping RemoteUserResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(href)"
+            print("Sending watchers request to \(url)")
+            
+            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Watchers successfully received - \(json)")
+                    OpUser.buildWatchers(json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
                     print(error)

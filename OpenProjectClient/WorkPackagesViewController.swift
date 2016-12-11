@@ -18,6 +18,9 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     var instanceId: String?
     var projectId: NSNumber?
     
+    var offset = 1
+    var pageSize = 100
+    
     let timeElapsedLimit = 180.0
 
     @IBOutlet weak var tableViewWorkPackages: UITableView!
@@ -60,6 +63,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
                 getWorkPackages(projectId, instanceId: instanceId)
                 self.updateFilterLableInToolbar(projectId, instanceId: instanceId)
+            } else {
+                showNoProjectAlert()
             }
         } else {
             ///show alert notifying that there is no instance selected. consider showing this alert just once after application start
@@ -86,7 +91,21 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     //UITableViewDataSource + UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        var numOfSections = 1
+        if workpackages.count == 0 {
+            numOfSections = 0
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableViewWorkPackages.bounds.size.width, height: self.tableViewWorkPackages.bounds.size.height))
+            noDataLabel.text = "No Workpackages"
+            noDataLabel.textColor = Colors.darkAzureOP.getUIColor()
+            noDataLabel.textAlignment = NSTextAlignment.center
+            self.tableViewWorkPackages.backgroundView = noDataLabel
+            self.tableViewWorkPackages.separatorStyle = .none
+        } else {
+            self.tableViewWorkPackages.backgroundView = nil
+            self.tableViewWorkPackages.separatorStyle = .singleLine
+        }
+        return numOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,18 +117,34 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         let wp = workpackages[(indexPath as NSIndexPath).row] as WorkPackage
         cell?.labelSubject.lineBreakMode = .byWordWrapping
         cell?.labelSubject.numberOfLines = 2
-        cell?.labelSubject.text = wp.subject
+        if let subject = wp.subject {
+            cell?.labelSubject.text = "#\(wp.id) \(subject)"
+        }
         cell?.labelDescription.font = UIFont.italicSystemFont(ofSize: 12)
         cell?.labelDescription.text = "Status: \(wp.statusTitle!), Priority: \(wp.priorityTitle!), Type: \(wp.typeTitle!)"
         return cell!;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let cell = tableView.cellForRow(at: indexPath) as! WorkPackagesTableViewCell
+        //cell.labelSubject.textColor = UIColor.white
         let vc = UIStoryboard.wpDetailViewController()
         vc?.workpackage = workpackages[(indexPath as NSIndexPath).row]
         self.navigationController?.pushViewController(vc!, animated: true)
-        
         tableViewWorkPackages.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let maxWpTotal = offset * pageSize
+        if indexPath.row == maxWpTotal - 1 {
+            if let instanceId = defaults.value(forKey: "InstanceId") as? String {
+                if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
+                    if workpackages.count == maxWpTotal {
+                        getWorkPackagesFromServer(projectId, instanceId: instanceId, getType: .loadMore)
+                    }
+                }
+            }
+        }
     }
     
     //button add    
@@ -117,11 +152,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         let vc = UIStoryboard.wpEditViewController()
         let navCon = UINavigationController(rootViewController: vc!)
         self.present(navCon, animated: true, completion: nil)
-    }
-
-    //filters button
-    @IBAction func filterButtonTapped(_ sender: AnyObject) {
-
     }
     
     func setButtons() {
@@ -134,7 +164,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
-    func getWorkPackages(_ projectId: NSNumber, instanceId: String, refresh: Bool) {
+    func getWorkPackages(_ projectId: NSNumber, instanceId: String, getType: GetWorkpackageType) {
         
         var timeElapsed: Double?
         
@@ -143,7 +173,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         if timeElapsed == nil || timeElapsed! > timeElapsedLimit {
-            getWorkPackagesFromServer(projectId, instanceId: instanceId, refresh: refresh)
+            getWorkPackagesFromServer(projectId, instanceId: instanceId, getType: getType)
         } else {
             self.workpackages = WorkPackage.getWorkPackages(projectId: projectId, instanceId: instanceId)
             self.tableViewWorkPackages.reloadData()
@@ -152,32 +182,59 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func getWorkPackages(_ projectId: NSNumber, instanceId: String) {
-        getWorkPackages(projectId, instanceId: instanceId, refresh: false)
+        getWorkPackages(projectId, instanceId: instanceId, getType: .initial)
     }
     
-    func getWorkPackagesFromServer(_ projectId: NSNumber, instanceId: String, refresh: Bool) {
-        if refresh {
-            
-        } else {
+    func getWorkPackagesFromServer(_ projectId: NSNumber, instanceId: String, getType: GetWorkpackageType) {
+        var truncate = true
+        switch getType {
+        case .initial:
+            offset = 1
             LoadingUIView.show()
+            break
+        case .refresh:
+            offset = 1
+            break
+        case .loadMore:
+            truncate = false
+            offset = offset + 1
+            SmallLoadingUIView.show()
+            break
         }
-        OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
+
+        OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, offset: offset, pageSize: pageSize, truncate: truncate, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
-                if refresh {
-                    self.refreshControl?.endRefreshing()
-                } else {
+                switch getType {
+                case .initial:
                     LoadingUIView.hide()
+                    break
+                case .refresh:
+                    self.refreshControl?.endRefreshing()
+                    break
+                case .loadMore:
+                    self.offset = self.offset - 1
+                    SmallLoadingUIView.hide()
+                    break
                 }
             } else {
                 if let _ = responseObject {
                     self.workpackages = WorkPackage.getWorkPackages(projectId: projectId, instanceId: instanceId)
-                    if refresh {
-                        self.refreshControl?.endRefreshing()
-                    } else {
+                    
+                    switch getType {
+                    case .initial:
                         LoadingUIView.hide()
+                        self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
+                        break
+                    case .refresh:
+                        self.refreshControl?.endRefreshing()
+                        self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
+                        break
+                    case .loadMore:
+                        SmallLoadingUIView.hide()
+                        break
                     }
-                    self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
+                    
                     self.tableViewWorkPackages.reloadData()
                 }
             }
@@ -186,6 +243,20 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     
     func showNoInstanceAlert() {
         let alertController = UIAlertController(title: "ERROR", message: "No instance is defined\nGo to settings and setup new instance", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch (action.style) {
+            case .default:
+                self.dismiss(animated: true, completion: nil)
+                break
+            default:
+                break
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoProjectAlert() {
+        let alertController = UIAlertController(title: "ERROR", message: "No project has been selected\nGo to settings and select a project", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch (action.style) {
             case .default:
@@ -222,7 +293,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
                 defaults.set(nil, forKey: "WorkPackageLastUpdate")
-                getWorkPackages(projectId, instanceId: instanceId, refresh: true)
+                getWorkPackages(projectId, instanceId: instanceId, getType: .refresh)
             }
         }
     }

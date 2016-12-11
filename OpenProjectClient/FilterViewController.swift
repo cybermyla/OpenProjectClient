@@ -71,7 +71,21 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //UITableViewDataSource + UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        var numOfSections = 1
+        if filters.count == 0 {
+            numOfSections = 0
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
+            noDataLabel.text = "No filters have been defined"
+            noDataLabel.textColor = Colors.darkAzureOP.getUIColor()
+            noDataLabel.textAlignment = NSTextAlignment.center
+            self.tableView.separatorStyle = .none
+            self.tableView.backgroundView = noDataLabel
+        }  else {
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .singleLine
+        }
+
+        return numOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,7 +158,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             action, index in
             WPFilter.deleteWPFilter(filter: self.filters[indexPath.row])
             self.filters.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            //in case removing last row - deleting the whole section - otherwise it crashes
+            if self.filters.count == 0 {
+                tableView.deleteSections([indexPath.section], with: .fade)
+                self.setEditing(false, animated: true)
+            } else {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         })
         delete.backgroundColor = UIColor.red
         return [delete, edit]

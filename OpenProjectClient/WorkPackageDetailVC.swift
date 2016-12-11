@@ -183,6 +183,10 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             let vc = segue.destination as! WorkPackageActivityVC
             vc.workPackage = self.workpackage
             break
+        case "ShowWatchers":
+            let vc = segue.destination as! WorkPackageWatchersVC
+            vc.workPackage = self.workpackage
+            break
         default:
             break
         }

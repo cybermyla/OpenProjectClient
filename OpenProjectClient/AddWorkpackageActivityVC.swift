@@ -30,7 +30,6 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
         textFieldText.autocorrectionType = .no
         textFieldText.becomeFirstResponder()
         
-        textFieldText.returnKeyType = .done
         textFieldText.delegate = self
     }
 
@@ -44,14 +43,6 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
             return true
         }
     }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textFieldText.resignFirstResponder()
-            return false
-        }
-        return true
-    }
 
     /*
     // MARK: - Navigation
@@ -64,9 +55,11 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
     */
     
     @IBAction func buttonSendTapped(_ sender: Any) {
+        textFieldText.resignFirstResponder()
         sendActivityComment()
     }
     @IBAction func cancelButtonTapped(_ sender: Any) {
+        textFieldText.resignFirstResponder()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -85,6 +78,7 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
                             self.delegate?.commentSubmitted()
                             self.dismiss(animated: true, completion: nil)
                         } else {
+                            self.textFieldText.becomeFirstResponder()
                             LoadingUIView.hide()
                         }
                     }

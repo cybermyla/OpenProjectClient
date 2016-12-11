@@ -123,6 +123,7 @@
         <attribute name="typeTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="versionTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="watchHref" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WorkPackageActivity" representedClassName=".WorkPackageActivity" syncable="YES">
         <attribute name="comment_html" optional="YES" attributeType="String" syncable="YES"/>
@@ -167,16 +168,16 @@
     <elements>
         <element name="Assignee" positionX="-45" positionY="144" width="128" height="180"/>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
+        <element name="OpUser" positionX="-45" positionY="144" width="128" height="105"/>
         <element name="Priority" positionX="-54" positionY="144" width="128" height="210"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
         <element name="Status" positionX="-54" positionY="144" width="128" height="210"/>
         <element name="StringObjectValue" positionX="-36" positionY="153" width="128" height="105"/>
         <element name="Type" positionX="-45" positionY="153" width="128" height="225"/>
         <element name="Version" positionX="-45" positionY="144" width="128" height="135"/>
-        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="450"/>
+        <element name="WorkPackage" positionX="-54" positionY="81" width="128" height="465"/>
         <element name="WorkPackageActivity" positionX="-45" positionY="144" width="128" height="135"/>
         <element name="WorkPackageFormSchema" positionX="-45" positionY="144" width="128" height="315"/>
         <element name="WPFilter" positionX="-45" positionY="144" width="128" height="195"/>
-        <element name="OpUser" positionX="-45" positionY="144" width="128" height="105"/>
     </elements>
 </model>

@@ -29,6 +29,9 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
         textViewActivities.isScrollEnabled = true
         buttonAddActivity.backgroundColor = Colors.darkAzureOP.getUIColor()
         buttonAddActivity.tintColor = UIColor.white
+        
+        self.title = "Activities"
+        
         loadActivities()
     }
 

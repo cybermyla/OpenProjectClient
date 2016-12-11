@@ -132,9 +132,14 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
         if let projectId = defaults.value(forKey: "ProjectId") as? NSNumber {
             //will have to get data from Core data
-            let project = Project.mr_findFirst(byAttribute: "id", withValue: projectId)
-            projectButton.setTitle("\(project!.name!) \u{25BE}", for: .normal)
-            projectButton.setTitle("\(project!.name!) \u{25B4}", for: .selected)
+ //           let project = Project.mr_findFirst(byAttribute: "id", withValue: projectId)
+            if let project = Project.mr_findFirst(byAttribute: "id", withValue: projectId) {
+                projectButton.setTitle("\(project.name!) \u{25BE}", for: .normal)
+                projectButton.setTitle("\(project.name!) \u{25B4}", for: .selected)
+            } else {
+                projectButton.setTitle("Select Project \u{25BE}", for: .normal)
+                projectButton.setTitle("Select Project \u{25B4}", for: .selected)
+            }
         } else {
             projectButton.setTitle("Select Project \u{25BE}", for: .normal)
             projectButton.setTitle("Select Project \u{25B4}", for: .selected)
