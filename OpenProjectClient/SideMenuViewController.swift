@@ -291,6 +291,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     func settingsClosed(instanceChanged: Bool) {
         if instanceChanged {
             self.defaults.set(nil, forKey: "ProjectId")
+            self.defaults.set(nil, forKey: "CanCreateWP")
         }
         
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
@@ -312,17 +313,16 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
       //      getRemoteProjects(instanceId)
         }
     }
- 
     
     func getRemoteProjects(_ instanceId: String) {
         LoadingUIView.show()
-        OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:[Project]?, error:NSError?) in
+        OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
                 self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
-                if let _ = responseObject {
+                if responseObject {
                     self.projects = Project.mr_findAllSorted(by: "name", ascending: true) as! [Project]
                     self.projectsTableView.reloadData()
                     self.menuTableView.reloadData()
@@ -331,7 +331,6 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
                 LoadingUIView.hide()
             }
-            
         })
     }
     
@@ -340,11 +339,41 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         OpenProjectAPI.sharedInstance.getPrioritiesStatusesTypes(onCompletion: {(success:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.defaults.set(false, forKey: "CanCreateWP")
+                self.getPrioritiesStatusesTypesFromServerOneByOne()
+            } else {
+                LoadingUIView.hide()
+                self.defaults.set(true, forKey: "CanCreateWP")
+                self.delegate?.projectSelected()
+            }
+        })
+    }
+    
+    func getPrioritiesStatusesTypesFromServerOneByOne() {
+        OpenProjectAPI.sharedInstance.getPriorities(onCompletion: {(success:Bool, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
                 self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
-                LoadingUIView.hide()
-                self.delegate?.projectSelected()
+                OpenProjectAPI.sharedInstance.getStatuses(onCompletion: {(success:Bool, error:NSError?) in
+                    if let issue = error {
+                        print(issue.description)
+                        self.showRequestErrorAlert(error: issue)
+                        LoadingUIView.hide()
+                    } else {
+                        OpenProjectAPI.sharedInstance.getTypes(onCompletion: {(success:Bool, error:NSError?) in
+                            if let issue = error {
+                                print(issue.description)
+                                self.showRequestErrorAlert(error: issue)
+                                LoadingUIView.hide()
+                            } else {
+                                self.delegate?.projectSelected()
+                                LoadingUIView.hide()
+                            }
+                        })
+                    }
+                })
             }
         })
     }

@@ -12,22 +12,21 @@ import SwiftyJSON
 
 class OpenProjectAPI {
 
-    static let sharedInstance = OpenProjectAPI()
-    fileprivate init() {
+    var manager: SessionManager?
+    
+    static let sharedInstance : OpenProjectAPI = OpenProjectAPI()
+    
+    private init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 20
+        configuration.timeoutIntervalForResource = 20
+        manager = SessionManager(configuration: configuration)
     }
     
-    typealias RemoteRootResponse = (Instance?, NSError?) -> Void
-    typealias RemoteProjectsResponse = ([Project]?, NSError?) -> Void
-    typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
     typealias RemoteJSONResponse = (JSON, NSError?) -> Void
     typealias RemoteBoolResponse = (Bool, NSError?) -> Void
     
-    let configuration = URLSessionConfiguration.default
-    var sessionManager: Alamofire.SessionManager?
-    let timeout = TimeInterval(5)
-    
-    
-    func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
+    func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteJSONResponse) {
         
         let auth = getBasicAuth(apikey)
         
@@ -37,33 +36,26 @@ class OpenProjectAPI {
         ]
         let url = "\(address)/api/v3"
         
-        configuration.timeoutIntervalForRequest = timeout
-        sessionManager = Alamofire.SessionManager(configuration: configuration)
-        self.sessionManager!.request(url, encoding: URLEncoding.default, headers: headers).validate().responseString { response in
-            var instance = Instance.mr_createEntity() as Instance
-            instance.address = address
-            instance.apikey = apikey
-            instance.auth = auth
-            instance.id = NSUUID().uuidString
+        manager!.request(url, encoding: URLEncoding.default, headers: headers).validate().responseString { response in
+            
             switch response.result {
             case .success( _):
                 guard let responseValue = response.result.value else {
-                    onCompletion(instance, nil)
+                    onCompletion(nil, nil)
                     return
                 }
                 
                 guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                    onCompletion(instance, nil)
+                    onCompletion(nil, nil)
                     return
                 }
                 
                 let json = JSON(data: dataFromResponse)
                 
-                instance = Instance.buildInstance(instance, json: json)
-                onCompletion(instance, nil)
+                Instance.buildInstance(address, api: apikey, auth: auth, json: json)
                 print("Root successfully received")
-                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
                 print("\(response)")
+                onCompletion(json, nil)
             case .failure(let error):
                 print(error)
                 onCompletion(nil, error as NSError?)
@@ -71,7 +63,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getProjects(_ instanceId: String, onCompletion: @escaping RemoteProjectsResponse) {
+    func getProjects(_ instanceId: String, onCompletion: @escaping RemoteBoolResponse) {
         
         guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
@@ -82,36 +74,32 @@ class OpenProjectAPI {
 
             let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
 
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url).validate().responseString { response in
-                var projects = [Project]()
+            manager!.request(url).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
-                        onCompletion(projects, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(projects, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     let json = JSON(data: dataFromResponse)
                     print("Projects successfully received - \(json)")
                     Project.buildProjects(json)
-                    projects = Project.mr_findAll() as! [Project]
-                    onCompletion(projects, nil)
+                    onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
-                    onCompletion(nil, error as NSError?)
+                    onCompletion(false, error as NSError?)
                 }
             }
         }
     }
     
-    func getWorkPackagesByProjectId(_ projectId: NSNumber, offset: Int, pageSize: Int, truncate: Bool, instanceId: String, onCompletion: @escaping RemoteWorkpackagesResponse) {
+    func getWorkPackagesByProjectId(_ projectId: NSNumber, offset: Int, pageSize: Int, truncate: Bool, instanceId: String, onCompletion: @escaping RemoteBoolResponse) {
         guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
             return
         }
@@ -125,31 +113,26 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=\(offset)&pageSize=\(pageSize)\(filters)"
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, headers: headers).validate().responseString { response in
-                var workpackages = [WorkPackage]()
+            manager!.request(url, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
-                        onCompletion(workpackages, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(workpackages, nil)
+                        onCompletion(false, nil)
                         return
                     }
                     
                     let json = JSON(data: dataFromResponse)
                     print("Workpackages successfully received - \(json)")
                     WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, truncate: truncate, json: json)
-                    let predicate = NSPredicate(format: "instanceId = %i AND projectId = %i", argumentArray: [instanceId, projectId])
-                    workpackages = WorkPackage.mr_findAllSorted(by: "id", ascending: true, with: predicate) as! [WorkPackage]
-                    onCompletion(workpackages, nil)
+                    onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
-                    onCompletion(nil, error as NSError?)
+                    onCompletion(false, error as NSError?)
                 }
             }
         }
@@ -178,10 +161,8 @@ class OpenProjectAPI {
                 url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
             }
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
             if payload != nil {
-                self.sessionManager!.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                     switch response.result {
                     case .success( _):
                         guard let responseValue = response.result.value else {
@@ -205,7 +186,7 @@ class OpenProjectAPI {
                     }
                 }
             } else {
-            self.sessionManager!.request(url, method:.post, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.post, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -272,9 +253,7 @@ class OpenProjectAPI {
                 operationName = "Update"
             }
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            manager!.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -349,7 +328,7 @@ class OpenProjectAPI {
             if let issue = error {
                 onCompletion(false, issue as NSError?)
             } else {
-                let _ = Priority.buildPriorities(NSNumber(value:projectId), instanceId: instanceId!, json: json)
+                Priority.buildPriorities(Int32(projectId), instanceId: instanceId!, json: json)
                 let _ = Type.buildTypes(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 let _ = Status.buildStatuses(NSNumber(value:projectId), instanceId: instanceId!, json: json)
                 let _ = Version.buildVersions(NSNumber(value:projectId), instanceId: instanceId!, json: json)
@@ -377,9 +356,7 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_assignees"
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -425,9 +402,7 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_responsibles"
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -470,9 +445,7 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending activities request to \(url)")
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -516,9 +489,7 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending user request to \(url)")
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -561,9 +532,7 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending watchers request to \(url)")
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -579,6 +548,150 @@ class OpenProjectAPI {
                     let json = JSON(data: dataFromResponse)
                     print("Watchers successfully received - \(json)")
                     onCompletion(json, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func getPriorities(onCompletion: @escaping RemoteBoolResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        let projectId = defaults.string(forKey: "ProjectId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        guard let intProjectId = Int32(projectId!) else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(instance.prioritiesHref!)"
+            print("Sending priorities request to \(url)")
+            
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Priorities successfully received - \(json)")
+                    Priority.buildPriorities(intProjectId, instanceId: instanceId!, json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func getStatuses(onCompletion: @escaping RemoteBoolResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        let projectId = defaults.string(forKey: "ProjectId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        guard let intProjectId = Int32(projectId!) else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(instance.statusesHref!)"
+            print("Sending statuses request to \(url)")
+            
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Statuses successfully received - \(json)")
+                    Type.buildTypes(NSNumber(value: intProjectId), instanceId: instanceId!, json: json)
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print(error)
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func getTypes(onCompletion: @escaping RemoteBoolResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        let projectId = defaults.string(forKey: "ProjectId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        guard let intProjectId = Int32(projectId!) else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)\(instance.typesHref!)"
+            print("Sending types request to \(url)")
+            
+            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("Types successfully received - \(json)")
+                    Status.buildStatuses(NSNumber(value: intProjectId), instanceId: instanceId!, json: json)
+                    onCompletion(true, nil)
                 case .failure(let error):
                     print(error)
                     onCompletion(false, error as NSError?)
@@ -605,9 +718,7 @@ class OpenProjectAPI {
             let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/activities"
             print("Sending new activity comment to \(url)")
             
-            configuration.timeoutIntervalForRequest = timeout
-            sessionManager = Alamofire.SessionManager(configuration: configuration)
-            self.sessionManager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {

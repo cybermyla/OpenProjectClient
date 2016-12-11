@@ -41,6 +41,8 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.tableViewWorkPackages.tableFooterView = UIView()
+        
         self.title = "Work Packages"
         self.view.backgroundColor = Colors.paleOP.getUIColor()
         setFilterLabelInToolbar()
@@ -83,8 +85,13 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowWPDetail" {
+            let vc = segue.destination as! WorkPackageDetailVC
+            if let pathRow = self.tableViewWorkPackages.indexPathForSelectedRow?.row {
+                vc.workpackage = workpackages[pathRow]
+            }
+        }
     }
-
     
     @IBAction func menuTapped(_ sender: AnyObject) {
         delegate?.toggleLeftPanel!()
@@ -127,11 +134,6 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let cell = tableView.cellForRow(at: indexPath) as! WorkPackagesTableViewCell
-        //cell.labelSubject.textColor = UIColor.white
-        let vc = UIStoryboard.wpDetailViewController()
-        vc?.workpackage = workpackages[(indexPath as NSIndexPath).row]
-        self.navigationController?.pushViewController(vc!, animated: true)
         tableViewWorkPackages.deselectRow(at: indexPath, animated: false)
     }
     
@@ -158,7 +160,11 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
     func setButtons() {
         if let _ = defaults.value(forKey: "ProjectId") as? NSNumber {
             filterButton.isEnabled = true
-            addWPButton.isEnabled = true
+            if let value = defaults.value(forKey: "CanCreateWP") as? Bool {
+                addWPButton.isEnabled = value
+            } else {
+                addWPButton.isEnabled = false
+            }
         } else {
             filterButton.isEnabled = false
             addWPButton.isEnabled = false
@@ -203,7 +209,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             break
         }
 
-        OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, offset: offset, pageSize: pageSize, truncate: truncate, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
+        OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, offset: offset, pageSize: pageSize, truncate: truncate, instanceId: instanceId, onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 self.showRequestErrorAlert(error: issue)
                 print(issue.description)
@@ -220,23 +226,21 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                     break
                 }
             } else {
-                if let _ = responseObject {
+                if responseObject {
                     self.workpackages = WorkPackage.getWorkPackages(projectId: projectId, instanceId: instanceId)
-                    
                     switch getType {
-                    case .initial:
-                        LoadingUIView.hide()
-                        self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
-                        break
-                    case .refresh:
-                        self.refreshControl?.endRefreshing()
-                        self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
-                        break
-                    case .loadMore:
-                        SmallLoadingUIView.hide()
-                        break
-                    }
-                    
+                        case .initial:
+                            LoadingUIView.hide()
+                            self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
+                            break
+                        case .refresh:
+                            self.refreshControl?.endRefreshing()
+                            self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
+                            break
+                        case .loadMore:
+                            SmallLoadingUIView.hide()
+                            break
+                        }
                     self.tableViewWorkPackages.reloadData()
                 }
             }

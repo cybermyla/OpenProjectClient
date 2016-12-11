@@ -11,6 +11,7 @@ import UIKit
 class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var labelSubject: UILabel!
+    
     @IBOutlet weak var textViewDescription: UITextView!
 
     @IBOutlet weak var labelTypeUpdateAuthor: UILabel!
@@ -35,6 +36,8 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     var workpackage: WorkPackage?
     
     let defaults = UserDefaults.standard
@@ -49,6 +52,9 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
         if let id = workpackage?.id {
             self.title = "ID #\(id)"
         }
+        
+        setEditButtonVisibility()
+        
         fillWP()
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -69,6 +75,14 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     }
     
     /* My functions */
+    
+    func setEditButtonVisibility() {
+        if let value = defaults.value(forKey: "CanCreateWP") as? Bool {
+            editButton.isEnabled = value
+        } else {
+            editButton.isEnabled = false
+        }
+    }
     
     func fillWP() {
         if let wp = workpackage {

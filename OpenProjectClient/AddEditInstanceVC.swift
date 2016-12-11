@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 protocol AddEditInstanceVCDelegate {
     func instanceSaved(_ instanceId: String)
@@ -58,10 +59,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-
-    }
-    
     override var prefersStatusBarHidden : Bool {
         return true
     }
@@ -74,7 +71,6 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     @IBAction func saveButtonTapped(_ sender: AnyObject) {
         currentInstanceAddress = textFieldAddress.text
         currentInstanceApiKey = textFieldApiKey.text
-        
         getInstanceDetails()
     }
 
@@ -119,18 +115,22 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     
     func getInstanceDetails() {
         LoadingUIView.show()
-        OpenProjectAPI.sharedInstance.getInstance(currentInstanceAddress!, apikey: currentInstanceApiKey!, onCompletion: {(responseObject:Instance?, error:NSError?) in
+        OpenProjectAPI.sharedInstance.getInstance(currentInstanceAddress!, apikey: currentInstanceApiKey!, onCompletion: {(responseObject:JSON, error:NSError?) in
             if let issue = error {
                 self.showRequestErrorAlert(error: issue)
                 print(issue.description)
                 LoadingUIView.hide()
             } else {
-                if let fetchedInstance = responseObject {
-                    print("Version: \(fetchedInstance.coreVersion), InstanceName: \(fetchedInstance.instanceName)")
-                    self.delegate?.instanceSaved(fetchedInstance.id!)
-                    self.defaults.set(fetchedInstance.id!, forKey: "InstanceId")
-                    LoadingUIView.hide()
-                    self.dismiss(animated: true, completion: nil)
+                if let errors = ResponseValidationError.getRequestErrors(json: responseObject) {
+                    self.showResponseErrorAlert(errors: errors)
+                } else {
+                    if let instance = Instance.getInstanceByAddressAndKey(address: self.currentInstanceAddress!, apiKey:self.currentInstanceApiKey!) {
+                        print("Version: \(instance.coreVersion), InstanceName: \(instance.instanceName)")
+                        self.delegate?.instanceSaved(instance.id!)
+                        self.defaults.set(instance.id!, forKey: "InstanceId")
+                        LoadingUIView.hide()
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         })
@@ -138,6 +138,11 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     
     func showRequestErrorAlert(error: Error) {
         let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showResponseErrorAlert(errors: [ResponseValidationError]) {
+        let alertController = ErrorAlerts.getAlertController(errors: errors, sender: self)
         self.present(alertController, animated: true, completion: nil)
     }
 }

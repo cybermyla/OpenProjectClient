@@ -13,9 +13,16 @@ public class Status: NSManagedObject {
     
     class func buildStatuses(_ projectId: NSNumber, instanceId:String, json: JSON) {
         
-        let allowedValues = json["_embedded"]["schema"]["status"]["_embedded"]["allowedValues"]
+        var allowedValues: [JSON] = []
         
-        for element in allowedValues.arrayValue {
+        if let allowedValuesTest = json["_embedded"]["schema"]["status"]["_embedded"]["allowedValues"].array {
+            allowedValues = allowedValuesTest
+        }
+        if let allowedValuesTest = json["_embedded"]["elements"].array {
+            allowedValues = allowedValuesTest
+        }
+        
+        for element in allowedValues {
             
             var status: Status?
             

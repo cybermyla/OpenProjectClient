@@ -596,7 +596,7 @@
                                         <rect key="frame" x="0.0" y="28" width="340" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhG-sB-BaV" id="zPy-wi-MgT">
-                                            <rect key="frame" x="0.0" y="0.0" width="340" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1023,6 +1023,7 @@
                                         <connections>
                                             <outlet property="labelDescription" destination="tQ9-4Z-OWU" id="iBP-aL-DPV"/>
                                             <outlet property="labelSubject" destination="iPi-cD-RNP" id="ksN-0g-Z5i"/>
+                                            <segue destination="LuC-ph-Ms5" kind="show" identifier="ShowWPDetail" id="Urm-pP-taf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1246,6 +1247,7 @@
                     <size key="freeformSize" width="340" height="800"/>
                     <connections>
                         <outlet property="constraintDescriptionHeight" destination="YU1-Na-wpT" id="ZUT-fw-i3s"/>
+                        <outlet property="editButton" destination="RcJ-2E-0VD" id="CTO-ss-5ES"/>
                         <outlet property="labelAssignee" destination="pcr-K2-vVQ" id="DEF-D3-961"/>
                         <outlet property="labelCategory" destination="zoL-L9-29e" id="IlI-JT-lbC"/>
                         <outlet property="labelDate" destination="tPe-An-3et" id="OaB-gR-H6n"/>

@@ -30,7 +30,7 @@
 		E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173A1BDB646300AF8332 /* Project+CoreDataClass.swift */; };
 		E260173F1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260173E1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift */; };
 		E26017471BDBE2B500AF8332 /* WorkPackageDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26017461BDBE2B500AF8332 /* WorkPackageDetailVC.swift */; };
-		E2642EC31DF4AC3E0059F38D /* WPValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2642EC21DF4AC3E0059F38D /* WPValidationError.swift */; };
+		E2642EC31DF4AC3E0059F38D /* ResponseValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2642EC21DF4AC3E0059F38D /* ResponseValidationError.swift */; };
 		E26EE1751DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1731DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift */; };
 		E26EE1761DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */; };
 		E26EE1781DF0F07F003E8A8B /* EditDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */; };
@@ -128,7 +128,7 @@
 		E260173A1BDB646300AF8332 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E260173E1BDB673A00AF8332 /* WorkPackage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E26017461BDBE2B500AF8332 /* WorkPackageDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageDetailVC.swift; sourceTree = "<group>"; };
-		E2642EC21DF4AC3E0059F38D /* WPValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WPValidationError.swift; sourceTree = "<group>"; };
+		E2642EC21DF4AC3E0059F38D /* ResponseValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseValidationError.swift; sourceTree = "<group>"; };
 		E26EE1731DF0DECE003E8A8B /* StringObjectValue+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StringObjectValue+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StringObjectValue+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E26EE1771DF0F07F003E8A8B /* EditDateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDateVC.swift; sourceTree = "<group>"; };
@@ -418,6 +418,7 @@
 				E243D9721DFA0EFB007FF3F0 /* DevSettings.swift */,
 				E2A5C22A1DFCC1750002E2FA /* SmallLoadingUIView.swift */,
 				E2A5C2341DFDC8990002E2FA /* ErrorAlerts.swift */,
+				E2642EC21DF4AC3E0059F38D /* ResponseValidationError.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -491,7 +492,6 @@
 				E26EE1741DF0DECE003E8A8B /* StringObjectValue+CoreDataProperties.swift */,
 				E2D2FC2B1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift */,
 				E2D2FC2C1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift */,
-				E2642EC21DF4AC3E0059F38D /* WPValidationError.swift */,
 			);
 			name = WorkPackageFormSchema;
 			sourceTree = "<group>";
@@ -808,7 +808,7 @@
 				E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */,
 				E243D9731DFA0EFB007FF3F0 /* DevSettings.swift in Sources */,
 				E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */,
-				E2642EC31DF4AC3E0059F38D /* WPValidationError.swift in Sources */,
+				E2642EC31DF4AC3E0059F38D /* ResponseValidationError.swift in Sources */,
 				E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */,
 				E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */,

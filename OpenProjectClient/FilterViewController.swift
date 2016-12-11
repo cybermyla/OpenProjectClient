@@ -195,6 +195,4 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let priorityString = Tools.createParametersLabel("Priorities", str: arr[2])
         return [typeString,statusString,priorityString]
     }
-    
-    
 }

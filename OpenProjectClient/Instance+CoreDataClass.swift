@@ -11,14 +11,21 @@ import SwiftyJSON
 
 class Instance: NSManagedObject {
 
-    class func buildInstance(_ instance: Instance, json: JSON) -> Instance {
+    class func buildInstance(_ address: String, api: String, auth: String, json: JSON) {
+        
+        let instance = Instance.mr_createEntity() as Instance
         
         instance.instanceName = json["instanceName"].stringValue
         instance.coreVersion = json["coreVersion"].stringValue
         
+        instance.address = address
+        instance.apikey = api
+        instance.auth = auth
+        instance.id = NSUUID().uuidString
+        
         guard let linksDict = json["_links"].dictionaryObject else
         {
-            return Instance()
+            return
         }
         
         if let configurationHrefRaw: NSDictionary = linksDict["configuration"] as? NSDictionary {
@@ -41,21 +48,14 @@ class Instance: NSManagedObject {
             instance.workPackagesHref = workPackagesHrefRaw.allValues[0] as? String
         }
         
-        
-        //DOES NOT WORK
-        /*
-         if let userHrefRaw: NSDictionary = linksDict["user"] as? NSDictionary {
-         let userHrefX = userHrefRaw.allValues
-         }
-         
-         if let userPreferencesHrefRaw: NSDictionary = linksDict["userPreferences"] as? NSDictionary {
-         userPreferencesHref = userPreferencesHrefRaw.allValues[0] as! String
-         }
-         */
-        
-        return instance
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     static func getAllInstances() -> [Instance] {
         return Instance.mr_findAllSorted(by: "instanceName", ascending: true) as! [Instance]
+    }
+    
+    static func getInstanceByAddressAndKey(address: String, apiKey: String) -> Instance? {
+        let predicate = NSPredicate(format: "apikey = %i AND address = %i", argumentArray: [apiKey, address])
+        return Instance.mr_findFirst(with: predicate) as Instance?
     }
 }

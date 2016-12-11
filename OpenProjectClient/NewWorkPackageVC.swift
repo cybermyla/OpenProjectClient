@@ -387,8 +387,8 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 print("Payload verification response received")
                 print(responseObject)
                 LoadingUIView.hide()
-                let errors = WPValidationError.getValidationErrors(json: responseObject)
-                if errors.count > 0 {
+
+                if let errors = ResponseValidationError.getFormErrors(json: responseObject) {
                     LoadingUIView.hide()
                     print("Form is not valid")
                     var errorText = [String]()
@@ -411,15 +411,10 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                         } else {
                             LoadingUIView.hide()
                             print(submitionResponseObject)
-                            let errors = WPValidationError.getSubmitionErrors(json: submitionResponseObject)
-                            if errors.count > 0 {
+                            if let errors = ResponseValidationError.getRequestErrors(json: submitionResponseObject) {
                                 LoadingUIView.hide()
                                 print("New Workpackage has not been created")
-                                var errorText = [String]()
-                                for error in errors {
-                                    errorText.append(error.message!)
-                                }
-                                self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
+                                self.showResponseErrorAlert(errors: errors)
                             } else {
                                 print(submitionResponseObject)
                                 let id = self.parseUpdatedWorkPackage(json: submitionResponseObject)
@@ -435,6 +430,11 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     private func parseUpdatedWorkPackage(json: JSON) -> Int32 {
         return WorkPackage.buildWorkPackage(projectId: projectId, instanceId: instanceId, item: json)
+    }
+    
+    private func showResponseErrorAlert(errors: [ResponseValidationError]) {
+        let alertController = ErrorAlerts.getAlertController(errors: errors, sender: self)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     private func showRequestErrorAlert(error: Error) {

@@ -14,9 +14,16 @@ public class Type: NSManagedObject {
     
     class func buildTypes(_ projectId: NSNumber, instanceId:String, json: JSON) {
         
-        let allowedValues = json["_embedded"]["schema"]["type"]["_embedded"]["allowedValues"]
+        var allowedValues: [JSON] = []
         
-        for element in allowedValues.arrayValue {
+        if let allowedValuesTest = json["_embedded"]["schema"]["type"]["_embedded"]["allowedValues"].array {
+            allowedValues = allowedValuesTest
+        }
+        if let allowedValuesTest = json["_embedded"]["elements"].array {
+            allowedValues = allowedValuesTest
+        }
+        
+        for element in allowedValues {
             
             var type: Type?
             
