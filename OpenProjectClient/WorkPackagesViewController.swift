@@ -205,6 +205,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
 
         OpenProjectAPI.sharedInstance.getWorkPackagesByProjectId(projectId, offset: offset, pageSize: pageSize, truncate: truncate, instanceId: instanceId, onCompletion: {(responseObject:[WorkPackage]?, error:NSError?) in
             if let issue = error {
+                self.showRequestErrorAlert(error: issue)
                 print(issue.description)
                 switch getType {
                 case .initial:
@@ -242,31 +243,19 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         })
     }
     
+    func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func showNoInstanceAlert() {
-        let alertController = UIAlertController(title: "ERROR", message: "No instance is defined\nGo to settings and setup new instance", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            switch (action.style) {
-            case .default:
-                self.dismiss(animated: true, completion: nil)
-                break
-            default:
-                break
-            }
-        }))
+        
+        let alertController = ErrorAlerts.getAlertController(title: "NOTE", message: "No instance is defined\nGo to settings and setup new instance", sender: self)
         self.present(alertController, animated: true, completion: nil)
     }
     
     func showNoProjectAlert() {
-        let alertController = UIAlertController(title: "ERROR", message: "No project has been selected\nGo to settings and select a project", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            switch (action.style) {
-            case .default:
-                self.dismiss(animated: true, completion: nil)
-                break
-            default:
-                break
-            }
-        }))
+        let alertController = ErrorAlerts.getAlertController(title: "NOTE", message: "No project has been selected\nSelect a project", sender: self)
         self.present(alertController, animated: true, completion: nil)
     }
     

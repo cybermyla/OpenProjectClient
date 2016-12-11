@@ -121,6 +121,7 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         LoadingUIView.show()
         OpenProjectAPI.sharedInstance.getInstance(currentInstanceAddress!, apikey: currentInstanceApiKey!, onCompletion: {(responseObject:Instance?, error:NSError?) in
             if let issue = error {
+                self.showRequestErrorAlert(error: issue)
                 print(issue.description)
                 LoadingUIView.hide()
             } else {
@@ -133,5 +134,10 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
                 }
             }
         })
+    }
+    
+    func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

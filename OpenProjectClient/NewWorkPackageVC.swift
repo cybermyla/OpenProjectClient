@@ -259,6 +259,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         OpenProjectAPI.sharedInstance.getAvailableAssignees(onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 //sending responsibles and assignee requests serialy - they share the same table
@@ -272,6 +273,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         OpenProjectAPI.sharedInstance.getAvailableResponsibles(onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 LoadingUIView.hide()
@@ -284,6 +286,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         OpenProjectAPI.sharedInstance.getWorkpackagesCreateFormsPayload(onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
@@ -299,6 +302,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         OpenProjectAPI.sharedInstance.getWorkpackagesUpdateFormsPayload(wpId: workpackage!.id,onCompletion: {(responseObject:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 self.workpackageFormSchemaItems = WorkPackageFormSchema.mr_findAll() as? [WorkPackageFormSchema]
@@ -377,6 +381,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         OpenProjectAPI.sharedInstance.verifyWorkpackageFormPayload(wpId: workpackage?.id, payload: payload, onCompletion: {(responseObject:JSON, error:NSError?) in
             if let issue = error {
                 print("FATAL - Payload verification request failed\n\(issue)")
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 print("Payload verification response received")
@@ -393,7 +398,6 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
                 } else {
                     print("Form is valid")
-                    
                     //create new workpackage
                     let finalPayload = WorkPackageFormSchema.getValidatedPayload(json: responseObject)
                     print(finalPayload)
@@ -402,6 +406,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                         if let issue = error {
                             print("New Workpackage request failed")
                             print(issue.description)
+                            self.showRequestErrorAlert(error: issue)
                             LoadingUIView.hide()
                         } else {
                             LoadingUIView.hide()
@@ -430,6 +435,11 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     private func parseUpdatedWorkPackage(json: JSON) -> Int32 {
         return WorkPackage.buildWorkPackage(projectId: projectId, instanceId: instanceId, item: json)
+    }
+    
+    private func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

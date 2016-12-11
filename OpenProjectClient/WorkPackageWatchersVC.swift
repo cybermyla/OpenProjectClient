@@ -87,6 +87,7 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
         OpenProjectAPI.sharedInstance.getWatchers(href: href, onCompletion: {(responseObject: JSON, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 OpUser.buildOpUsers(json: responseObject)
@@ -95,5 +96,10 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

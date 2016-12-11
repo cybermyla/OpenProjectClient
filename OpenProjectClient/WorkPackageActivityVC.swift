@@ -64,6 +64,7 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
             OpenProjectAPI.sharedInstance.getActivities(href: href, onCompletion: {(responseObject:Bool, error:NSError?) in
                 if let issue = error {
                     print(issue.description)
+                    self.showRequestErrorAlert(error: issue)
                     LoadingUIView.hide()
                 } else {
                     OpUser.mr_truncateAll()
@@ -82,6 +83,7 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
             OpenProjectAPI.sharedInstance.getUser(href: href, onCompletion: {(responseObject:Bool, error:NSError?) in
                 if let issue = error {
                     print(issue.description)
+                    self.showRequestErrorAlert(error: issue)
                     LoadingUIView.hide()
                 } else {
                     self.userHrefsIndex = self.userHrefsIndex + 1
@@ -160,6 +162,11 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
         self.userHrefsIndex = 0
         self.userHrefs = []
         self.loadActivities()
+    }
+    
+    func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

@@ -19,10 +19,6 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var labelDate: UILabel!
     
-    @IBOutlet weak var labelProgress: UILabel!
-    
-    @IBOutlet weak var pvProgress: UIProgressView!
-    
     @IBOutlet weak var labelVersion: UILabel!
     
     @IBOutlet weak var labelCategory: UILabel!
@@ -37,7 +33,7 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     @IBOutlet weak var constraintDescriptionHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var constraintSpentBottomMargin: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var workpackage: WorkPackage?
     
@@ -50,7 +46,12 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
-        self.title = "Detail"
+        if let id = workpackage?.id {
+            self.title = "ID #\(id)"
+        }
+        fillWP()
+        self.automaticallyAdjustsScrollViewInsets = false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +62,10 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     override func viewWillAppear(_ animated: Bool) {
         //disable description textview editing
         textViewDescription.isEditable = false
-        fillWP()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.contentSize = self.view.frame.size
     }
     
     /* My functions */
@@ -83,21 +87,16 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             if let description = wp.descriptionHtml {
                 var text:NSAttributedString?
                 if description.characters.count > 0 {
-                    text = ("<html style=\"font-family:HelveticaNeue;font-size:14px;\">\(description)</html>".data(using: .utf8)?.attributedString)
+                    text = ("<html style=\"font-family:HelveticaNeue;font-size:14px;\">\(description.replacingOccurrences(of: "&para;", with: ""))</html>".data(using: .utf8)?.attributedString)
                 } else {
                     text = "<html style=\"font-family:HelveticaNeue;font-size:14px;\"><i>No description</i></html>".data(using: .utf8)?.attributedString
                 }
                 
-                let size = CGSize(width: self.view.frame.width - 10, height: CGFloat.greatestFiniteMagnitude)
-                let rect = text?.boundingRect(with: size, options: .usesLineFragmentOrigin, context: nil)
-                if let height = rect?.size.height {
-                    if height <= constraintDescriptionHeight.constant {
-                        let finalHeight = height < 20 ? 25 : height //if it is just one row, it would show just half of the row, so setting minimum 25
-                        let difference = constraintDescriptionHeight.constant - finalHeight
-                        constraintDescriptionHeight.constant = finalHeight
-                        constraintSpentBottomMargin.constant += difference
-                    }
+                let rect = text?.boundingRect(with: CGSize(width: textViewDescription.frame.width, height: CGFloat.greatestFiniteMagnitude) , options: .usesLineFragmentOrigin, context: nil)
+                if let height = rect?.height {
+                    constraintDescriptionHeight.constant = height > 25 ? height : 25
                 }
+                textViewDescription.isScrollEnabled = false
                 textViewDescription.attributedText = text
             }
             

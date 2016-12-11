@@ -288,7 +288,11 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     //SettingsViewController delegate implementation
-    func settingsClosed() {
+    func settingsClosed(instanceChanged: Bool) {
+        if instanceChanged {
+            self.defaults.set(nil, forKey: "ProjectId")
+        }
+        
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             getRemoteProjects(instanceId)
             self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
@@ -315,6 +319,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         OpenProjectAPI.sharedInstance.getProjects(instanceId, onCompletion: {(responseObject:[Project]?, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 if let _ = responseObject {
@@ -335,6 +340,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         OpenProjectAPI.sharedInstance.getPrioritiesStatusesTypes(onCompletion: {(success:Bool, error:NSError?) in
             if let issue = error {
                 print(issue.description)
+                self.showRequestErrorAlert(error: issue)
                 LoadingUIView.hide()
             } else {
                 LoadingUIView.hide()
@@ -343,4 +349,8 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         })
     }
     
+    func showRequestErrorAlert(error: Error) {
+        let alertController = ErrorAlerts.getAlertController(error: error, sender: self)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

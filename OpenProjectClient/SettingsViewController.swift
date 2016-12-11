@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsViewControllerDelegate {
-    func settingsClosed()
+    func settingsClosed(instanceChanged: Bool)
 }
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddEditInstanceVCDelegate {
@@ -38,6 +38,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableViewInstances.backgroundColor = UIColor.white
         tableViewInstances.rowHeight = tableHeight!
         tableViewInstances.separatorStyle = .none
+        
+        //saving temporarily instance id = will be compared to InstanceId when saving changes
+        self.defaults.setValue(defaults.value(forKey: "InstanceId"), forKey: "CurrentInstanceId")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +58,18 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func doneButtonTapped(_ sender: Any) {
-        delegate?.settingsClosed()
+        var current: String = ""
+        var newInstance: String = " "
+        
+        if let curInst = defaults.value(forKey: "CurrentInstanceId") as? String {
+            current = curInst
+        }
+        
+        if let newInst = defaults.value(forKey: "InstanceId") as? String {
+            newInstance = newInst
+        }
+        self.defaults.setValue(nil, forKey: "CurrentInstanceId")
+        delegate?.settingsClosed(instanceChanged: current == newInstance ? false : true)
         self.dismiss(animated: true, completion: nil)
     }
     

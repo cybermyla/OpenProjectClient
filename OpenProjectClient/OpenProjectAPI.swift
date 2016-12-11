@@ -13,13 +13,19 @@ import SwiftyJSON
 class OpenProjectAPI {
 
     static let sharedInstance = OpenProjectAPI()
-    fileprivate init() {}
+    fileprivate init() {
+    }
     
     typealias RemoteRootResponse = (Instance?, NSError?) -> Void
     typealias RemoteProjectsResponse = ([Project]?, NSError?) -> Void
     typealias RemoteWorkpackagesResponse = ([WorkPackage]?, NSError?) -> Void
     typealias RemoteJSONResponse = (JSON, NSError?) -> Void
     typealias RemoteBoolResponse = (Bool, NSError?) -> Void
+    
+    let configuration = URLSessionConfiguration.default
+    var sessionManager: Alamofire.SessionManager?
+    let timeout = TimeInterval(5)
+    
     
     func getInstance(_ address: String, apikey: String, onCompletion: @escaping RemoteRootResponse) {
         
@@ -31,7 +37,9 @@ class OpenProjectAPI {
         ]
         let url = "\(address)/api/v3"
         
-        Alamofire.request(url, encoding: URLEncoding.default, headers: headers).validate().responseString { response in
+        configuration.timeoutIntervalForRequest = timeout
+        sessionManager = Alamofire.SessionManager(configuration: configuration)
+        self.sessionManager!.request(url, encoding: URLEncoding.default, headers: headers).validate().responseString { response in
             var instance = Instance.mr_createEntity() as Instance
             instance.address = address
             instance.apikey = apikey
@@ -74,7 +82,9 @@ class OpenProjectAPI {
 
             let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
 
-            Alamofire.request(url).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url).validate().responseString { response in
                 var projects = [Project]()
                 switch response.result {
                 case .success( _):
@@ -115,7 +125,9 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=\(offset)&pageSize=\(pageSize)\(filters)"
             
-            Alamofire.request(url, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, headers: headers).validate().responseString { response in
                 var workpackages = [WorkPackage]()
                 switch response.result {
                 case .success( _):
@@ -166,8 +178,10 @@ class OpenProjectAPI {
                 url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
             }
             
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
             if payload != nil {
-                Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                self.sessionManager!.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                     switch response.result {
                     case .success( _):
                         guard let responseValue = response.result.value else {
@@ -191,7 +205,7 @@ class OpenProjectAPI {
                     }
                 }
             } else {
-            Alamofire.request(url, method:.post, headers: headers).validate().responseString { response in
+            self.sessionManager!.request(url, method:.post, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -258,7 +272,9 @@ class OpenProjectAPI {
                 operationName = "Update"
             }
             
-            Alamofire.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -361,7 +377,9 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_assignees"
             
-            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -407,7 +425,9 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_responsibles"
             
-            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -450,7 +470,9 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending activities request to \(url)")
             
-            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -494,7 +516,9 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending user request to \(url)")
             
-            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -537,7 +561,9 @@ class OpenProjectAPI {
             let url = "\(instance.address!)\(href)"
             print("Sending watchers request to \(url)")
             
-            Alamofire.request(url, method:.get, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -579,7 +605,9 @@ class OpenProjectAPI {
             let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/activities"
             print("Sending new activity comment to \(url)")
             
-            Alamofire.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            configuration.timeoutIntervalForRequest = timeout
+            sessionManager = Alamofire.SessionManager(configuration: configuration)
+            self.sessionManager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {

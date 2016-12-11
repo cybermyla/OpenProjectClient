@@ -60,6 +60,7 @@
 		E2A5C22E1DFCD7620002E2FA /* WorkPackageWatchersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5C22D1DFCD7620002E2FA /* WorkPackageWatchersVC.swift */; };
 		E2A5C2311DFCD9FB0002E2FA /* WorkPackage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5C2301DFCD9FB0002E2FA /* WorkPackage+CoreDataProperties.swift */; };
 		E2A5C2331DFCDC200002E2FA /* WorkPackageWatchersTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5C2321DFCDC200002E2FA /* WorkPackageWatchersTVC.swift */; };
+		E2A5C2351DFDC8990002E2FA /* ErrorAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5C2341DFDC8990002E2FA /* ErrorAlerts.swift */; };
 		E2AA26AE1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */; };
 		E2B25D631DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B25D621DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift */; };
 		E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */; };
@@ -157,6 +158,7 @@
 		E2A5C22D1DFCD7620002E2FA /* WorkPackageWatchersVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageWatchersVC.swift; sourceTree = "<group>"; };
 		E2A5C2301DFCD9FB0002E2FA /* WorkPackage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WorkPackage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E2A5C2321DFCDC200002E2FA /* WorkPackageWatchersTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackageWatchersTVC.swift; sourceTree = "<group>"; };
+		E2A5C2341DFDC8990002E2FA /* ErrorAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlerts.swift; sourceTree = "<group>"; };
 		E2AA26AD1D20510E00AA8FE7 /* WorkPackagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkPackagesTableViewCell.swift; sourceTree = "<group>"; };
 		E2B25D621DDE5C2C009A9938 /* ProjectItemSideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectItemSideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingUIView.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				E207C0E91DF63B6E00CA32A3 /* Tools.swift */,
 				E243D9721DFA0EFB007FF3F0 /* DevSettings.swift */,
 				E2A5C22A1DFCC1750002E2FA /* SmallLoadingUIView.swift */,
+				E2A5C2341DFDC8990002E2FA /* ErrorAlerts.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -581,7 +584,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Miloslav Linhart";
 				TargetAttributes = {
 					E2CD5A651BBDC013009A3C33 = {
@@ -809,6 +812,7 @@
 				E29D4FC81DC3E48600EB3BB6 /* Status+CoreDataClass.swift in Sources */,
 				E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */,
 				E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */,
+				E2A5C2351DFDC8990002E2FA /* ErrorAlerts.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */,
 				E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */,
