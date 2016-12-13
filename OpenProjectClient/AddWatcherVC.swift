@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+protocol AddWatcherVCDelegate {
+    func addingWatchersFinished()
+}
 
 class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -17,8 +22,11 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var tableView: UITableView!
     
     var workPackage: WorkPackage?
+    var delegate: AddWatcherVCDelegate?
     
     var availableWatchers: [OpUser] = []
+    var selectedWatchers: [OpUser] = []
+    var selectedWatchersIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +44,9 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.allowsMultipleSelection = true
         
-        getWatchers()
+        getAvailableWatchers()
     }
     
     
@@ -51,6 +60,8 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func buttonAddWatcherTapped(_ sender: Any) {
+        LoadingUIView.show()
+        addWatcher()
     }
     
     @IBAction func buttonCancelTapped(_ sender: Any) {
@@ -68,10 +79,10 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     */
     
-    func getWatchers() {
+    func getAvailableWatchers() {
         if let wpId = self.workPackage?.id {
             LoadingUIView.show()
-            OpenProjectAPI.sharedInstance.getAvailableWatchers(workPackageId: wpId, onCompletion: {(responseObject:Bool, error:NSError?) in
+            OpenProjectAPI.sharedInstance.getAvailableWatchers(workPackageId: wpId, testRightsOnly: false, onCompletion: {(responseObject:Bool, error:NSError?) in
                 if let issue = error {
                     print(issue.description)
                     self.showRequestErrorAlert(error: issue)
@@ -80,12 +91,36 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     LoadingUIView.hide()
                     if let users = OpUser.getAllUsers() {
                         self.availableWatchers = users
-                        self.buttonAddWatcher.isEnabled = self.availableWatchers.count > 0 ? true : false
+                        self.buttonAddWatcher.isHidden = self.availableWatchers.count > 0 ? false : true
                         self.tableView.reloadData()
                     }
                 }
             })
         }
+    }
+    
+    func addWatcher() {
+        let watcher = selectedWatchers[self.selectedWatchersIndex] as OpUser
+        guard let wpId = self.workPackage?.id else {
+            LoadingUIView.hide()
+            return
+        }
+        OpenProjectAPI.sharedInstance.addWatcher(to: wpId, payload: watcher.payload, onCompletion: {(responseObject:JSON, error:NSError?) in
+            if let issue = error {
+                print(issue.description)
+                self.showRequestErrorAlert(error: issue)
+                LoadingUIView.hide()
+            } else {
+                self.selectedWatchersIndex = self.selectedWatchersIndex + 1
+                if self.selectedWatchersIndex < self.selectedWatchers.count {
+                    self.addWatcher()
+                } else {
+                    LoadingUIView.hide()
+                    self.delegate?.addingWatchersFinished()
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        })
     }
     
     //UITableViewDataSource + UITableViewDelegate
@@ -120,6 +155,18 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         return cell!;
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedWatchers.append(availableWatchers[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let selectedWatcher = availableWatchers[indexPath.row]
+        if let i = selectedWatchers.index(where: { $0.id == selectedWatcher.id }) {
+            selectedWatchers.remove(at: i)
+        }
+    }
+    
     /*
     private func showResponseErrorAlert(errors: [ResponseValidationError]) {
         let alertController = ErrorAlerts.getAlertController(errors: errors, sender: self)

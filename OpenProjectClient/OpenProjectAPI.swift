@@ -29,6 +29,7 @@ class OpenProjectAPI {
     var _sendActivityComment: DataRequest?
     var _removeWatcher: DataRequest?
     var _getAvailableWatchers: DataRequest?
+    var _addWatcher: DataRequest?
     
     static let sharedInstance : OpenProjectAPI = OpenProjectAPI()
     
@@ -874,7 +875,7 @@ class OpenProjectAPI {
         }
     }
     
-    func getAvailableWatchers(workPackageId: Int32, onCompletion: @escaping RemoteBoolResponse) {
+    func getAvailableWatchers(workPackageId: Int32, testRightsOnly: Bool, onCompletion: @escaping RemoteBoolResponse) {
         let defaults = UserDefaults.standard
         let instanceId = defaults.string(forKey: "InstanceId")
         
@@ -909,12 +910,59 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    OpUser.buildOpUsers(json: json)
+                    if !testRightsOnly {
+                        OpUser.buildOpUsers(json: json)
+                    }
                     print("\(Date()) Get available watchers response successfuly received")
                     onCompletion(true, nil)
                 case .failure(let error):
                     print("\(Date()) Get available watchers request failed \(error)")
                     onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func addWatcher(to workPackageId: Int32, payload: String, onCompletion: @escaping RemoteJSONResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/watchers"
+            
+            if let existingRequest = _removeWatcher {
+                existingRequest.cancel()
+                print("\(Date()) Existing add watcher request has been canceled")
+            }
+            print("\(Date()) Sending add watcher request - \(url)")
+            
+            _addWatcher = manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(nil, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(nil, nil)
+                        return
+                    }
+                    let json = JSON(data: dataFromResponse)
+                    print("\(Date()) Add watcher response successfuly received")
+                    onCompletion(json, nil)
+                case .failure(let error):
+                    print("\(Date()) Add watcher request failed\n\(error)\n\(payload)")
+                    onCompletion(nil, error as NSError?)
                 }
             }
         } else {

@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewDataSource, AddWatcherVCDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buttonAddWatcher: UIButton!
@@ -37,7 +37,10 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         if let wp = workPackage {
             if let watchHref = wp.watchHref {
+                //this will also include test add watchers right
                 getWatchers(href: watchHref)
+            } else {
+                testAddWatchersRight()
             }
         }
     }
@@ -58,6 +61,7 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
         if segue.identifier == "PresentAddWatcher" {
             let vc = segue.destination as? AddWatcherVC
             vc?.workPackage = self.workPackage
+            vc?.delegate = self
         }
     }
     
@@ -101,23 +105,21 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
         self.tableView.setEditing(editing, animated: animated)
-//        self.addFilterButton.isEnabled = false
-//        if editing == false {
-//            self.addFilterButton.isEnabled = true
-//            tableView.reloadData()
-//        }
+        self.buttonAddWatcher.isEnabled = false
+        if editing == false {
+            self.buttonAddWatcher.isEnabled = true
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
         }
-        
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let delete = UITableViewRowAction(style: .destructive, title: "DELETE", handler: {
+        let delete = UITableViewRowAction(style: .destructive, title: "REMOVE", handler: {
             action, index in
             
             LoadingUIView.show()
@@ -142,7 +144,7 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
                         //in case removing last row - deleting the whole section - otherwise it crashes
                         if self.watchers.count == 0 {
                             tableView.deleteSections([indexPath.section], with: .fade)
-                            self.navigationItem.rightBarButtonItem?.isEnabled = false
+                            self.navigationItem.rightBarButtonItem = nil
                             self.setEditing(false, animated: true)
                         } else {
                             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -166,11 +168,45 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
             } else {
                 OpUser.buildOpUsers(json: responseObject)
                 self.watchers = OpUser.mr_findAllSorted(by: "name", ascending: true) as! [OpUser]
-                self.navigationItem.rightBarButtonItem?.isEnabled = self.watchers.count > 0
+                if self.watchers.count == 0 {
+                    self.navigationItem.rightBarButtonItem = nil
+                }
                 LoadingUIView.hide()
                 self.tableView.reloadData()
+                
+                //send get available watchers request - in case of an issue,
+                if let wpId = self.workPackage?.id {
+                    OpenProjectAPI.sharedInstance.getAvailableWatchers(workPackageId: wpId, testRightsOnly: true, onCompletion: {(responseObject:Bool, error:NSError?) in
+                        if let _ = error {
+                            print("\(Date()) User has no add watcher rights for project id \(wpId)")
+                            self.buttonAddWatcher.isHidden = true
+                            self.navigationItem.rightBarButtonItem = nil
+                            LoadingUIView.hide()
+                        } else {
+                            print("\(Date()) User has add watcher rights for project id \(wpId)")
+                            LoadingUIView.hide()
+                        }
+                    })
+                }
             }
         })
+    }
+    
+    func testAddWatchersRight() {
+        LoadingUIView.show()
+        if let wpId = self.workPackage?.id {
+            OpenProjectAPI.sharedInstance.getAvailableWatchers(workPackageId: wpId, testRightsOnly: true, onCompletion: {(responseObject:Bool, error:NSError?) in
+                if let _ = error {
+                    print("\(Date()) User has no add watcher rights for project id \(wpId)")
+                    self.buttonAddWatcher.isHidden = true
+                    self.navigationItem.rightBarButtonItem = nil
+                    LoadingUIView.hide()
+                } else {
+                    print("\(Date()) User has add watcher rights for project id \(wpId)")
+                    LoadingUIView.hide()
+                }
+            })
+        }
     }
     
     private func showRequestErrorAlert(error: Error) {
@@ -181,5 +217,18 @@ class WorkPackageWatchersVC: UIViewController, UITableViewDelegate, UITableViewD
     private func showResponseErrorAlert(errors: [ResponseValidationError]) {
         let alertController = ErrorAlerts.getAlertController(errors: errors, sender: self)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func addingWatchersFinished() {
+        watchers = []
+        self.navigationItem.rightBarButtonItem = editButtonItem
+        if let wp = workPackage {
+            if let watchHref = wp.watchHref {
+                //this will also include test add watchers right
+                getWatchers(href: watchHref)
+            } else {
+                testAddWatchersRight()
+            }
+        }
     }
 }

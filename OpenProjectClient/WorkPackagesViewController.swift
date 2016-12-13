@@ -161,13 +161,16 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         if let _ = defaults.value(forKey: "ProjectId") as? NSNumber {
             filterButton.isEnabled = true
             if let value = defaults.value(forKey: "CanCreateWP") as? Bool {
-                addWPButton.isEnabled = value
+                if !value {
+                    self.navigationItem.rightBarButtonItem = nil
+                }
             } else {
-                addWPButton.isEnabled = false
+                self.navigationItem.rightBarButtonItem = nil
+                //addWPButton.isEnabled = false
             }
         } else {
             filterButton.isEnabled = false
-            addWPButton.isEnabled = false
+            self.navigationItem.rightBarButtonItem = nil
         }
     }
     

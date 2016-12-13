@@ -85,11 +85,14 @@ class Tools {
         return date as NSDate?
     }
     
-    static func nsDateToString(_ date: NSDate) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        
-        return dateFormatter.string(from: date as Date)
+    static func nsDateToString(_ date: NSDate?) -> String? {
+        if let d = date {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            return dateFormatter.string(from: d as Date)
+        } else {
+            return nil
+        }
     }
     
     ///PRIVATE FUNCTIONS

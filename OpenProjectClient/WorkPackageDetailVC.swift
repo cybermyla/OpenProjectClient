@@ -78,9 +78,12 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
     
     func setEditButtonVisibility() {
         if let value = defaults.value(forKey: "CanCreateWP") as? Bool {
-            editButton.isEnabled = value
+            if value == false {
+                self.navigationItem.rightBarButtonItem = nil
+            }
+            //editButton.isEnabled = value
         } else {
-            editButton.isEnabled = false
+            self.navigationItem.rightBarButtonItem = nil
         }
     }
     

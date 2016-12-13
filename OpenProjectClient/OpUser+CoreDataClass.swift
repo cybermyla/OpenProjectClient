@@ -19,9 +19,21 @@ public class OpUser: NSManagedObject {
         }
     }
     
+    var self_href_clean: String? {
+        get {
+            return "/api/v3/users/\(self.id)"
+        }
+    }
+    
     var show_href: String? {
         get {
             return "\"/users/\(self.id)\""
+        }
+    }
+    
+    var payload: String {
+        get {
+            return "{\"user\":{\"href\":\"/api/v3/users/\(self.id)\"}}"
         }
     }
 
@@ -103,15 +115,5 @@ public class OpUser: NSManagedObject {
     
     static func getAllUsers() -> [OpUser]? {
         return OpUser.mr_findAllSorted(by: "name", ascending: true) as! [OpUser]?
-    }
-    
-    static func getPayload(user: OpUser) -> String {
-        var result = "{\"_type\": \"\(user.type)\","
-        result += "\"_links\": { \"self\": { \"href\": \"/api/v3/users/\(user.id)\", \"title\": \"\(user.self_title)\" },"
-        result += "\"show\": { \"href\": \"/users/\(user.id)\", \"type\": 'text/html' }, \"lock\": { \"href\": \"/api/v3/users/\(user.id)/lock\", \"method\": \"POST\" }, \"updateImmediately\": { \"href\": \"/api/v3/users/\(user.id)\", \"method\": \"PATCH\"}, \"delete\": { \"href\": \"/api/v3/users/\(user.id)\", \"method\": \"DELETE\" }, },"
-        
-        result += "\"id\": \(user.id), \"login\": \"\(user.login)\", \"firstName\": \"\(user.firstName)\", \"lastName\": \"\(user.lastName)\","
-        result += "\"email\": \"\(user.email)\", \"admin\": \(user.admin), \"avatar\": \"\(user.avatar)\", \"status\": \"\(user.status)\", \"language\": \"\(user.language)\", \"createdAt\": \"\(Tools.nsDateToString(user.createdAt!)!)\", \"updatedAt\": \"\(Tools.nsDateToString(user.updatedAt!)!)\" }"
-        return result
     }
 }

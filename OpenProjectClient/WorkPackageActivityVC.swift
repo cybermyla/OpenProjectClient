@@ -123,7 +123,7 @@ class WorkPackageActivityVC: UIViewController, AddWorkPackageVCDelegate {
             let opUsers = OpUser.mr_findAll() as! [OpUser]
             for activity in self.activities! {
                 var name = "N/A"
-                if let i = opUsers.index(where: {$0.href == activity.user_href}) {
+                if let i = opUsers.index(where: { $0.self_href_clean == activity.user_href }) {
                     name = opUsers[i].name!
                 }
                 var rowActivity = "<div style=\"font-size:14px;font-family:HelveticaNeue\">"
