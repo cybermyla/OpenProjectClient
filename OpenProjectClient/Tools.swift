@@ -85,6 +85,13 @@ class Tools {
         return date as NSDate?
     }
     
+    static func nsDateToString(_ date: NSDate) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        return dateFormatter.string(from: date as Date)
+    }
+    
     ///PRIVATE FUNCTIONS
     private static func attributedString(from string: String, nonBoldRange: NSRange?) -> NSAttributedString {
         let fontSize = UIFont.systemFontSize

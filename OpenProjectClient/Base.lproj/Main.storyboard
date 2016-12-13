@@ -589,35 +589,120 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sUR-We-3zx">
-                                <rect key="frame" x="0.0" y="64" width="340" height="736"/>
+                                <rect key="frame" x="0.0" y="64" width="340" height="686"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkPackageWatchersTVC" id="fhG-sB-BaV" customClass="WorkPackageWatchersTVC" customModule="OpenProjectClient" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="340" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhG-sB-BaV" id="zPy-wi-MgT">
-                                            <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="340" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ape-4B-fIq">
+                                <rect key="frame" x="0.0" y="750" width="340" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="w76-ST-D1U"/>
+                                </constraints>
+                                <state key="normal" title="ADD WATCHER"/>
+                                <connections>
+                                    <segue destination="vTK-MV-0P6" kind="presentation" identifier="PresentAddWatcher" id="b2O-ed-Dsh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Ape-4B-fIq" firstAttribute="leading" secondItem="Vc8-ww-M13" secondAttribute="leading" id="71a-uD-c8e"/>
                             <constraint firstAttribute="trailing" secondItem="sUR-We-3zx" secondAttribute="trailing" id="Cxv-Bx-HE6"/>
+                            <constraint firstAttribute="trailing" secondItem="Ape-4B-fIq" secondAttribute="trailing" id="a8b-Hl-0T5"/>
+                            <constraint firstItem="VT5-7S-vUh" firstAttribute="top" secondItem="Ape-4B-fIq" secondAttribute="bottom" id="cNB-Nk-6mY"/>
+                            <constraint firstItem="Ape-4B-fIq" firstAttribute="top" secondItem="sUR-We-3zx" secondAttribute="bottom" id="ede-46-2YS"/>
                             <constraint firstItem="sUR-We-3zx" firstAttribute="leading" secondItem="Vc8-ww-M13" secondAttribute="leading" id="hev-hM-r3Q"/>
                             <constraint firstItem="sUR-We-3zx" firstAttribute="top" secondItem="gzw-3t-Ag6" secondAttribute="bottom" id="hyl-P9-UOf"/>
-                            <constraint firstItem="VT5-7S-vUh" firstAttribute="top" secondItem="sUR-We-3zx" secondAttribute="bottom" id="uOE-W2-ePO"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonAddWatcher" destination="Ape-4B-fIq" id="Odt-CV-IVl"/>
                         <outlet property="tableView" destination="sUR-We-3zx" id="0Lw-aO-sEn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVN-Wh-PbJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1585" y="-270"/>
+            <point key="canvasLocation" x="1657.5999999999999" y="-273.4632683658171"/>
+        </scene>
+        <!--Add WatcherVC-->
+        <scene sceneID="dlY-cG-4cg">
+            <objects>
+                <viewController id="vTK-MV-0P6" customClass="AddWatcherVC" customModule="OpenProjectClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Yf7-nK-Xcy"/>
+                        <viewControllerLayoutGuide type="bottom" id="bri-OS-B9K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CTX-Vm-WQJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BVf-Lx-Ai3">
+                                <rect key="frame" x="0.0" y="20" width="375" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddWatcherTVC" id="Eww-uC-pyR" customClass="AddWatcherTVC" customModule="OpenProjectClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Eww-uC-pyR" id="Fxw-vx-BLK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tih-I4-9Lm">
+                                <rect key="frame" x="0.0" y="567" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1wI-4W-Kl8"/>
+                                </constraints>
+                                <state key="normal" title="ADD WATCHER"/>
+                                <connections>
+                                    <action selector="buttonAddWatcherTapped:" destination="vTK-MV-0P6" eventType="touchUpInside" id="dsS-Bp-tHe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhW-Uf-Ffc">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="dnL-MA-L31"/>
+                                </constraints>
+                                <state key="normal" title="CANCEL"/>
+                                <connections>
+                                    <action selector="buttonCancelTapped:" destination="vTK-MV-0P6" eventType="touchUpInside" id="lIA-v4-xLW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Tih-I4-9Lm" firstAttribute="leading" secondItem="CTX-Vm-WQJ" secondAttribute="leading" id="1OH-LA-g5E"/>
+                            <constraint firstItem="AhW-Uf-Ffc" firstAttribute="top" secondItem="Tih-I4-9Lm" secondAttribute="bottom" id="Byg-mo-dRm"/>
+                            <constraint firstItem="BVf-Lx-Ai3" firstAttribute="top" secondItem="Yf7-nK-Xcy" secondAttribute="bottom" id="Dx7-QV-IHv"/>
+                            <constraint firstItem="AhW-Uf-Ffc" firstAttribute="leading" secondItem="CTX-Vm-WQJ" secondAttribute="leading" id="FZu-j1-WHf"/>
+                            <constraint firstItem="bri-OS-B9K" firstAttribute="top" secondItem="AhW-Uf-Ffc" secondAttribute="bottom" id="PZB-tm-dQY"/>
+                            <constraint firstAttribute="trailing" secondItem="Tih-I4-9Lm" secondAttribute="trailing" id="dkO-lx-E9D"/>
+                            <constraint firstAttribute="trailing" secondItem="BVf-Lx-Ai3" secondAttribute="trailing" id="sUb-MR-0Qa"/>
+                            <constraint firstItem="Tih-I4-9Lm" firstAttribute="top" secondItem="BVf-Lx-Ai3" secondAttribute="bottom" id="sj4-Bn-A05"/>
+                            <constraint firstItem="BVf-Lx-Ai3" firstAttribute="leading" secondItem="CTX-Vm-WQJ" secondAttribute="leading" id="uJy-FQ-fzg"/>
+                            <constraint firstAttribute="trailing" secondItem="AhW-Uf-Ffc" secondAttribute="trailing" id="z7e-Vi-6Lo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonAddWatcher" destination="Tih-I4-9Lm" id="rUX-3A-j5S"/>
+                        <outlet property="buttonCancel" destination="AhW-Uf-Ffc" id="kFc-dv-SBg"/>
+                        <outlet property="tableView" destination="BVf-Lx-Ai3" id="ebb-fZ-5E7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dul-cp-TvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2409" y="-314"/>
         </scene>
         <!--Edit Long TextVC-->
         <scene sceneID="oWw-Sb-gX9">
@@ -654,7 +739,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vmb-Ff-Oz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2493.5999999999999" y="-283.80809595202402"/>
+            <point key="canvasLocation" x="3273" y="395"/>
         </scene>
         <!--Edit Multiple ChoicesVC-->
         <scene sceneID="xOX-Pd-z3a">

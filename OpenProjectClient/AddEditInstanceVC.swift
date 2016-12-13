@@ -57,6 +57,8 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
                 textFieldApiKey.text = key
             }
         }
+        
+        textFieldAddress.becomeFirstResponder()
     }
     
     override var prefersStatusBarHidden : Bool {
@@ -101,7 +103,8 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
         textFieldAddress.returnKeyType = .done
         textFieldApiKey.returnKeyType = .done
         
-        textFieldApiKey.isSecureTextEntry = true
+        textFieldApiKey.font = UIFont(name: (textFieldApiKey.font?.fontName)!, size: 13.0)
+        
         self.view.backgroundColor = Colors.paleOP.getUIColor()
         buttonSave.backgroundColor = Colors.darkAzureOP.getUIColor()
         buttonCancel.backgroundColor = Colors.lightAzureOP.getUIColor()
@@ -110,6 +113,9 @@ class AddEditInstanceVC: UIViewController, UITextFieldDelegate {
     //textfield delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        if textField == textFieldAddress {
+            textFieldApiKey.becomeFirstResponder()
+        }
         return true
     }
     

@@ -25,10 +25,20 @@
         <attribute name="workPackagesHref" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="OpUser" representedClassName=".OpUser" syncable="YES">
-        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="admin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="login" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="self_title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="Priority" representedClassName=".Priority" syncable="YES">
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
@@ -168,7 +178,7 @@
     <elements>
         <element name="Assignee" positionX="-45" positionY="144" width="128" height="180"/>
         <element name="Instance" positionX="-54" positionY="-9" width="128" height="210"/>
-        <element name="OpUser" positionX="-45" positionY="144" width="128" height="105"/>
+        <element name="OpUser" positionX="-45" positionY="144" width="128" height="255"/>
         <element name="Priority" positionX="-54" positionY="144" width="128" height="210"/>
         <element name="Project" positionX="-54" positionY="27" width="128" height="180"/>
         <element name="Status" positionX="-54" positionY="144" width="128" height="210"/>

@@ -39,6 +39,8 @@
 		E2722F681BE0C26E0095DAE3 /* InstanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */; };
 		E287CC861DC7E87800743229 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E287CC851DC7E87800743229 /* FilterViewController.swift */; };
 		E28D506C1DF378F400723A80 /* EditHoursVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D506B1DF378F400723A80 /* EditHoursVC.swift */; };
+		E28D76321DFF626200A13597 /* AddWatcherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D76311DFF626200A13597 /* AddWatcherVC.swift */; };
+		E28D76341DFF63AE00A13597 /* AddWatcherTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D76331DFF63AE00A13597 /* AddWatcherTVC.swift */; };
 		E28E190F1BDED2B3001D1901 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */; };
 		E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */; };
 		E2933EFE1DEF90C50024BCAF /* Priority+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */; };
@@ -137,6 +139,8 @@
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
 		E287CC851DC7E87800743229 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E28D506B1DF378F400723A80 /* EditHoursVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditHoursVC.swift; sourceTree = "<group>"; };
+		E28D76311DFF626200A13597 /* AddWatcherVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWatcherVC.swift; sourceTree = "<group>"; };
+		E28D76331DFF63AE00A13597 /* AddWatcherTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWatcherTVC.swift; sourceTree = "<group>"; };
 		E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		E292EA281DC00E71006534C7 /* Priority+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2933EFD1DEF90C50024BCAF /* Priority+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Priority+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -397,6 +401,8 @@
 			children = (
 				E2A5C22D1DFCD7620002E2FA /* WorkPackageWatchersVC.swift */,
 				E2A5C2321DFCDC200002E2FA /* WorkPackageWatchersTVC.swift */,
+				E28D76311DFF626200A13597 /* AddWatcherVC.swift */,
+				E28D76331DFF63AE00A13597 /* AddWatcherTVC.swift */,
 			);
 			name = WorkPackageWatchers;
 			sourceTree = "<group>";
@@ -813,6 +819,7 @@
 				E260173B1BDB646300AF8332 /* Project+CoreDataClass.swift in Sources */,
 				E2F1AD2D1DC94BA200DC0649 /* FilterAddEditTableViewCell.swift in Sources */,
 				E2A5C2351DFDC8990002E2FA /* ErrorAlerts.swift in Sources */,
+				E28D76341DFF63AE00A13597 /* AddWatcherTVC.swift in Sources */,
 				E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */,
 				E2F1AD2B1DC9491700DC0649 /* FilterAddEditViewController.swift in Sources */,
 				E292EA291DC00E71006534C7 /* Priority+CoreDataClass.swift in Sources */,
@@ -828,6 +835,7 @@
 				E207C0EA1DF63B6E00CA32A3 /* Tools.swift in Sources */,
 				E26017471BDBE2B500AF8332 /* WorkPackageDetailVC.swift in Sources */,
 				E20391F31BDC057000071846 /* AddEditInstanceVC.swift in Sources */,
+				E28D76321DFF626200A13597 /* AddWatcherVC.swift in Sources */,
 				E2075C591BDF610C005CE246 /* Instance+CoreDataProperties.swift in Sources */,
 				E2A5C2291DFCB1700002E2FA /* GetWorkpackageType.swift in Sources */,
 				E2D2FC2E1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataProperties.swift in Sources */,

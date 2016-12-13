@@ -391,11 +391,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 if let errors = ResponseValidationError.getFormErrors(json: responseObject) {
                     LoadingUIView.hide()
                     print("Form is not valid")
-                    var errorText = [String]()
-                    for error in errors {
-                        errorText.append(error.message!)
-                    }
-                    self.showAlert(title: "Error", str: errorText.joined(separator: "\n"))
+                    self.showResponseErrorAlert(errors: errors)
                 } else {
                     print("Form is valid")
                     //create new workpackage
@@ -429,7 +425,7 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     private func parseUpdatedWorkPackage(json: JSON) -> Int32 {
-        return WorkPackage.buildWorkPackage(projectId: projectId, instanceId: instanceId, item: json)
+        return WorkPackage.buildWorkPackage(projectId: projectId, instanceId: instanceId, item: json, saveToContext: true)
     }
     
     private func showResponseErrorAlert(errors: [ResponseValidationError]) {

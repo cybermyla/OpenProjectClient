@@ -48,7 +48,7 @@ public class WorkPackageActivity: NSManagedObject {
                 }
             }
             activity.details = details as NSObject?
-            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
 }

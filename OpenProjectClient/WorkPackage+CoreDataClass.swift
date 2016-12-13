@@ -26,11 +26,14 @@ class WorkPackage: NSManagedObject {
         //there is no other way to get all possible statuses directly from API - I will check all items if they contain unknow status and if so, this status will be added to statuses for this particular project and instance
         
         for item in array {
-            let _ = buildWorkPackage(projectId: projectId, instanceId: instanceId, item: item)
+            let _ = buildWorkPackage(projectId: projectId, instanceId: instanceId, item: item, saveToContext: false)
         }
+        
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        
     }
     
-    class func buildWorkPackage(projectId: NSNumber, instanceId: String, item: JSON) -> Int32 {
+    class func buildWorkPackage(projectId: NSNumber, instanceId: String, item: JSON, saveToContext: Bool) -> Int32 {
         var wp: WorkPackage?
         
         let predicateStatuses = NSPredicate(format: "projectId = %i AND instanceId = %i", argumentArray: [projectId, instanceId])
@@ -161,7 +164,9 @@ class WorkPackage: NSManagedObject {
             }
         }
         wp!.descriptionHtml = dictDescription["html"]?.rawString()
-        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        if saveToContext {
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        }
         return wp!.id
     }
     

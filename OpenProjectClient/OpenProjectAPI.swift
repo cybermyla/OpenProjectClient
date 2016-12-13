@@ -14,12 +14,28 @@ class OpenProjectAPI {
 
     var manager: SessionManager?
     
+    var _getProjects: DataRequest?
+    var _getWorkPackages: DataRequest?
+    var _postWorkPackagesForms: DataRequest?
+    var _createOrUpdateWorkpackage: DataRequest?
+    var _getAvailableAssignees: DataRequest?
+    var _getAvailableResponsibles: DataRequest?
+    var _getActivities: DataRequest?
+    var _getUser: DataRequest?
+    var _getWatchers: DataRequest?
+    var _getTypes: DataRequest?
+    var _getPriorities: DataRequest?
+    var _getStatuses: DataRequest?
+    var _sendActivityComment: DataRequest?
+    var _removeWatcher: DataRequest?
+    var _getAvailableWatchers: DataRequest?
+    
     static let sharedInstance : OpenProjectAPI = OpenProjectAPI()
     
     private init() {
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 20
-        configuration.timeoutIntervalForResource = 20
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 30
         manager = SessionManager(configuration: configuration)
     }
     
@@ -73,8 +89,13 @@ class OpenProjectAPI {
             let instance = instances[0]
 
             let url = "\(instance.address!)/api/v2/projects.json?key=\(instance.apikey!)"
-
-            manager!.request(url).validate().responseString { response in
+            
+            if let existinGetProjects = _getProjects {
+                existinGetProjects.cancel()
+                print("\(Date()) Existing get projects request has been canceled")
+            }
+            print("\(Date()) Sending get projects request \(url)")
+            self._getProjects = manager!.request(url).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -86,13 +107,12 @@ class OpenProjectAPI {
                         onCompletion(false, nil)
                         return
                     }
-                    
+                    print("\(Date()) Get projects response successfuly received")
                     let json = JSON(data: dataFromResponse)
-                    print("Projects successfully received - \(json)")
                     Project.buildProjects(json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get projects request failed \(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -113,7 +133,13 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(projectId)/work_packages?offset=\(offset)&pageSize=\(pageSize)\(filters)"
             
-            manager!.request(url, headers: headers).validate().responseString { response in
+            if let existinGetProjects = _getWorkPackages {
+                existinGetProjects.cancel()
+                print("\(Date()) Existing get workpackages request has been canceled")
+            }
+            print("\(Date()) Sending get workpackages request \(url)")
+            
+            _getWorkPackages = manager!.request(url, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -127,11 +153,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Workpackages successfully received - \(json)")
+                    print("\(Date()) Get workpackages response successfully received")
                     WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, truncate: truncate, json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Workpackages request failed \(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -161,8 +187,15 @@ class OpenProjectAPI {
                 url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/form"
             }
             
+            if let existingRequest = _postWorkPackagesForms {
+                existingRequest.cancel()
+                print("\(Date()) Existing post workpackage form validate/empty request has been canceled")
+            }
+            
+            
             if payload != nil {
-                manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+                print("\(Date()) Sending validate workpackage forms request \(url)")
+                _postWorkPackagesForms = manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload!), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                     switch response.result {
                     case .success( _):
                         guard let responseValue = response.result.value else {
@@ -176,38 +209,35 @@ class OpenProjectAPI {
                         }
                         
                         let json = JSON(data: dataFromResponse)
-                        print("Validate form response successfully received")
+                        print("\(Date()) Received workpackage forms request - validate")
                         onCompletion(json, nil)
                     case .failure(let error):
-                        print(error)
-                        print("\(url)")
-                        print("\(payload!)")
+                        print("\(Date()) Request workpackage forms failed - validate\n\(error)\n\(payload)")
                         onCompletion(false, error as NSError?)
                     }
                 }
             } else {
-            manager!.request(url, method:.post, headers: headers).validate().responseString { response in
+                print("\(Date()) Sending post workpackage forms request - get form \(url)")
+                _postWorkPackagesForms = manager!.request(url, method:.post, headers: headers).validate().responseString { response in
                 switch response.result {
-                case .success( _):
-                    guard let responseValue = response.result.value else {
-                        onCompletion(false, nil)
-                        return
-                    }
+                    case .success( _):
+                        guard let responseValue = response.result.value else {
+                            onCompletion(false, nil)
+                            return
+                        }
                     
-                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                        onCompletion(false, nil)
-                        return
-                    }
+                        guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                            onCompletion(false, nil)
+                            return
+                        }
                     
-                    let json = JSON(data: dataFromResponse)
-                    print("WP Create forms successfully received - \(json)")
-
-                    onCompletion(json, nil)
-                case .failure(let error):
-                    print(error)
-                    print("\(url)")
-                    onCompletion(false, error as NSError?)
-                }
+                        let json = JSON(data: dataFromResponse)
+                        print("\(Date()) Received post workpackage forms response - get form")
+                        onCompletion(json, nil)
+                    case .failure(let error):
+                        print("\(Date()) Request post workpackage forms failed - get form\n\(error)")
+                        onCompletion(false, error as NSError?)
+                    }
                 }
             }
         } else {
@@ -253,7 +283,13 @@ class OpenProjectAPI {
                 operationName = "Update"
             }
             
-            manager!.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            if let existingRequest = _createOrUpdateWorkpackage {
+                existingRequest.cancel()
+                print("\(Date()) Existing create or update workpackage request has been canceled")
+            }
+            print("\(Date()) Sending \(operationName) workpackage request - \(url)")
+            
+            _createOrUpdateWorkpackage = manager!.request(url, method: method, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -267,10 +303,10 @@ class OpenProjectAPI {
                     }
                         
                     let json = JSON(data: dataFromResponse)
-                    print("\(operationName) WP response successfully received")
+                    print("\(Date()) \(operationName) workpackage response successfully received")
                     onCompletion(json, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) \(operationName) workpackage response failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -356,6 +392,12 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_assignees"
             
+            if let existingRequest = _getAvailableAssignees {
+                existingRequest.cancel()
+                print("\(Date()) Existing get available assignees request has been canceled")
+            }
+            print("\(Date()) Sending get available assignees request - \(url)")
+            
             manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
@@ -370,11 +412,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Available assignees successfully received - \(json)")
+                    print("\(Date()) get available assignees request successfuly received")
                     Assignee.buildAssignees(NSNumber(value: projectId), instanceId:instanceId!, json: json, isAssignee: true)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) get available assignees request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -402,6 +444,12 @@ class OpenProjectAPI {
             
             let url = "\(instance.address!)/api/v3/projects/\(NSNumber(value:projectId))/available_responsibles"
             
+            if let existingRequest = _getAvailableResponsibles {
+                existingRequest.cancel()
+                print("\(Date()) - Existing get available responsibles request has been canceled")
+            }
+            print("\(Date()) - Sending get available responsibles request - \(url)")
+            
             manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
@@ -416,11 +464,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Available responsibles successfully received - \(json)")
+                    print("\(Date()) - Get available responsibles response successfuly received")
                     Assignee.buildAssignees(NSNumber(value: projectId), instanceId:instanceId!, json: json, isAssignee: false)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) - Get available responsibles request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -443,9 +491,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(href)"
-            print("Sending activities request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getActivities {
+                existingRequest.cancel()
+                print("\(Date()) Existing get activities request has been canceled")
+            }
+            print("\(Date()) Sending get activities request - \(url)")
+            
+            _getActivities = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -459,11 +512,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Activities successfully received - \(json)")
+                    print("\(Date()) Get activities response successfuly received")
                     WorkPackageActivity.buildWPActivities(json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get activities request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -487,9 +540,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(href)"
-            print("Sending user request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getUser {
+                existingRequest.cancel()
+                print("\(Date()) Existing get user request has been canceled")
+            }
+            print("\(Date()) Sending get user request - \(url)")
+            
+            _getUser = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -503,11 +561,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("User successfully received - \(json)")
-                    OpUser.buildOpUser(json: json)
+                    print("\(Date()) Get user response successfuly received")
+                    OpUser.buildOpUser(json: json, saveToContext: true)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get user request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -530,9 +588,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(href)"
-            print("Sending watchers request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getWatchers {
+                existingRequest.cancel()
+                print("\(Date()) Existing get watchers request has been canceled")
+            }
+            print("\(Date()) Sending get watchers request - \(url)")
+            
+            _getWatchers = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -546,10 +609,10 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Watchers successfully received - \(json)")
+                    print("\(Date()) Get watchers response successfuly received")
                     onCompletion(json, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get watchers request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -577,9 +640,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.prioritiesHref!)"
-            print("Sending priorities request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getPriorities {
+                existingRequest.cancel()
+                print("\(Date()) Existing get priorities request has been canceled")
+            }
+            print("\(Date()) Sending get priorities request - \(url)")
+            
+            _getPriorities = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -593,11 +661,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Priorities successfully received - \(json)")
+                    print("\(Date()) Get priorities response successfuly received")
                     Priority.buildPriorities(intProjectId, instanceId: instanceId!, json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get priorities request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -625,9 +693,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.statusesHref!)"
-            print("Sending statuses request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getStatuses {
+                existingRequest.cancel()
+                print("\(Date()) Existing get statuses request has been canceled")
+            }
+            print("\(Date()) Sending get statuses request - \(url)")
+            
+            _getStatuses = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -641,11 +714,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Statuses successfully received - \(json)")
+                    print("\(Date()) Get statuses response successfuly received")
                     Type.buildTypes(NSNumber(value: intProjectId), instanceId: instanceId!, json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get statuses request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -673,9 +746,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)\(instance.typesHref!)"
-            print("Sending types request to \(url)")
             
-            manager!.request(url, method:.get, headers: headers).validate().responseString { response in
+            if let existingRequest = _getTypes {
+                existingRequest.cancel()
+                print("\(Date()) Existing get types request has been canceled")
+            }
+            print("\(Date()) Sending get types request - \(url)")
+            
+            _getTypes = manager!.request(url, method:.get, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -689,11 +767,11 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Types successfully received - \(json)")
+                    print("\(Date()) Get types response successfuly received")
                     Status.buildStatuses(NSNumber(value: intProjectId), instanceId: instanceId!, json: json)
                     onCompletion(true, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Get types request failed\n\(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
@@ -716,9 +794,14 @@ class OpenProjectAPI {
             let headers = getHeaders(auth: instance.auth!)
             
             let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/activities"
-            print("Sending new activity comment to \(url)")
             
-            manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
+            if let existingRequest = _sendActivityComment {
+                existingRequest.cancel()
+                print("\(Date()) Existing send activity comment request has been canceled")
+            }
+            print("\(Date()) Sending activity comment request - \(url)")
+            
+            _sendActivityComment = manager!.request(url, method: .post, parameters: paramsFromJSON(json: payload), encoding: JSONEncoding.default, headers: headers).validate().responseString { response in
                 switch response.result {
                 case .success( _):
                     guard let responseValue = response.result.value else {
@@ -732,10 +815,105 @@ class OpenProjectAPI {
                     }
                     
                     let json = JSON(data: dataFromResponse)
-                    print("Add comment response successfully received - \(json)")
+                    print("\(Date()) Send activity comment response successfuly received")
                     onCompletion(json, nil)
                 case .failure(let error):
-                    print(error)
+                    print("\(Date()) Send activity comment request failed \(error)")
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func removeWorkPackageWatcher(watcherId: Int32, workPackageId: Int32, onCompletion: @escaping RemoteJSONResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+            
+            let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/watchers/\(watcherId)"
+            
+            if let existingRequest = _removeWatcher {
+                existingRequest.cancel()
+                print("\(Date()) Existing remove watcher request has been canceled")
+            }
+            print("\(Date()) Sending remove watcher request - \(url)")
+            
+            _removeWatcher = manager!.request(url, method: .delete, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    print("\(Date()) Remove watcher response successfuly received")
+                    onCompletion(json, nil)
+                case .failure(let error):
+                    print("\(Date()) Remove watcher request failed \(error)")
+                    onCompletion(false, error as NSError?)
+                }
+            }
+        } else {
+            onCompletion(false, nil)
+        }
+    }
+    
+    func getAvailableWatchers(workPackageId: Int32, onCompletion: @escaping RemoteBoolResponse) {
+        let defaults = UserDefaults.standard
+        let instanceId = defaults.string(forKey: "InstanceId")
+        
+        guard let instances = Instance.mr_find(byAttribute: "id", withValue: instanceId) as? [Instance] else {
+            return
+        }
+        
+        if instances.count > 0 {
+            let instance = instances[0]
+            
+            let headers = getHeaders(auth: instance.auth!)
+
+            let url = "\(instance.address!)/api/v3/work_packages/\(workPackageId)/available_watchers"
+            
+            if let existingRequest = _removeWatcher {
+                existingRequest.cancel()
+                print("\(Date()) Existing get available watchers request has been canceled")
+            }
+            print("\(Date()) Sending get available watchers request - \(url)")
+            
+            _getAvailableWatchers = manager!.request(url, method: .get, headers: headers).validate().responseString { response in
+                switch response.result {
+                case .success( _):
+                    guard let responseValue = response.result.value else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    guard let dataFromResponse = responseValue.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                        onCompletion(false, nil)
+                        return
+                    }
+                    
+                    let json = JSON(data: dataFromResponse)
+                    OpUser.buildOpUsers(json: json)
+                    print("\(Date()) Get available watchers response successfuly received")
+                    onCompletion(true, nil)
+                case .failure(let error):
+                    print("\(Date()) Get available watchers request failed \(error)")
                     onCompletion(false, error as NSError?)
                 }
             }
