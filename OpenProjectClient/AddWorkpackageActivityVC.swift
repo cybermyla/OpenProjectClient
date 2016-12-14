@@ -18,6 +18,8 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textFieldText: UITextView!
     @IBOutlet weak var buttonCancel: UIButton!
     
+    @IBOutlet weak var cancelButtonBottomConstraint: NSLayoutConstraint!
+    
     var delegate: AddWorkPackageVCDelegate?
     var workPackage: WorkPackage?
     
@@ -31,6 +33,8 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
         textFieldText.becomeFirstResponder()
         
         textFieldText.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,6 +45,13 @@ class AddWorkpackageActivityVC: UIViewController, UITextViewDelegate {
     override var prefersStatusBarHidden : Bool {
         get {
             return true
+        }
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            cancelButtonBottomConstraint.constant = keyboardHeight
         }
     }
 

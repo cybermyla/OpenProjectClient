@@ -15,7 +15,7 @@ class DevSettings {
     init() {
         
         self.address = "http://10.0.0.40"
-        self.key = "ed7524cc91c5024ad89a269546b80373c854b847"
+        self.key = "93d133676d35473f14f9335f6f0323533e5a2537"
         /*
         //normal user
         self.address = "http://10.0.0.40"

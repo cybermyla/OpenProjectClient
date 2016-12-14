@@ -36,8 +36,11 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         //don't show empty rows
         self.tableView.tableFooterView = UIView()
         
+        self.title = "Add watcher"
+        
         buttonAddWatcher.backgroundColor = Colors.darkAzureOP.getUIColor()
         buttonAddWatcher.tintColor = UIColor.white
+        buttonAddWatcher.isEnabled = false
         
         buttonCancel.backgroundColor = Colors.lightAzureOP.getUIColor()
         buttonCancel.tintColor = UIColor.white
@@ -100,6 +103,11 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func addWatcher() {
+        
+        guard selectedWatchers.count > 0 else {
+            return
+        }
+        
         let watcher = selectedWatchers[self.selectedWatchersIndex] as OpUser
         guard let wpId = self.workPackage?.id else {
             LoadingUIView.hide()
@@ -158,6 +166,7 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedWatchers.append(availableWatchers[indexPath.row])
+        self.buttonAddWatcher.isEnabled = true
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -165,6 +174,7 @@ class AddWatcherVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         if let i = selectedWatchers.index(where: { $0.id == selectedWatcher.id }) {
             selectedWatchers.remove(at: i)
         }
+        self.buttonAddWatcher.isEnabled = selectedWatchers.count > 0
     }
     
     /*

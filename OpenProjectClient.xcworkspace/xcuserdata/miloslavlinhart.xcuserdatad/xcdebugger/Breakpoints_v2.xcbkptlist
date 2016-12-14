@@ -6962,11 +6962,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWorkpackageActivityVC.swift"
-            timestampString = "503097349.145016"
+            timestampString = "503367374.714722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "checkIfSubmitSuccesfull(json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6978,11 +6978,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWorkpackageActivityVC.swift"
-            timestampString = "503097349.145016"
+            timestampString = "503367374.714722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "checkIfSubmitSuccesfull(json:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7874,11 +7874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWatcherVC.swift"
-            timestampString = "503365008.845111"
+            timestampString = "503368112.474411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "getAvailableWatchers()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8210,11 +8210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWatcherVC.swift"
-            timestampString = "503365008.845111"
+            timestampString = "503368112.474411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "addWatcher()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8226,11 +8226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWatcherVC.swift"
-            timestampString = "503365008.845111"
+            timestampString = "503368112.474411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "addWatcher()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8242,11 +8242,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWatcherVC.swift"
-            timestampString = "503365008.845111"
+            timestampString = "503368112.474411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "getAvailableWatchers()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8514,11 +8514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OpenProjectClient/AddWatcherVC.swift"
-            timestampString = "503365008.845111"
+            timestampString = "503368112.474411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "addWatcher()"
             landmarkType = "7">
             <Locations>
@@ -8728,6 +8728,38 @@
             startingLineNumber = "141"
             endingLineNumber = "141"
             landmarkName = "tableView(_:editActionsForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/AddWatcherVC.swift"
+            timestampString = "503368112.474411"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "getAvailableWatchers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OpenProjectClient/AddWatcherVC.swift"
+            timestampString = "503368112.474411"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "getAvailableWatchers()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
