@@ -162,8 +162,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if self.filters.count == 0 {
                 tableView.deleteSections([indexPath.section], with: .fade)
                 self.setEditing(false, animated: true)
+                self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
             } else {
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
             }
         })
         delete.backgroundColor = UIColor.red

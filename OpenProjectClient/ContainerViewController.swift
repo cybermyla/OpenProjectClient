@@ -43,8 +43,8 @@ class ContainerViewController: UIViewController {
         //showActivities()
         centerNavigationController.didMove(toParentViewController: self)
         
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
-        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
+        //let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
+        //centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -70,7 +70,7 @@ class ContainerViewController: UIViewController {
         var activitiesViewController: ActivitiesViewController!
         activitiesViewController = UIStoryboard.activitiesViewController()
         activitiesViewController.delegate = self
-        activitiesViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
+        //activitiesViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
         centerNavigationController = UINavigationController(rootViewController: activitiesViewController)
         view.addSubview(centerNavigationController.view)
         addChildViewController(centerNavigationController)
@@ -109,8 +109,8 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
             height: totalHeight))
         transparentView.tag = 1
         centerNavigationController.view.addSubview(transparentView)
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
-        transparentView.addGestureRecognizer(gestureRecognizer)
+        //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
+        //transparentView.addGestureRecognizer(gestureRecognizer)
     }
     
     func removeTransparentFromCenterNavigationController() {
@@ -139,7 +139,9 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     
     func menuItemTapped(_ item: MenuItem) {
         let vc = item.viewController()
-        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
+        //let x = UIImage(named: "menu-classic")
+        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu-classic"), style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
+        //vc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(ContainerViewControllerDelegate.toggleLeftPanel))
         defaults.set(item.id(), forKey: "MenuId")
         self.centerNavigationController.viewControllers = [vc]
         self.toggleLeftPanel()
@@ -194,6 +196,7 @@ extension ContainerViewController: ContainerViewControllerDelegate, SideMenuView
     }
 }
 
+/*
 extension ContainerViewController: UIGestureRecognizerDelegate {
     func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
@@ -223,5 +226,6 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         }
     }
 }
+ */
 
 

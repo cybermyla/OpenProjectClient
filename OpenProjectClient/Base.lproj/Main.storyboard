@@ -386,6 +386,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="constraintProjectButtonWidth" destination="8RL-Z7-j4T" id="sj3-rC-4Bg"/>
                         <outlet property="menuTableView" destination="Qyb-VN-eKI" id="b0b-lV-4b9"/>
                         <outlet property="projectButton" destination="GPh-wn-bCV" id="f9e-hg-WWU"/>
                         <outlet property="projectsTableView" destination="6xM-IV-GsX" id="hwy-pm-Oci"/>

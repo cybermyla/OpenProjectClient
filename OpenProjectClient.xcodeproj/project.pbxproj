@@ -137,6 +137,7 @@
 		E271D6531DECEFA400805611 /* EditMultipleChoicesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMultipleChoicesVC.swift; sourceTree = "<group>"; };
 		E271D6551DECEFCB00805611 /* EditMultipleChoicesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMultipleChoicesTVC.swift; sourceTree = "<group>"; };
 		E2722F671BE0C26E0095DAE3 /* InstanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceTableViewCell.swift; sourceTree = "<group>"; };
+		E2871DCC1E03189B00149EFD /* DataModelV1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModelV1.xcdatamodel; sourceTree = "<group>"; };
 		E287CC851DC7E87800743229 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E28D506B1DF378F400723A80 /* EditHoursVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditHoursVC.swift; sourceTree = "<group>"; };
 		E28D76311DFF626200A13597 /* AddWatcherVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWatcherVC.swift; sourceTree = "<group>"; };
@@ -1140,6 +1141,7 @@
 		E28E190D1BDED2B3001D1901 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E2871DCC1E03189B00149EFD /* DataModelV1.xcdatamodel */,
 				E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */,
 			);
 			currentVersion = E28E190E1BDED2B3001D1901 /* DataModel.xcdatamodel */;

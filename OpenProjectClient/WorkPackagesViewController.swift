@@ -45,6 +45,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         
         self.title = "Work Packages"
         self.view.backgroundColor = Colors.paleOP.getUIColor()
+
         setFilterLabelInToolbar()
         setNeedsStatusBarAppearanceUpdate()
         addRefresh()
@@ -170,7 +171,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
             }
         } else {
             filterButton.isEnabled = false
-            self.navigationItem.rightBarButtonItem = nil
+            //self.navigationItem.rightBarButtonItem = nil
         }
     }
     
@@ -208,7 +209,12 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
         case .loadMore:
             truncate = false
             offset = offset + 1
-            SmallLoadingUIView.show()
+            let uiView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableViewWorkPackages.frame.width, height: 50))
+            let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: (self.tableViewWorkPackages.frame.width/2), y: 25, width: 0, height: 0))
+            activityIndicator.activityIndicatorViewStyle = .gray
+            activityIndicator.startAnimating()
+            uiView.addSubview(activityIndicator)
+            self.tableViewWorkPackages.tableFooterView = uiView
             break
         }
 
@@ -225,7 +231,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                     break
                 case .loadMore:
                     self.offset = self.offset - 1
-                    SmallLoadingUIView.hide()
+                    self.tableViewWorkPackages.tableFooterView = UIView()
                     break
                 }
             } else {
@@ -241,7 +247,7 @@ class WorkPackagesViewController: UIViewController, UITableViewDataSource, UITab
                             self.defaults.set(Date(), forKey: "WorkPackageLastUpdate")
                             break
                         case .loadMore:
-                            SmallLoadingUIView.hide()
+                            //self.tableViewWorkPackages.tableFooterView = UIView()
                             break
                         }
                     self.tableViewWorkPackages.reloadData()

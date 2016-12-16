@@ -75,6 +75,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var projectsTableView: UITableView!
     @IBOutlet weak var projectsViewConHeight: NSLayoutConstraint!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var constraintProjectButtonWidth: NSLayoutConstraint!
     
     var items: [MenuItem] = [.workPackages]
     var projects: [Project] = []
@@ -105,6 +106,9 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         menuTableView.separatorStyle = .none
         projectsTableView.separatorStyle = .none
         projectsTableView.backgroundColor = Colors.paleOP.getUIColor()
+        
+        constraintProjectButtonWidth.constant = self.view.frame.width - 205
+        projectButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         menuTableView.tableHeaderView?.backgroundColor = UIColor.darkGray
     }
@@ -297,6 +301,7 @@ class SideMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if let instanceId = defaults.value(forKey: "InstanceId") as? String {
             getRemoteProjects(instanceId)
             self.defaults.set(nil, forKey: "WorkPackageLastUpdate")
+            self.projectsViewConHeight.constant = 0
             self.instanceSelected = true
         }
     }
