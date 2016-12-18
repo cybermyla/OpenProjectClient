@@ -92,10 +92,16 @@ class NewWorkPackageVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         sections.append(Section(heading: "Details", items: getSectionItems(items: sectItems2)))
         
         let sectItems3 = WorkPackageFormSchema.getItemsBySection(section: 2)
-        sections.append(Section(heading: "People", items: getSectionItems(items: sectItems3)))
+        let section3 = Section(heading: "People", items: getSectionItems(items: sectItems3))
+        if section3.items.count > 0 {
+            sections.append(section3)
+        }
         
         let sectItems4 = WorkPackageFormSchema.getItemsBySection(section: 3)
-        sections.append(Section(heading: "Estimates & Time", items: getSectionItems(items: sectItems4)))
+        let section4 = Section(heading: "Estimates & Time", items: getSectionItems(items: sectItems4))
+        if section4.items.count > 0 {
+            sections.append(section4)
+        }
         
         let sectItems5 = WorkPackageFormSchema.getItemsBySection(section: 4)
         let section5 = Section(heading: "Custom", items: getSectionItems(items: sectItems5))

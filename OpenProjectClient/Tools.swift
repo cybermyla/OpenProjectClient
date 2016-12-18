@@ -95,6 +95,42 @@ class Tools {
         }
     }
     
+    static func formatDuration(str: String?) -> String {
+        if let unwrappedStr = str {
+            let arrDuration = unwrappedStr.components(separatedBy: "T")
+            
+            //let years = durationSubStringToInt(str: matches(for: "[0-9]{0,2}[Y]", in: arrDuration[0])[0])
+            //let months = durationSubStringToInt(str: matches(for: "[0-9]?[0-9]?M", in: arrDuration[0])[0])
+            let days = durationSubStringToInt(str: matches(for: "[0-9]?[0-9]?D", in: arrDuration[0])[0])
+            
+            let hours = durationSubStringToInt(str: matches(for: "[0-9]{0,2}[H]", in: arrDuration[1])[0])
+            let minutes = durationSubStringToInt(str: matches(for: "[0-9]{0,2}[M]", in: arrDuration[1])[0])
+            let seconds = durationSubStringToInt(str: matches(for: "[0-9]{0,2}[S]", in: arrDuration[1])[0])
+            
+            var result = ""
+            
+            if let day = days {
+                result += "\(day)d"
+            }
+            if let hour = hours {
+                result += "\(hour)h"
+            }
+            if let minute = minutes {
+                result += "\(minute)m"
+            }
+            if let second = seconds {
+                result += "\(second)s"
+            }
+            
+            if result.characters.count > 0 {
+                return result
+            } else {
+                return "-"
+            }
+        }
+        return "-"
+    }
+    
     ///PRIVATE FUNCTIONS
     private static func attributedString(from string: String, nonBoldRange: NSRange?) -> NSAttributedString {
         let fontSize = UIFont.systemFontSize
@@ -123,5 +159,16 @@ class Tools {
             print("invalid regex: \(error.localizedDescription)")
             return []
         }
+    }
+    
+    private static func durationSubStringToInt(str: String) -> Int? {
+        if str.characters.count > 0 {
+            let index: String.Index = str.index(str.startIndex, offsetBy: str.characters.count - 1)
+            var subStr = str.substring(to: index)
+            if subStr.characters.count > 0 {
+                return Int(subStr)
+            }
+        }
+        return 0
     }
 }

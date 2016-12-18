@@ -187,7 +187,8 @@ class WorkPackageDetailVC: UIViewController, NewWorkPackageVCDelegate {
             labelEstimatedRemaining.attributedText = timeAttributedString
             labelEstimatedRemaining.font = UIFont.systemFont(ofSize: 14)
             
-            labelSpent.attributedText = Tools.createFormatedLabel("Spent", str: "not implemented")
+            let strSpentTime = Tools.formatDuration(str: wp.spentTime)
+            labelSpent.attributedText = Tools.createFormatedLabel("Spent", str: strSpentTime)
             labelSpent.font = UIFont.systemFont(ofSize: 14)
         }
     }

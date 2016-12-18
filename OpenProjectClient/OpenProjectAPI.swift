@@ -155,6 +155,7 @@ class OpenProjectAPI {
                     
                     let json = JSON(data: dataFromResponse)
                     print("\(Date()) Get workpackages response successfully received")
+                    print("\(Date()) \(json)")
                     WorkPackage.buildWorkpackages(projectId, instanceId: instanceId, truncate: truncate, json: json)
                     onCompletion(true, nil)
                 case .failure(let error):

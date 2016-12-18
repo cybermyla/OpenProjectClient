@@ -2,7 +2,7 @@
 //  WorkPackage+CoreDataProperties.swift
 //  OpenProjectClient
 //
-//  Created by Miloslav Linhart on 11/12/16.
+//  Created by Miloslav Linhart on 18/12/16.
 //  Copyright © 2016 Miloslav Linhart. All rights reserved.
 //
 
@@ -34,7 +34,7 @@ extension WorkPackage {
     @NSManaged public var projectId: Int32
     @NSManaged public var remainingHours: Int32
     @NSManaged public var responsibleTitle: String?
-    @NSManaged public var spentTime: Int32
+    @NSManaged public var spentTime: String?
     @NSManaged public var startDate: NSDate?
     @NSManaged public var statusHref: String?
     @NSManaged public var statusTitle: String?

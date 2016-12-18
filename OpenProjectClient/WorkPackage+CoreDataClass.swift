@@ -74,8 +74,8 @@ class WorkPackage: NSManagedObject {
             wp!.estimatedTime = Tools.durationToInt(duration: value)
         }
         
-        if let value = item["spentTime"].int {
-            wp!.spentTime = Int32(value)
+        if let value = item["spentTime"].string {
+            wp!.spentTime = value
         }
         
         if let value = item["percentageDone"].int {
