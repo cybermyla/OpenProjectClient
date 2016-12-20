@@ -68,7 +68,6 @@
 		E2C9759B1DDFBFB80055430A /* LoadingUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C9759A1DDFBFB80055430A /* LoadingUIView.swift */; };
 		E2CD5A6A1BBDC013009A3C33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */; };
 		E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A701BBDC013009A3C33 /* Assets.xcassets */; };
-		E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */; };
 		E2CD5A7F1BBDC013009A3C33 /* OpenProjectClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A7E1BBDC013009A3C33 /* OpenProjectClientTests.swift */; };
 		E2CD5A8A1BBDC013009A3C33 /* OpenProjectClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CD5A891BBDC013009A3C33 /* OpenProjectClientUITests.swift */; };
 		E2D2FC2D1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2FC2B1DF04EEF007B6109 /* WorkPackageFormSchema+CoreDataClass.swift */; };
@@ -170,7 +169,6 @@
 		E2CD5A661BBDC013009A3C33 /* OpenProjectClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenProjectClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2CD5A701BBDC013009A3C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E2CD5A731BBDC013009A3C33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2CD5A751BBDC013009A3C33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2CD5A7A1BBDC013009A3C33 /* OpenProjectClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenProjectClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CD5A7E1BBDC013009A3C33 /* OpenProjectClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenProjectClientTests.swift; sourceTree = "<group>"; };
@@ -467,7 +465,6 @@
 				E2CD5A691BBDC013009A3C33 /* AppDelegate.swift */,
 				E2CD5A701BBDC013009A3C33 /* Assets.xcassets */,
 				E24CF4661BDE79F600930E38 /* Main.storyboard */,
-				E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */,
 				E2CD5A751BBDC013009A3C33 /* Info.plist */,
 				E2075C4C1BDEE3AA005CE246 /* OpenProjectClient-Bridging-Header.h */,
 			);
@@ -637,7 +634,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E24CF4681BDE79F600930E38 /* Main.storyboard in Resources */,
-				E2CD5A741BBDC013009A3C33 /* LaunchScreen.storyboard in Resources */,
 				E2CD5A711BBDC013009A3C33 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,14 +892,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		E2CD5A721BBDC013009A3C33 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2CD5A731BBDC013009A3C33 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1003,6 +991,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1025,6 +1014,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
